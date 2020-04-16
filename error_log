@@ -1,0 +1,10 @@
+[13-Feb-2020 06:48:03 UTC] PHP Fatal error:  Cannot redeclare Common_model::select_option() in /home/mcfojotc/public_html/sareeerp/application/models/Common_model.php on line 58
+[22-Feb-2020 14:43:40 UTC] PHP Fatal error:  Cannot redeclare Common_model::febric_type() in /home/mcfojotc/public_html/sareeerp/application/models/Common_model.php on line 353
+[22-Feb-2020 14:44:12 UTC] PHP Fatal error:  Cannot redeclare Common_model::febric_type() in /home/mcfojotc/public_html/sareeerp/application/models/Common_model.php on line 353
+[02-Mar-2020 09:19:11 UTC] PHP Fatal error:  Cannot redeclare Src_model::update() in /home/mcfojotc/public_html/sareeerp/application/models/Src_model.php on line 41
+[05-Mar-2020 11:45:49 UTC] PHP Fatal error:  Cannot redeclare FDA::get_fabric_name_value() in /home/mcfojotc/public_html/sareeerp/application/controllers/admin/FDA.php on line 77
+[16-Mar-2020 12:33:14 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 67108872 bytes) in /home/mcfojotc/public_html/sareeerp/application/controllers/admin/Job_work_type.php on line 55
+[16-Mar-2020 12:34:02 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 67108872 bytes) in /home/mcfojotc/public_html/sareeerp/application/controllers/admin/Job_work_type.php on line 55
+[16-Mar-2020 12:36:34 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/mcfojotc/public_html/sareeerp/system/core/Exceptions.php on line 268
+[16-Mar-2020 12:38:19 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 67108872 bytes) in /home/mcfojotc/public_html/sareeerp/application/controllers/admin/Job_work_type.php on line 45
+[18-Mar-2020 11:46:53 UTC] PHP Fatal error:  Cannot use [] for reading in /home/mcfojotc/public_html/sareeerp/application/controllers/admin/ERC.php on line 59
