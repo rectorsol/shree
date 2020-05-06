@@ -177,7 +177,7 @@
               <div class="col-sm-9">
                 <select name="fabHsnCode" class="form-control">
                   <?php foreach ($hsn_data as $hsn_value): ?>
-                    <option value="<?php echo $hsn_value->hsn_code ?>"><?php echo $hsn_value->hsn_code ?></option>
+                    <option value="<?php echo $hsn_value->id ?>"><?php echo $hsn_value->hsn_code ?></option>
                   <?php endforeach;?>
                 </select>
               </div>

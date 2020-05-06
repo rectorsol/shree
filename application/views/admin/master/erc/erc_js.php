@@ -18,7 +18,7 @@ $(document).ready(function() {
         data= jexcel(document.getElementById('spreadsheet'), {
         data:text,
         search:true,
-        pagination:10,
+        pagination:30,
         columns: [
             // { type: 'checkbox',title:'Check',class:'sub_chk',allowDeleteRow:true,width:120 },
             { type: 'hidden', title:'id',width:60 },

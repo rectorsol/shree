@@ -46,18 +46,19 @@
 				$this->load->library('upload', $config);
                 $this->upload->do_upload('designPic');
 				$img=$this->upload->data();
-                 // echo "<pre>";
-                 // print_r($img);
-                 // exit();
+                //  echo "<pre>";
+                //  print_r($img);
+                //  exit();
                          $pic=$img['file_name'];
+                
                         $lastId = $this->Design_model->getLastId();
 						$pre = explode("D", $lastId->barCode);
 						$newId = (int)($pre[1]) + 1;
 						$id = "D".(string)$newId;
+						
+						if(!empty($pic)){
 
-						if($pic!=''){
-
-    			$data=array(
+    					$data=array(
     				'designName'=>$_POST['designName'],
 
     				'designSeries'=>$_POST['designSeries'],

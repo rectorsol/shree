@@ -17,6 +17,18 @@
                   <input type="text" class="form-control" name="series_number" value="<?php echo $order_data->series_number;?>" id="">
                 </div>
                 <div class="col-md-2">
+                  <label>Order Barcode</label>
+                  <input type="text" class="form-control" name="order_barcode" value="<?php echo $order_data->order_barcode;?>">
+                </div>
+                <div class="col-md-2">
+                  <label>Order No.</label>
+                  <input type="text" class="form-control" name="order_number" value="<?php echo $order_data->order_number;?>">
+                </div>
+                 <div class="col-md-2">
+                  <label>Customer Name</label>
+                  <input type="text"  class="form-control" name="customer_name" value="<?php echo $order_data->customer_name;?>">
+                </div>
+                <div class="col-md-2">
                   <label>Fabric Name</label>
                   <input type="text"  class="form-control" name="fabric_name" value="<?php echo $order_data->fabric_name;?>">
                 </div>
@@ -56,10 +68,7 @@
                   <label>priority</label>
                   <input type="text" class="form-control" name="priority" value="<?php echo $order_data->priority;?>">
                 </div>
-                <div class="col-md-2">
-                  <label>Order Barcode</label>
-                  <input type="text" class="form-control" name="order_barcode" value="<?php echo $order_data->order_barcode;?>">
-                </div>
+                
                 <div class="col-md-1">
                   <label>Remark</label>
                   <input type="text" class="form-control" name="remark" value="<?php echo $order_data->remark;?>">

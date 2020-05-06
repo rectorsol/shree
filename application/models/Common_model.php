@@ -360,7 +360,7 @@ class Common_model extends CI_Model {
 	public function user_name()
 	{
 		$this->db->select('*');
-		$rec=$this->db->get('user');
+		$rec=$this->db->get('users');
 		return $rec->result();
 	}
 	function get_user_role1(){

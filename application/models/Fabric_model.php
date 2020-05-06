@@ -9,7 +9,9 @@ class Fabric_model extends CI_Model {
 	}
 	public function get()
 	{
-		$rec=$this->db->get('fabric');
+		$this->db->from('fabric');
+	 
+		$rec=$this->db->get();
 		return $rec->result();
 
 	}

@@ -163,7 +163,8 @@
               <li class="sidebar-item"><a href="<?php echo base_url('admin/ERC'); ?>" class="sidebar-link"><i class="fa-meetup"></i><span class="hide-menu"> ERC </span></a></li>
               <li class="sidebar-item"><a href="<?php echo base_url('admin/SRC'); ?>" class="sidebar-link"><i class="fa fa-podcast"></i><span class="hide-menu"> SRC </span></a></li>
               <li class="sidebar-item"><a href="<?php echo base_url('admin/EMB'); ?>" class="sidebar-link"><i class="fa fa-podcast"></i><span class="hide-menu"> EMBJWR </span></a></li>
-
+             <li class="sidebar-item"><a href="<?php echo base_url('admin/Cause'); ?>" class="sidebar-link"> <i class="fab fa-uniregistry"></i><span class="hide-menu"> Cause</span></a></li>
+  
               <li class="sidebar-item"><a href="<?php echo base_url('admin/session_year'); ?>" class="sidebar-link"> <i class="fas fa-calendar"></i><span class="hide-menu"> Session</span></a></li>
               <li class="sidebar-item"><a href="<?php echo base_url('admin/Order_type'); ?>" class="sidebar-link"> <i class="fab fa-first-order"></i><span class="hide-menu"> Order Type</span></a></li>
               <li class="sidebar-item"><a href="<?php echo base_url('admin/Data_category'); ?>" class="sidebar-link"> <i class="fas fa-certificate"></i><span class="hide-menu"> Data Category</span></a></li>
@@ -176,6 +177,14 @@
               <li class="sidebar-item"><a href="<?php echo base_url('admin/Orders/order_flow'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> ORDER FLOW </span></a></li>
               <li class="sidebar-item"><a href="<?php echo base_url('admin/Orders/'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Show Order </span></a></li>
               <li class="sidebar-item"><a href="<?php echo base_url('admin/Orders/addOrders'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Add Order </span></a></li>
+            </ul>
+          </li>
+          <li class="sidebar-item "> <a class="sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">FRC</span></a>
+            <ul aria-expanded="false" class="collapse  first-level">
+              <li class="sidebar-item"><a href="<?php echo base_url('admin/FRC'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> ADD FRC </span></a></li>
+              <li class="sidebar-item"><a href="<?php echo base_url('admin/FRC/showFrc'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> FRC List </span></a></li>
+              <li class="sidebar-item"><a href="<?php echo base_url('admin/FRC/AddPBC'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu">ADD 2nd PBC </span></a></li>
+              <li class="sidebar-item"><a href="<?php echo base_url('admin/FRC/Show_PBC'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> 2nd PBC List </span></a></li>
             </ul>
           </li>
           <li class="sidebar-item hideElement"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo base_url('admin/FDA'); ?>" aria-expanded="false"><i class="mdi mdi-lumx"></i><span class="hide-menu">Fabric design

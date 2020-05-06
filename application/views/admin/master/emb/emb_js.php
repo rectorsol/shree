@@ -1,164 +1,139 @@
-<script src="<?php echo base_url('jexcelmaster/')?>asset/js/jquery.3.1.1.js"></script>
-    <script src="<?php echo base_url('jexcelmaster/')?>dist/jexcel.js"></script>
-    <script src="<?php echo base_url('jexcelmaster/')?>dist/jsuites.js"></script>
-    <link rel="stylesheet" href="<?php echo base_url('jexcelmaster/')?>dist/jsuites.css" type="text/css" />
-    <link rel="stylesheet" href="<?php echo base_url('jexcelmaster/')?>dist/jexcel.css" type="text/css" />
-    <link rel="stylesheet" href="<?php echo base_url('jexcelmaster/')?>src/css/jexcel.datatables.css" type="text/css" />
+
 
 <script type="text/javascript">
 $(document).ready(function() {
-        var response = '';
-        var design=[];
-        $.ajax({
-            type: "GET",
-            url: "<?php echo base_url('admin/EMB/get_emb_list')?>",
 
-            success: function(text) {
-
-        data= jexcel(document.getElementById('spreadsheet'), {
-        data:text,
-        search:true,
-        pagination:10,
-        columns: [
-            // { type: 'checkbox',title:'Check',class:'sub_chk',allowDeleteRow:true,width:120 },
-           { type: 'text', title:'id',width:60 },
-            { type: 'dropdown', title:'Design Name' ,autocomplete:true, width:120,url:"<?php echo base_url('admin/EMB/getDesignName')?>" },
-            { type: 'dropdown', title:'Worker Name',autocomplete:true, width:120,url:"<?php echo base_url('admin/EMB/get_workporty_name')?>" },
-            { type: 'text', title:' Rate' , width:120 },
-            { type: 'hidden', title:' Rate' , width:120 },
+jQuery('#master').on('click', function(e){
+     if($(this).is(':checked',true))
+     {
+       $(".sub_chk").prop('checked', true);
+     }
+     else
+     {
+       $(".sub_chk").prop('checked',false);
+     }
+    });
 
 
-         ], onchange: changed,
-            oninsertrow:insertrow,
-      });
+    jQuery('.delete_all').on('click', function(e){
+    var allVals = [];
+       $(".sub_chk:checked").each(function() {
+         allVals.push($(this).attr('data-id'));
+       });
+       //alert(allVals.length); return false;
+       if(allVals.length <=0)
+       {
+         alert("Please select row.");
+       }
+       else {
+         //$("#loading").show();
+         WRN_PROFILE_DELETE = "Are you sure you want to delete this row?";
+         var check = confirm(WRN_PROFILE_DELETE);
+         if(check == true){
+           //for server side
+         var join_selected_values = allVals.join(",");
+         // alert (join_selected_values);exit;
 
-            console.log(data);
-            }
-        });
-          var changed = function(instance, cell, x, y, value) {
-            var cellName = jexcel.getColumnNameFromId([x,y]);
-            var cell1 = data.getValueFromCoords(0,y);
-           var workname = data.getValueFromCoords(2,y);
-
-
-                var dat=[];
-                if(x==1){
-                    dat={
-                      designName: value,
-                      id : cell1,
-                      workerName1:workname,
-                      '<?php echo $this->security->get_csrf_token_name(); ?>' : '<?php  echo $this->security->get_csrf_hash(); ?>'
-                    }
-              $.ajax({
-              url: "<?php echo base_url('admin/EMB/update')?>",
-              type: "POST",
-              data:dat,
-              success: function(dataResult){
-              console.log(dataResult);
-              }
-            });
-                }
-
-             var design = data.getValueFromCoords(1,y);
-                if(x==2){
-                    dat={
-                      designName1: design,
-                      workerName: value,
-                      id : cell1,
-                      '<?php echo $this->security->get_csrf_token_name(); ?>' : '<?php  echo $this->security->get_csrf_hash(); ?>'
-                    }
-                           $.ajax({
-              url: "<?php echo base_url('admin/EMB/update')?>",
-              type: "POST",
-              data:dat,
-              success: function(dataResult){
-              console.log(dataResult);
-              }
-            });
-                }
-                if(x==3){
-                    dat={
-                      rate: value,
-                      id : cell1,
-                      '<?php echo $this->security->get_csrf_token_name(); ?>' : '<?php  echo $this->security->get_csrf_hash(); ?>'
-                    }
-                           $.ajax({
-              url: "<?php echo base_url('admin/EMB/update')?>",
-              type: "POST",
-              data:dat,
-              success: function(dataResult){
-              console.log(dataResult);
-              }
-            });
-                }
-        }
-
-        var insertrow  = function(instance,x,y) {
-
-         dat={
-
-                      '<?php echo $this->security->get_csrf_token_name(); ?>' : '<?php  echo $this->security->get_csrf_hash(); ?>'
-                    }
-          $.ajax({
-              url: "<?php echo base_url('admin/EMB/add_emb')?>",
-              type: "POST",
-               data: dat,
-              success: function(id){
-               var cellName = jexcel.getColumnNameFromId([0,x+1]);
-
-                    data.setValue(cellName,id);
-                    var cell1 = data.getValueFromCoords(0,x+1);
-              }
-            });
-
-          }
-         $('#download').on('click', function () {
-          $('#spreadsheet').jexcel('download');
-         });
+           $.ajax({
+             type: "POST",
+             url: "<?= base_url()?>admin/Job_work_type/deletejob",
+             cache:false,
+             data: {'ids' : join_selected_values, '<?php echo $this->security->get_csrf_token_name(); ?>' : '<?php  echo $this->security->get_csrf_hash(); ?>'},
+             success: function(response)
+             {
+               //referesh table
+               $(".sub_chk:checked").each(function() {
+                  var id = $(this).attr('data-id');
+                  $('#tr_'+id).remove();
+               });
 
 
-    jQuery('.delete_all').on('click', function(e) {
-       var allVals = [];
-      $(".sub_chk:checked").each(function() {
-     allVals.push($(this).attr('data-id'));
-   });
-   //alert(allVals.length); return false;
-   if(allVals.length <=0)
-   {
-     alert("Please select row.");
-   }
-   else {
-     //$("#loading").show();
-     WRN_PROFILE_DELETE = "Are you sure you want to delete this row?";
-     var check = confirm(WRN_PROFILE_DELETE);
-     if(check == true){
-       //for server side
-     var join_selected_values = allVals.join(",");
-     // alert (join_selected_values);exit;
-
-       $.ajax({
-         type: "POST",
-         url: "<?= base_url()?>admin/design/deleteUser",
-         cache:false,
-         data: {'ids' : join_selected_values, '<?php echo $this->security->get_csrf_token_name(); ?>' : '<?php  echo $this->security->get_csrf_hash(); ?>'},
-         success: function(response)
-         {
-
-           //referesh table
-           $(".sub_chk:checked").each(function() {
-              var id = $(this).attr('data-id');
-              $('#tr_'+id).remove();
+             }
            });
-
+                  //for client side
 
          }
-       });
-              //for client side
+       }
+     });
 
-     }
-   }
+ // $(".order_row").click(function(){
+ //            // alert ('ok');
+ //            var oreder_id =  $(this).attr('id');
+ //             ///alert(oreder_id);
+ //
+ //                  var csrf_name = $("#get_csrf_hash").attr('name');
+ //                  var csrf_val = $("#get_csrf_hash").val();
+ //                  $.ajax({
+ //                    type: "POST",
+ //                    url: "<?php echo base_url('admin/Orders/get_order_details') ?>",
+ //                    data: {'oreder_id' : 	oreder_id, '<?php echo $this->security->get_csrf_token_name(); ?>' : '<?php  echo $this->security->get_csrf_hash(); ?>'},
+ //                    datatype: 'json',
+ //                    success: function(data){
+ //
+ //                       $("#content_body").html(data);
+ //                    }
+ //                  });
+ //                });
+
+ var i=1;
+ // $('#add_fresh').click(function(){
+ //
+ //      i++;
+ //
+ //      $('#fresh_field').append('<row id="row'+i+'" class="row"><input type="hidden" name="count[]" value="'+Math.floor((Math.random() * 10000) + 1)+'">   <div class="col-md-3"> <label>Job</label>  <input type="text" class="form-control" name="job[]" value=""></div> <div class="col-md-4"> <label>Rate</label>  <input type="text" class="form-control" name="rate[]" value=""></div><div class="col-md-3"><label>Choose Unit</label><select Name="unit[]"><option value="pcs">pcs</option><option value="mtrs">mtrs</option></select></div>  <div class="col-md-2"><br>&nbsp;&nbsp;<button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">X</button></div></div><div class="row"><div class="col-md-12"> <label></label><div></div><br><br><br>');
+ //
+ // });
+
+$('#add_fresh').click(function(){
+  var rowobj = $("#addNewRow").html();
+  $('#fresh_field').append(rowobj);
+});
+ $(document).on('click', '.btn_remove', function(){
+      $(this).parent().parent().remove();
  });
 
-        });
+ $( "#order_id" ).autocomplete({
+      source: function( request, response ) {
+
+          var searchText = extractLast(request.term);
+          $.ajax({
+              url: "<?php echo base_url("/admin/Orders/order_number") ?>",
+              type: 'post',
+              dataType: "json",
+              data: {
+                  search: searchText,
+                  '<?php echo $this->security->get_csrf_token_name(); ?>' : '<?php  echo $this->security->get_csrf_hash(); ?>'
+              },
+              success: function( data ) {
+                  response( data );
+              }
+          });
+      },
+      select: function( event, ui ) {
+          var terms = split( $('#order_id').val() );
+
+          terms.pop();
+
+          terms.push( ui.item.label );
+
+          terms.push( "" );
+          $('#order_id').val(terms.join( ", " ));
+
+          // Id
+          var terms = split( $('#selectuser_ids').val() );
+
+          terms.pop();
+
+          terms.push( ui.item.value );
+
+          terms.push( "" );
+          $('#selectuser_ids').val(terms.join( ", " ));
+
+          return false;
+      }
+
+  });
+
+});
 
    </script>

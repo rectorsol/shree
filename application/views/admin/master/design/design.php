@@ -263,7 +263,7 @@
               <div class="col-sm-9">
                 <select name="fabricName" id="fabricName" class="form-control">
                   <?php foreach ($febName as $rec): ?>
-                    <option value="<?php echo $rec->fabricName;?>"> <?php echo $rec->fabricName;?></option>
+                    <option value="<?php echo $rec->id;?>"> <?php echo $rec->fabricName;?></option>
                  <?php endforeach;?>
                 </select>
               </div>

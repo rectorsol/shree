@@ -65,12 +65,14 @@
                     <option value="<?php echo $value['id'];?>"> <?php echo $value['name'];?></option>
                     <?php endforeach;?>
                   </select>
-                </div>
+                </div><div class="col-md-2"></div>
+                <div class="col-md-4"><label>IMAGE</label><img src="" alt="" id="preview" style="width:100px">  </div>
               </div>
               <hr>
               <table id="fresh_form" class="remove_datatable">
                 <thead>
                   <th>#</th>
+                  <th>Serial N0.</th>
                   <th>Design Barcode</th>
                   <th>Fabric_Name</th>
                   <th>Hsn</th> 
@@ -80,7 +82,7 @@
                   <th>Stitch</th>
                   <th>Dye</th>
                   <th>Matching</th>
-                  <th>Quantity</th><th>Unit</th>
+                  <th>Quantity</th><th>Unit</th>  <th>Image</th>
                   <th>priority</th>
                   <th>Order Barcode</th>
                   <th>Remark</th>
@@ -88,14 +90,15 @@
                 </thead>
                 <tbody id="fresh_data">
                   <tr id="0">
+                    <td><input type="text" class="form-control" readonly value="1"></td>
                     <td><input type="text" class="form-control" name="serial_number[]" value=""></td>
                     <td><input type="text" class="form-control design_name"  value=""></td>
-                    <td><select name="fabric_name[]" class="form-control fabric_name" >
-                    <option>Select Fabric</option>
-                    <?php foreach ($febName as $value): ?>
-                    <option value="<?php echo $value->id;?>"> <?php echo $value->fabricName;?></option>
-                    <?php endforeach;?>
-                  </select> </td>
+                    <td><select name="fabric_name[]" class="form-control fabric_name select2" >
+                          <option>Select Fabric</option>
+                           <?php foreach ($febName as $value): ?>
+                          <option value="<?php echo $value->id;?>"> <?php echo $value->fabricName;?></option>
+                            <?php endforeach;?>
+                     </select> </td>
                     <td><input type="text" class="form-control " name="hsn[]" value="" id='hsn0'></td>
                      
                     <td><input type="text" name="design_name[]" class="form-control" value="" id='designName0'></td>
@@ -106,7 +109,8 @@
                    
                     <td><input type="text" class="form-control" name="quantity[]" value=""></td>
                     <td><input type="text" name="unit[]" class="form-control " value="" id="unit0"></td>
-                    <td> <input type="text" class="form-control" name="priority[]" value=""></td>
+                    <td><input type="text" name="image[]" class="form-control image" value="" id="image0"></td>
+                    <td> <input type="text" class="form-control" name="priority[]" value="30"></td>
                     <td> <input type="text" class="form-control" name="order_barcode[]" value=""></td>
                     <td><input type="text" class="form-control" name="remark[]" value=""></td>
                     <td> <button type="button" name="add_more" id="add_more" class="btn btn-success">+</button></td>
@@ -116,6 +120,7 @@
               <table id="prm_form" class="remove_datatable">
                 <thead>
                   <th>#</th>
+                   <th>Serial N0.</th>
                   <th>old Barcode</th>
                   <th>Fabric_Name</th>
                   <th>Hsn</th>
@@ -125,33 +130,37 @@
                   <th>Stitch</th>
                   <th>Dye</th>
                   <th>Matching</th>
-                  <th>Quantity</th><th>Unit</th>
+                  <th>Quantity</th>
+                  <th>Unit</th>
+                  <th>Image</th>
                   <th>priority</th>
                   <th>Order Barcode</th>
                   <th>Remark</th>
                   <th>Option</th>
                 </thead>
                 <tbody id="prm_data">
-                  <tr>
+                  <tr id="0">
+                   <td><input type="text" class="form-control" readonly value="1"></td>
                     <td><input type="text" class="form-control" name="serial_number[]" value=""></td>
                     <td> <input type="text" name="old_barcode[]" class="form-control" value=""></td>
-                    <td> <select name="fabric_name[]" class="form-control fabric_name" >
-                    <option>Select Fabric</option>
-                    <?php foreach ($febName as $value): ?>
-                    <option value="<?php echo $value->id;?>"> <?php echo $value->fabricName;?></option>
-                    <?php endforeach;?>
-                  </select></td>
-                    <td><input type="text" class="form-control hsn" name="hsn[]" value="" ></td>
+                    <td> <select name="fabric_name[]" class="form-control fabric_name select2" >
+                          <option>Select Fabric</option>
+                           <?php foreach ($febName as $value): ?>
+                          <option value="<?php echo $value->id;?>" > <?php echo $value->fabricName;?></option>
+                            <?php endforeach;?>
+                     </select></td>
+                    <td><input type="text" class="form-control hsn" name="hsn[]" value="" id='hsnp0' ></td>
                    
-                    <td><input type="text" name="design_name[]" class="form-control" value=""></td>
-                    <td> <input type="text" name="design_code[]" class="form-control" value=""></td>
-                    <td><input type="text" class="form-control" name="stitch[]" value=""></td>
-                    <td> <input type="text" class="form-control" name="dye[]" value=""></td>
-                    <td><input type="text" class="form-control" name="matching[]" value=""></td>
+                    <td><input type="text" name="design_name[]" class="form-control" value="" id='designNamep0'></td>
+                    <td> <input type="text" name="design_code[]" class="form-control" value="" id='designCodep0'></td>
+                    <td><input type="text" class="form-control" name="stitch[]" value="" id='stitchp0'></td>
+                    <td> <input type="text" class="form-control" name="dye[]" value="" id='dyep0'></td>
+                    <td><input type="text" class="form-control" name="matching[]" value="" id='matchingp0'></td>
                     
                     <td><input type="text" class="form-control" name="quantity[]" value=""></td>
-                     <td><input type="text" name="unit[]" class="form-control unit" value=""></td>
-                    <td> <input type="text" class="form-control" name="priority[]" value=""></td>
+                     <td><input type="text" name="unit[]" class="form-control unit" value="" id="unitp0"></td>
+                     <td><input type="text" name="image[]" class="form-control image" value="" id="imagep0"></td>
+                    <td> <input type="text" class="form-control" name="priority[]" value="30"></td>
                     <td> <input type="text" class="form-control" name="order_barcode[]" value=""></td>
                     <td><input type="text" class="form-control" name="remark[]" value=""></td>
                     <td> <button type="button" name="add_more" id="add_more_prm" class="btn btn-success">+</button></td>
@@ -169,4 +178,5 @@
     </div>
   </div>
 </div>
+
 <?php include('order_js.php');?>

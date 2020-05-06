@@ -26,11 +26,12 @@
         $('#fresh_form').show();
       }
     });
+  
 $(document).on('change', '.fabric_name', function(e) {
       var fabric =$(this).val();
       console.log(fabric);
       var button_id = $(this).parent().parent().attr("id");
-         
+       console.log(button_id);  
       var csrf_name = $("#get_csrf_hash").attr('name');
         var csrf_val = $("#get_csrf_hash").val();
         $.ajax({
@@ -76,6 +77,9 @@ $(document).on('change', '.fabric_name', function(e) {
              $('#stitch'+ button_id + '').val(data[0]['stitch']);
              $('#dye'+ button_id + '').val(data[0]['dye']);
              $('#matching'+ button_id + '').val(data[0]['matching']);
+             $('#fabric_name'+ button_id + '').val(data[0]['fabricName']);
+             $('#image'+ button_id + '').val(data[0]['designPic']);
+              $("#preview").attr('src','<?php echo base_url('upload/') ?>'+data[0]['designPic']);
              }else{
                $(".msg").html("<h6 class='text-danger'><b>Design Not Found </b></h6>");
                 $('#designName'+ button_id + '').val("");
@@ -83,6 +87,7 @@ $(document).on('change', '.fabric_name', function(e) {
              $('#stitch'+ button_id + '').val('');
              $('#dye'+ button_id + '').val('');
              $('#matching'+ button_id + '').val('');
+             $('#image'+ button_id + '').val('');
              }
            
           }
@@ -95,12 +100,15 @@ $(document).on('change', '.fabric_name', function(e) {
         $(".sub_chk").prop('checked', false);
       }
     });
+     
     $('#add_more').on('click', function() {
+      
       count=count+1;
       var element = '<tr id='+count+'>'
+      element +='<td><input type="text" class="form-control" readonly value='+(count+1)+'></td>'
       element += '<td> <input type="text" class="form-control" name="serial_number[]" value="" ></td>'
       element += '<td> <input type="text" class="form-control design_name"  value="" ></td>'
-      element += '<td> <select name="fabric_name[]" class="form-control fabric_name" >'
+      element += '<td> <select name="fabric_name[]" class="form-control fabric_name select2" >'
          element +=            '<option>Select Fabric</option>'
          element +=            '<?php foreach ($febName as $value): ?>'
          element +=            '<option value="<?php echo $value->id;?>"> <?php echo $value->fabricName;?></option>'
@@ -115,7 +123,8 @@ $(document).on('change', '.fabric_name', function(e) {
       element += '<td><input type="text" class="form-control" name="matching[]" value="" id=matching'+count+'></td>'
       element += '<td><input type="text" class="form-control" name="quantity[]" value=""></td>'
       element += '<td><input type="text" name="unit[]" class="form-control unit" value="" id=unit'+count+'></td>'
-      element += '<td>  <input type="text" class="form-control" name="priority[]"  value=""></td>'
+      element += '<td><input type="text" name="image[]" class="form-control unit" value="" id=image'+count+'></td>'
+      element += '<td>  <input type="text" class="form-control" name="priority[]"  value="30"></td>'
       element += '<td> <input type="text" class="form-control" name="order_barcode[]" value=""></td>'
       element += '<td><input type="text" class="form-control" name="remark[]" value=""></td>'
       element += '<td> <button type="button" name="remove"  class="btn btn-danger btn-xs remove">-</button></td>'
@@ -124,25 +133,28 @@ $(document).on('change', '.fabric_name', function(e) {
     });
 
     $('#add_more_prm').on('click', function() {
-      var element = '<tr>'
+      count=count+1;
+      var element = '<tr id='+count+'>'
+      element +='<td><input type="text" class="form-control" readonly value='+(count+1)+'></td>'
       element += '<td> <input type="text" class="form-control" name="serial_number[]" value="" required></td>'
       element += '<td> <input type="text" name="old_barcode[]" class="form-control" value=""></td>'
-      element += '<td> <select name="fabric_name[]" class="form-control fabric_name" >'
+      element += '<td> <select name="fabric_name[]" class="form-control fabric_name select2" >'
          element +=            '<option>Select Fabric</option>'
          element +=            '<?php foreach ($febName as $value): ?>'
          element +=            '<option value="<?php echo $value->id;?>"> <?php echo $value->fabricName;?></option>'
          element +=          '<?php endforeach;?>'
           element +=         '</select></td>'
-      element += '<td><input type="text" class="form-control hsn" name="hsn[]" value="" required></td>'
-       
-      element += '<td><input type="text" name="design_name[]" class="form-control" value="" required></td>'
-      element += '<td> <input type="text" name="design_code[]" class="form-control" value="" required></td>'
-      element += '<td><input type="text" class="form-control" name="stitch[]" value="" required></td>'
-      element += '<td>  <input type="text" class="form-control" name="dye[]" value="" required></td>'
-      element += '<td><input type="text" class="form-control" name="matching[]" value="" required></td>'
-      element += '<td><input type="text" class="form-control" name="quantity[]" value="" required></td>'
-      element += '<td><input type="text" name="unit[]" class="form-control unit" value="" required></td>'
-      element += '<td>  <input type="text" class="form-control" name="priority[]"  value="" required></td>'
+      element += '<td><input type="text" class="form-control" name="hsn[]" value="" id=hsnp'+count+'></td>'
+      
+      element += '<td><input type="text" name="design_name[]" class="form-control" value="" id=designNamep'+count+'></td>'
+      element += '<td> <input type="text" name="design_code[]" class="form-control" value="" id=designCodep'+count+'></td>'
+      element += '<td><input type="text" class="form-control" name="stitch[]" value="" id=stitchp'+count+'></td>'
+      element += '<td>  <input type="text" class="form-control" name="dye[]" value="" id=dyep'+count+'></td>'
+      element += '<td><input type="text" class="form-control" name="matching[]" value="" id=matchingp'+count+'></td>'
+      element += '<td><input type="text" class="form-control" name="quantity[]" value=""></td>'
+      element += '<td><input type="text" name="unit[]" class="form-control unit" value="" id=unitp'+count+'></td>'
+      element += '<td><input type="text" name="image[]" class="form-control unit" value="" id=imagep'+count+'></td>'
+      element += '<td>  <input type="text" class="form-control" name="priority[]"  value="30" required></td>'
       element += '<td> <input type="text" class="form-control" name="order_barcode[]" value="" required></td>'
       element += '<td><input type="text" class="form-control" name="remark[]" value="" required></td>'
       element += '<td> <button type="button" name="remove"  class="btn btn-danger btn-xs remove">-</button></td>'
@@ -151,7 +163,7 @@ $(document).on('change', '.fabric_name', function(e) {
   });
 
     $(document).on('click', '.remove', function() {
-      $(this).parent().parent().remove();
+      $(this).parent().parent().remove();count=count-1;
     });
 
     $('.delete_all').on('click', function(e) {

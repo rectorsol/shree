@@ -15,7 +15,7 @@ $(document).ready(function() {
             data= jexcel(document.getElementById('spreadsheet'), {
             data:text,
             search:true,
-            pagination:10,
+            pagination:30,
             columns: [
               { type: 'hidden', title:'id',width:120 },
               { type: 'dropdown', title:'Fabric Name' ,autocomplete:true, width:120,url:"<?php echo base_url('admin/SRC/getfabricName')?>" },

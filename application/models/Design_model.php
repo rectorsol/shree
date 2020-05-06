@@ -118,7 +118,7 @@ class Design_model extends CI_Model {
 function getLastId(){
     			$this->db->select("barCode");
     			$this->db->from('design');
-    			$this->db->order_by('barCode','DESC');
+    			$this->db->order_by('id','DESC');
     			$this->db->limit(1);
     			$query = $this->db->get();
     			$query = $query->row();

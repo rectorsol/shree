@@ -25,6 +25,7 @@ $system_title = $this->db->get_where('settings', array('type' => 'system_title')
     <link href="<?php echo base_url('optimum/admin') ?>/assets/libs/magnific-popup/dist/magnific-popup.css" rel="stylesheet">
     <link href="<?php echo base_url('optimum/admin') ?>/assets/libs/select2/dist/css/select2.min.css" rel="stylesheet">
     <script src="<?php echo base_url('optimum/admin') ?>/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="<?php echo base_url('optimum/admin') ?>/assets/libs/select2/dist/js/select2.min.js"></script>
 <style>.tip {
     display: inline-block;
     font-size: 18px;

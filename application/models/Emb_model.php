@@ -21,9 +21,9 @@ class Emb_model extends CI_Model {
 
  public function get_emb()
  {
-   $this->db->select('id,designName,workerName,rate,created_date');
+   $this->db->select('*');
    $this->db->from('emb');
-   $this->db->order_by('id','asc');
+   $this->db->order_by('id','desc');
    $query = $this->db->get();
    $query = $query->result_array();
    return $query;
@@ -42,8 +42,8 @@ class Emb_model extends CI_Model {
  }
 public function get_design_name()
  {
-   $this->db->select('distinct(desName)');
-   $this->db->from('erc');
+   $this->db->select('distinct(designName),id');
+   $this->db->from('design');
    $query = $this->db->get();
    $query = $query->result_array();
    return $query;
@@ -58,15 +58,7 @@ public function get_design_name()
    return true;
  }
 
- // public function Update_design($designName,$data)
- // {
- //    // print_r($designName);
- //    // print_r($data);exit;
- //   $this->db->where('designName', $designName);
- //   $this->db->update('design', $data);
- //   //echo $this->db->last_query();exit;
- //   return true;
- // }
+ 
 
  public function get_emb_name($designName,$workerName)
  {
@@ -98,7 +90,7 @@ public function get_design_name()
 
   public function get_worker_name()
  {
-   $this->db->select('distinct(name)');
+   $this->db->select('distinct(name),id');
    $this->db->from('job_work_party');
    $query = $this->db->get();
    $query = $query->result_array();
@@ -108,7 +100,7 @@ public function get_design_name()
  public function delete($id)
  {
    $this->db->where('id', $id);
-     $this->db->delete('fabric');
+     $this->db->delete('emb');
  }
  public function search($searchByCat,$searchValue)
  {

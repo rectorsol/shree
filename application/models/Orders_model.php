@@ -16,7 +16,7 @@
  {
    $this->db->select('hsn.unit,fabric.fabHsnCode');
    $this->db->from('fabric');
-   $this->db->join('hsn','hsn.id=fabric.fabHsnCode','left');
+   $this->db->join('hsn','hsn.hsn_code=fabric.fabHsnCode','left');
    $this->db->where('fabric.id',$id);
    $query = $this->db->get();
    $query = $query->result_array();
@@ -24,10 +24,10 @@
  }
  public function getDesignDetails($id)
  {
-   $this->db->select('designName,designCode,stitch,dye,matching');
+   $this->db->select();
    $this->db->from('design');
    
-   $this->db->where('id',$id);
+   $this->db->where('barCode',$id);
    $query = $this->db->get();
    $query = $query->result_array();
    return $query;
@@ -74,8 +74,11 @@ public function get_design_name()
  {
 
    $this->db->select('*');
-   $this->db->from('order_product');
-   $this->db->where('status', 'CANCEL');
+   $this->db->from('order_cancel_cause');
+	$this->db->join('order_product ','order_cancel_cause.order_id = order_product.product_order_id','inner');
+      $this->db->join('cause_list ','cause_list.id = order_cancel_cause.cause','inner');
+
+	$this->db->where('status', 'CANCEL');
    $query = $this->db->get();
    $query = $query->result_array();
    return $query;
@@ -147,7 +150,7 @@ public function get_design_name()
 
 			$this->db->select('*');
 			$this->db->from('order_product');
-		 // $this->db->join('order_product ','order_table.order_id = order_product.order_id','inner');
+		 $this->db->join('order_table ','order_table.order_id = order_product.order_id','inner');
 			$this->db->where('product_order_id', $order_id);
 			$query = $this->db->get();
 			$query = $query->row();
@@ -387,7 +390,13 @@ public function get_design_name()
 		   $query = $query->row();
 			 return $query->last_id;
 		}
-
+  public function get_fabric_by_name($name){
+      $this->db->select(' id, fabricName AS text');
+      $this->db->from('fabric');
+      $this->db->where('fabricName LIKE', $name.'%');
+      $result = $this->db->get();
+      return $result->result();
+    }
 
 		public function show_order_flow_chart(){
 			$this->db->select('*');

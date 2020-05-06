@@ -26,6 +26,7 @@ public function __construct(){
   {
       $data = array();
       $data['page_name'] = 'ORDER DASHBORD';
+       $data['cause'] = $this->common_model->select('cause_list');
       $data['order_count'] = $this->Orders_model->get_order_count();
       $data['get_complete'] = $this->Orders_model->get_order_complete();
       $data['get_cancel'] = $this->Orders_model->get_order_cancel();
@@ -105,6 +106,13 @@ public function getFabricDetails(){
     $data = array();
      $data['febName']=$this->Orders_model->getFabricDetails($id);
      echo json_encode($data['febName']);
+  }
+  public function getFabricName(){
+    if ($_POST) {
+    $fabric=$this->security->xss_clean($_POST);
+     $data['febName']=$this->Orders_model->get_fabric_by_name($fabric['search']);
+     echo json_encode($data['febName']);
+     }
   }
   public function getDesignDetails(){
      $id= $this->security->xss_clean($_POST['id']);
@@ -231,6 +239,7 @@ public function getFabricDetails(){
             $data=array();
             $data['name']='Order List';
             $data['order_data']=$this->Orders_model->get_order_product($order_id);
+          //  echo"<pre>"; print_r($data['order_data']);exit;
             $data['main_content'] = $this->load->view('admin/order/edit_order_details', $data, TRUE);
             $this->load->view('admin/index', $data);
 
@@ -270,7 +279,55 @@ public function getFabricDetails(){
        //  $data['pdf'] = new Pdf(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
        //  $this->load->view('admin/order/print', $data);
        // }
+public function cancel_status(){
+  if($_POST) {
+    //  echo "<pre>"; print_r($_POST);exit;
+        try {
+          $data = [
+            'status' => 'CANCEL'
+          ];
+           $ids = $this->input->post('ids');
+       $userid= explode(",", $ids);
+       foreach ($userid as $value) {
+          $this->Orders_model->edit_by_node('product_order_id', $value, $data, 'order_product');
+          $data1 = [
+            'order_id' => $value,
+            'cause' => $this->input->post('cause'),
+            'date' => $this->input->post('date'),
+          ];
+          $this->Orders_model->insert($data1,'order_cancel_cause');
+        }
+        } catch (\Exception $e) {
+          $error = $e->getMessage();
+          $this->session->set_flashdata(array('error' => 1, 'msg' => $error));
+          redirect($_SERVER['HTTP_REFERER']);
 
+        }
+    }
+        redirect($_SERVER['HTTP_REFERER']);
+    }
+public function done_status(){
+  if($_POST) {
+    //  echo "<pre>"; print_r($_POST);exit;
+        try {
+          $data = [
+            'status' => 'DONE'
+          ];
+           $ids = $this->input->post('ids');
+       $userid= explode(",", $ids);
+       foreach ($userid as $value) {
+          $this->Orders_model->edit_by_node('product_order_id', $value, $data, 'order_product');
+        
+        }
+        } catch (\Exception $e) {
+          $error = $e->getMessage();
+          $this->session->set_flashdata(array('error' => 1, 'msg' => $error));
+          redirect($_SERVER['HTTP_REFERER']);
+
+        }
+    }
+        
+    }
 
           public function deleteOrders($id)
           {
