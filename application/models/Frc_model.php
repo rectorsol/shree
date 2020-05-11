@@ -36,7 +36,7 @@ class Frc_model extends CI_Model {
 
 public function get()
  {
-   $this->db->select("fabric_challan.id,branch_detail.sort_name,fabric_challan.created,fabric_stock_received.fabric_id,unit.unitName,fabric_stock_received.stock_quantity");
+   $this->db->select("fabric_challan.challan_no,fabric_challan.id,branch_detail.sort_name,fabric_challan.challan_date,fabric_stock_received.fabric_id,unit.unitName,fabric_stock_received.stock_quantity");
    $this->db->from('fabric_challan');
    $this->db->join('fabric_stock_received','fabric_stock_received.fabric_challan_id=fabric_challan.id','inner');
   $this->db->join('branch_detail','branch_detail.id=fabric_challan.challan_from','inner');
@@ -105,7 +105,7 @@ public function select($table)
    $this->db->join('fabric','fabric.id=fabric_stock_received.fabric_id','inner');
     $this->db->join('unit','unit.id=fabric_stock_received.stock_unit','inner');
    $rec=$this->db->get();
-   echo $this->db->last_query();exit;
+  //  echo $this->db->last_query();exit;
    return $rec->result_array();
  
 

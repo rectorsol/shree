@@ -62,8 +62,9 @@
 				$data1 =[
 					'challan_from' =>$data['fromGodown'],
 					'challan_to'  => $data['toGodown'],
-					'created' => date('Y-m-d'),
+					'challan_date' => $data['PBC_date'],
 					'created_by' => $_SESSION['userID'],
+					'challan_no' =>  $data['PBC_challan'],
 					'total_pcs' => $count,
 					'total_quantity' => $total_qty
 
@@ -93,8 +94,13 @@
 				$data = $this->security->xss_clean($_POST);
 				// echo "<pre>"; print_r($data);exit;
 				$count =count($data['sno']);
+				$tc=0;
+				for ($i=0; $i < $count; $i++) { 
+					$tc=$tc+$data['tc'][$i];
+				}
 				$data2=['current_stock' => $data['Cur_quantity'],
-				'stock_quantity' => $data['Tquantity']
+				'stock_quantity' => $data['Tquantity'],
+				'tc' => $tc
 			];
 				$this->Frc_model->update($data2,'parent_barcode',$data['pbc'], 'fabric_stock_received');
 				for ($i=0; $i < $count; $i++) { 

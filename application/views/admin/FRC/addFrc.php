@@ -30,8 +30,14 @@
                     <?php endforeach;?>
                   </select>
                 </div>
-              
-                
+              <div class="col-md-3">
+                  <label>DATE</label>
+                  <input type="date" class="form-control" name="PBC_date" value="<?php echo date('Y-m-d')?>">
+                </div>
+                <div class="col-md-3">
+                  <label>Challan No</label>
+                  <input type="text" class="form-control" name="PBC_challan" value="">
+                </div>
                
               </div> <hr>
                <table id="fresh_form" class="remove_datatable">

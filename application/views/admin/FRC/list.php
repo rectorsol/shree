@@ -23,7 +23,8 @@
                                         <th><input type="checkbox" class="sub_chk" id="master"></th>
                                         <th>Date</th>
                                         
-                                        <th>party name</th> 
+                                        <th>Party name</th> 
+                                        <th>Challan no</th>
                                         <th>Fabric_id</th>
                                         <th>Quantity</th>
                                         <th>Unit</th>  
@@ -42,8 +43,8 @@
                                           <td><?php echo $id ?></td>
 
                                           
-                                          <td><?php echo $value['created'];?></td>
-                                         
+                                          <td><?php echo $value['challan_date'];?></td>
+                                         <td><?php echo $value['challan_no'];?></td>
                                            <td><?php echo $value['fabric_id'];?></td>
                                           
                                          
