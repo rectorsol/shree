@@ -181,8 +181,10 @@
           </li>
           <li class="sidebar-item "> <a class="sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">FRC</span></a>
             <ul aria-expanded="false" class="collapse  first-level">
-              <li class="sidebar-item"><a href="<?php echo base_url('admin/FRC'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> ADD FRC </span></a></li>
-              <li class="sidebar-item"><a href="<?php echo base_url('admin/FRC/showFrc'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> FRC List </span></a></li>
+            <li class="sidebar-item"><a href="<?php echo base_url('admin/FRC/showRecieve'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Add Recieve Challan </span></a></li>
+              <li class="sidebar-item"><a href="<?php echo base_url('admin/FRC/showRecieveList'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Recieve Challan List </span></a></li>
+              <li class="sidebar-item"><a href="<?php echo base_url('admin/FRC'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Add Return Challan </span></a></li>
+              <li class="sidebar-item"><a href="<?php echo base_url('admin/FRC/showReturnList'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Return Challan List </span></a></li>
               <li class="sidebar-item"><a href="<?php echo base_url('admin/FRC/AddPBC'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu">ADD 2nd PBC </span></a></li>
               <li class="sidebar-item"><a href="<?php echo base_url('admin/FRC/Show_PBC'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> 2nd PBC List </span></a></li>
             </ul>

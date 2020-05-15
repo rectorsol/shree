@@ -191,8 +191,33 @@
       });
     });
 
-
-
+$("#frcFilter").on("submit", function(event) {
+      event.preventDefault();
+      var form = $(this).serialize();
+      console.log(form);
+      $.ajax({
+        'url': "<?php echo base_url('/admin/frc/filter'); ?>",
+        'type': 'POST',
+        'data': form,
+        'success': function(response) {
+          $('#frc').find('tbody').html(JSON.parse(response));
+        }
+      });
+    });
+   
+ $("#frc_dateFilter").on("submit", function(event) {
+      event.preventDefault();
+      var form = $(this).serialize();
+      console.log(form);
+      $.ajax({
+        'url': "<?php echo base_url('/admin/frc/date_filter'); ?>",
+        'type': 'POST',
+        'data': form,
+        'success': function(response) {
+          $('#frc').find('tbody').html(JSON.parse(response));
+        }
+      });
+    });
         	});
 
 

@@ -5,7 +5,7 @@
         <form method="post" action="<?php echo base_url('admin/FRC/addFrc')?>">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title"><i class="fa fa-plus"></i> Create Chalan</h5>
+              <h5 class="modal-title"><i class="fa fa-plus"></i> Create Return Challan</h5>
             </div>
             <div class="modal-body">
               <div class="row">
@@ -30,14 +30,7 @@
                     <?php endforeach;?>
                   </select>
                 </div>
-              <div class="col-md-3">
-                  <label>DATE</label>
-                  <input type="date" class="form-control" name="PBC_date" value="<?php echo date('Y-m-d')?>">
-                </div>
-                <div class="col-md-3">
-                  <label>Challan No</label>
-                  <input type="text" class="form-control" name="PBC_challan" value="">
-                </div>
+              
                
               </div> <hr>
                <table id="fresh_form" class="remove_datatable">

@@ -6,7 +6,8 @@ class PrintThis extends CI_Controller {
         parent::__construct();
         check_login_user();
        $this->load->model('common_model');
-       $this->load->model('Design_model');
+	   $this->load->model('Design_model');
+	     $this->load->model('Frc_model');
        $this->load->model('login_model');
        $this->load->library('barcode');
        $this->load->library('pdf');
@@ -29,4 +30,32 @@ class PrintThis extends CI_Controller {
 					}
     }
 
+    public function Recieve_Challan_multiprint()
+    {
+					if ($_POST['ids']) {
+						foreach ($_POST['ids'] as $value) {
+							if ($value != "") {
+								$data['data'][] = $this->Frc_model->get_fabric_recieve($value);
+							}
+						}
+						// echo"<pre>"; print_r($data['data']);
+						$data['main_content'] = $this->load->view('admin/FRC/recieve/multi_list_print', $data, TRUE);
+						$this->load->view('admin/print/index', $data);
+
+					}
+	}
+	public function Return_Challan_multiprint()
+    {
+					if ($_POST['ids']) {
+						foreach ($_POST['ids'] as $value) {
+							if ($value != "") {
+								$data['data'][] = $this->Frc_model->get_fabric_return($value);
+							}
+						}
+						// echo"<pre>"; print_r($data['data']);
+						$data['main_content'] = $this->load->view('admin/FRC/return/multi_list_print', $data, TRUE);
+						$this->load->view('admin/print/index', $data);
+
+					}
+    }
   }

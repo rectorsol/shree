@@ -13,33 +13,7 @@
       }
     });
      
-    $('#add_more').on('click', function() {
-      
-      count=count+1;
-      var element = '<tr id='+count+'>'
-     element += '<td><input type="text" class="form-control pbc" name="pbc[]" value=""></td>'
-      element += '<td> <select name="fabric_name[]" class="form-control fabric_name select2" >'
-         element +=            '<option>Fabric</option>'
-         element +=            '<?php foreach ($febName as $value): ?>'
-         element +=            '<option value="<?php echo $value->id;?>"> <?php echo $value->fabricName;?></option>'
-         element +=          '<?php endforeach;?>'
-          element +=         '</select></td>'
-      element += '<td><input type="text" class="form-control" name="hsn[]" value="" id=hsn'+count+'></td>'
-      element += '<td><input type="text" class="form-control" name="fabType[]" value=""></td>'
-      element += '<td><input type="text" class="form-control" name="Tquantity[]" value=""></td>'
-      element += '<td><select name="unit[]" class="form-control unit " >'
-      element += '<option>Unit</option>'
-       element += '<?php foreach ($unit as $value): ?>'
-      element += '<option value="<?php echo $value['id'];?>"> <?php echo $value['unitName'];?></option>'
-      element += '                      <?php endforeach;?>'
-       element += '              </select></td>'
-      element += '<td> <input type="text" class="form-control" name="ADNo[]" value=""></td>'
-      element +=              '<td> <input type="text" class="form-control" name="challan[]" value=""></td>'
-      element +=              '<td><input type="text" class="form-control" name="pcode[]" value=""></td>'
-      element += '<td> <button type="button" name="remove"  class="btn btn-danger btn-xs remove">-</button></td>'
-      element += '</tr>';
-      $('#fresh_data').append(element);
-    });
+    
     $('#add_more2').on('click', function() {
        
       count=count+1;
@@ -107,14 +81,6 @@
       $('#row' + button_id + '').remove();
     });
 
-      
-
-    $("body").keypress(function(e) {
-        if (e.which == 13) {
-          return false;
-        }
-      });
- 
   $('#pbc').on('change' , function(e) {
       var pbc =$(this).val();
       
@@ -185,8 +151,7 @@
         console.log("val="+val);
          $('#value' + id + '').val(val); 
         });
-
-
+  
         function get_current_quntity(){
             var current = 0;
             $("input[name='quantity[]']").each(function(){
@@ -195,7 +160,7 @@
             });
             return Number(total - current);
         }
-   
+        
 
  });
 </script>
