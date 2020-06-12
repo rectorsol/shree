@@ -4,7 +4,9 @@
  
     var count =0;
     var total= 0;
-    
+   var tqty=0;
+    var stotal=0; 
+     var summary=[];
     $('#master').on('click', function(e) {
       if ($(this).is(':checked', true)) {
         $(".sub_chk").prop('checked', true);
@@ -15,32 +17,149 @@
      
     $('#add_more').on('click', function() {
       
-      count=count+1;
-      var element = '<tr id='+count+'>'
-     element += '<td><input type="text" class="form-control pbc" name="pbc[]" value=""></td>'
-      element += '<td> <select name="fabric_name[]" class="form-control fabric_name select2" >'
-         element +=            '<option>Fabric</option>'
-         element +=            '<?php foreach ($febName as $value): ?>'
-         element +=            '<option value="<?php echo $value->id;?>"> <?php echo $value->fabricName;?></option>'
-         element +=          '<?php endforeach;?>'
-          element +=         '</select></td>'
-      element += '<td><input type="text" class="form-control" name="hsn[]" value="" id=hsn'+count+'></td>'
-      element += '<td><input type="text" class="form-control" name="fabType[]" value=""></td>'
-      element += '<td><input type="text" class="form-control" name="Tquantity[]" value=""></td>'
-      element += '<td><select name="unit[]" class="form-control unit " >'
-      element += '<option>Unit</option>'
-       element += '<?php foreach ($unit as $value): ?>'
-      element += '<option value="<?php echo $value['id'];?>"> <?php echo $value['unitName'];?></option>'
-      element += '                      <?php endforeach;?>'
-       element += '              </select></td>'
-      element += '<td> <input type="text" class="form-control" name="ADNo[]" value=""></td>'
-      element +=              '<td> <input type="text" class="form-control" name="challan[]" value=""></td>'
-      element +=              '<td><input type="text" class="form-control" name="pcode[]" value=""></td>'
-      element += '<td> <button type="button" name="remove"  class="btn btn-danger btn-xs remove">-</button></td>'
-      element += '</tr>';
-      $('#fresh_data').append(element);
+      addmore();
     });
-       
+   $(document).on('keypress',function(e) {
+    if(e.which == 13) {
+      event.preventDefault();
+      var id =$(document.activeElement).parent().parent().attr("id");
+    //  console.log("id="+id);
+   
+      if(summary==""){
+      
+    var  fabric=$('#fabric' + id + '').val();
+    var  pcs=1;
+    var  qty=Number($('#qty' + id + '').val());
+    
+      var arr=[fabric,pcs,qty];
+      summary.push(arr); 
+    
+      }else{
+        var found=0;
+      summary.forEach(myFunction);
+        
+        function myFunction(value, index, array) {
+          var fabric=$('#fabric' + id + '').val();
+        //  console.log('#fabric='+fabric);console.log('#value='+value); 
+          if(fabric==array[index][0]){
+           found=1;
+            array[index][1]+=1;
+            array[index][2]+=Number($('#qty' + id + '').val());
+            
+            //  console.log('#fabric found'+summary);
+          }
+          
+        }
+        if(found==0){
+           fabric=$('#fabric' + id + '').val();
+           pcs=1;
+      qty=Number($('#qty' + id + '').val());
+     
+      arr=[fabric,pcs,qty];
+      summary.push(arr); 
+        // console.log(summary);
+        }
+             
+      }
+      
+      addmore();
+      var html='<table class=" table-bordered text-center remove_datatable"><caption>Summary</caption><thead class="bg-secondary text-white">';
+          html+='<tr><th>fabric</th>';
+          html+='<th>PCS</th>';
+                         html+='<th>Quantity</th>';
+                        
+                       html+='</tr>';
+                     html+='</thead>';
+                     html+='<tbody>';
+                     
+      summary.forEach(myFunction);
+      
+        function myFunction(value, index, array) {
+          stotal+=array[index][2];tqty+=array[index][1];
+         html+=' <tr><td>'+array[index][0]+'</td>';
+         html+='<td>'+array[index][1]+'</td>';
+                         html+='<td>'+array[index][2]+'</td></tr></tbody>';
+                        
+        }
+                    html+='<tr><th>total</th><th>'+tqty+'</th><th>'+stotal+'</th></tr>';
+                  html+='</table>';
+        
+      $('#summary').html(html);
+     }
+});
+$(document).on('change' ,'.pbc', function(e) {
+      var selected_option = $('#fromGodown option:selected').val();
+      if(selected_option==''){
+        alert('Please select a Godown');
+        $('#fromGodown ').focus();
+      }else{
+
+      var count=0;
+      var pbc =$(this).val();
+      pbc=pbc.toUpperCase();
+      $(this).val(pbc);
+       $("input[name='pbc[]']").each(function (index, element) {
+        current = $(this).val();
+       if(current==pbc){
+         count+=1;
+       }
+      });
+      if(count>1){
+        alert('Already entered');
+        $(this).focus();
+        $(this).css("border-color","red");
+      }else{
+        $(this).css("border-color","");
+      
+      var id =$(this).parent().parent().attr("id");
+      var from =$("#fromGodown").val();
+      console.log(from);
+      var csrf_name = $("#get_csrf_hash").attr('name');
+        var csrf_val = $("#get_csrf_hash").val();
+        $.ajax({
+          type: "POST",
+          url: "<?php echo base_url('admin/FRC/getPBC2') ?>",
+          data: {
+            
+            'id': pbc,
+             'from':from,
+            '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php  echo $this->security->get_csrf_hash(); ?>'
+          },
+         
+          success: function(data) {
+            
+             if(data!='0'){
+               data =JSON.parse(data);
+               
+               $("#msg").html("");
+               $('#fabric'+id+'').val(data[0]['fabricName']);
+               $('#fabric_id'+id+'').val(data[0]['fabric_id']);
+               $('#fabtype'+id+'').val(data[0]['fabric_type']);
+             $('#qty'+id+'').val(data[0]['current_stock']);
+             $('#hsn'+id+'').val(data[0]['fabHsnCode']);
+             $('#challan'+id+'').val(data[0]['challan_no']);
+             $('#adno'+id+'').val(data[0]['ad_no']);
+             $('#pcode'+id+'').val(data[0]['purchase_code']);
+            $('#unit'+id+'').val(data[0]['stock_unit']);
+            $('#prate'+id+'').val(data[0]['purchase_rate']);
+             }else{
+               $("#msg").html("<h6 class='text-danger'><b>PBC Not Found </b></h6>");
+                $('#fabric'+id+'').val("");
+               $('#fabtype'+id+'').val("");
+             $('#qty'+id+'').val("");
+             $('#hsn'+id+'').val("");
+             $('#challan'+id+'').val("");
+             $('#adno'+id+'').val("");
+             $('#pcode'+id+'').val("");
+            $('#unit'+id+'').val("");
+            $('#prate'+id+'').val("");
+             }
+           
+          }
+        });
+      }
+        }
+    });
 
     $(document).on('click', '.remove', function() {
       $(this).parent().parent().remove();count=count-1;
@@ -89,46 +208,25 @@
       $('#row' + button_id + '').remove();
     });
 
- jQuery('.print_all').on('click', function(e) {
-  var allVals = [];
-   $(".sub_chk:checked").each(function() {
-     allVals.push($(this).attr('data-id'));
-   });
-   //alert(allVals.length); return false;
-   if(allVals.length <=0)
-   {
-     alert("Please select row.");
-   }
-   else {
-     //$("#loading").show();
-     WRN_PROFILE_DELETE = "Are you sure you want to Print this rows?";
-     var check = confirm(WRN_PROFILE_DELETE);
-     if(check == true){
-       //for server side
-     var join_selected_values = allVals.join(",");
-     // alert (join_selected_values);exit;
-     var ids = join_selected_values.split(",");
-     var data = [];
-     $.each(ids, function(index, value){
-       if (value != "") {
-         data[index] = value;
-       }
-     });
-       $.ajax({
-         type: "POST",
-         url: "<?= base_url()?>admin/PrintThis/Recieve_Challan_multiprint",
-         cache:false,
-         data: {'ids' : data, '<?php echo $this->security->get_csrf_token_name(); ?>' : '<?php  echo $this->security->get_csrf_hash(); ?>'},
-         success: function(response)
-         {
-           $("body").html(response);
-         }
-       });
-              //for client side
 
-     }
-   }
+ function addmore(){
+  count=count+1;
+      var element = '<tr id='+count+'>'
+      element += '<td><input type="text" class="form-control sno" name="sno[]" value='+(count+1)+' readonly></td>'
+     element += '<td><input type="text" class="form-control pbc" name="pbc[]" value="" id=pbc'+count+'></td>'
+       element += '<td><input type="text" name="fabric_name[]" class="form-control  " id=fabric'+count+' readonly><input type="hidden" name="fabric_id[]" class="form-control  " id="fabric_id'+count+'"  > </td>'
+       element += '<td><input type="text" class="form-control " name="hsn[]" id=hsn'+count+' readonly></td>'
+       element += '<td><input type="text" class="form-control" name="fabType[]" id=fabtype'+count+' value="" readonly></td>'
+       element += '<td><input type="text" class="form-control" name="quantity[]" id=qty'+count+' readonly></td>'
+       element += '<td><input type="text" name="unit[]" class="form-control  " id=unit'+count+' readonly></td>'
+       element += '<td> <input type="text" class="form-control" name="ADNo[]" id=adno'+count+' readonly></td>'
+       element += '             <td> <input type="text" class="form-control" name="challan[]" id=challan'+count+' readonly></td>'
+       element += '<td><input type="text" class="form-control" name="pcode[]" id=pcode'+count+' readonly></td><input type="hidden" class="form-control" name="prate[]" id=prate'+count+' >'
+      element += '<td> <button type="button" name="remove"  class="btn btn-danger btn-xs remove">-</button></td>'
+      element += '</tr>';
+      $('#fresh_data').append(element);
+      $('#pbc'+count+'').focus();
+}
  });
 
- });
 </script>

@@ -50,7 +50,7 @@
 
 
            </div><br>
-          <table class="table table-striped table-responsive  table-bordered data-table" id="design">
+          <table class="table table-striped  table-responsive  table-bordered data-table table-responsive" id="design">
               <thead>
                 <tr class="odd" role="row">
                   <th><input type="checkbox" class="sub_chk" id="master" ></th>
@@ -263,7 +263,7 @@
               <div class="col-sm-9">
                 <select name="fabricName" id="fabricName" class="form-control">
                   <?php foreach ($febName as $rec): ?>
-                    <option value="<?php echo $rec->id;?>"> <?php echo $rec->fabricName;?></option>
+                    <option value="<?php echo $rec->fabricName;?>"> <?php echo $rec->fabricName;?></option>
                  <?php endforeach;?>
                 </select>
               </div>

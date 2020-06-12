@@ -18,6 +18,15 @@ $system_title = $this->db->get_where('settings', array('type' => 'system_title')
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('optimum/admin') ?>/assets/extra-libs/multicheck/multicheck.css">
     <link href="<?php echo base_url('optimum/admin') ?>/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
+    <!-- Datatable -->
+    
+   
+ 
+ <link href="<?php echo base_url('optimum/admin') ?>/assets/extra-libs/DataTables/Buttons-1.6.2/css/buttons.bootstrap4.min.css" rel="stylesheet"> 
+    <link href="<?php echo base_url('optimum/admin') ?>/assets/extra-libs/DataTables/DataTables-1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="<?php echo base_url('optimum/admin') ?>/assets/extra-libs/DataTables/Buttons-1.6.2/css/buttons.dataTables.min.css" rel="stylesheet"> 
+<link href="<?php echo base_url('optimum/admin') ?>/assets/extra-libs/DataTables/Select-1.3.1/css/select.dataTables.min.css" rel="stylesheet">
+<link href="<?php echo base_url('optimum/admin') ?>/assets/extra-libs/DataTables/FixedHeader-3.1.7/css/fixedHeader.dataTables.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="<?php echo base_url('optimum/admin') ?>/dist/css/style.min.css" rel="stylesheet">
@@ -52,6 +61,8 @@ div#overlay img {
 .select2-container--default .select2-selection--multiple .select2-selection__choice{
       background-color: #2255a4;
 }
+
+ 
 </style>
 </head>
 

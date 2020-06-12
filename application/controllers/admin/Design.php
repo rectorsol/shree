@@ -26,7 +26,8 @@
 
     	public function fabricOn(){
     	    if($_POST){
-    	       $data = $this->common_model->febric_type_byId($_POST['fabricName']);
+			   $data = $this->common_model->febric_type_byId($_POST['fabricName']);
+			//    print_r($data);exit;
     	       echo $data->fabricType;
     	    }
     	}

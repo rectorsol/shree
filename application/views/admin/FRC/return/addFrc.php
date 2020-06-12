@@ -13,29 +13,29 @@
 
                 <div class="col-md-3">
                   <label>From Godown</label>
-                  <select name="fromGodown" class="form-control" id='Select_Session'>
-                    <option>Select Godown</option>
-                    <?php foreach ($branch_data as $value): ?>
-                    <option value="<?php echo $value->id;?>"> <?php echo $value->sort_name;?></option>
+                  <select name="fromGodown" class="form-control" id='fromGodown'>
+                    <option value=''>Select Godown</option>
+                    <?php foreach ($sub_dept_data as $value): ?>
+                    <option value="<?php echo $value->id;?>"> <?php echo $value->subDeptName;?></option>
                     <?php endforeach;?>
                   </select>
                 </div>
 
                 <div class="col-md-3">
                   <label>To Godown</label>
-                  <select name="toGodown" class="form-control" id="Select_Category">
+                  <select name="toGodown" class="form-control" id="toGodown">
                     <option>Select Godown </option>
-                    <?php foreach ($branch_data as $value): ?>
-                    <option value="<?php echo $value->id?>"> <?php echo $value->sort_name;?></option>
+                    <?php foreach ($sub_dept_data as $value): ?>
+                    <option value="<?php echo $value->id?>"> <?php echo $value->subDeptName;?></option>
                     <?php endforeach;?>
                   </select>
                 </div>
               
                
               </div> <hr>
-               <table id="fresh_form" class="remove_datatable">
+               <table id="fresh_form" class=" remove_datatable">
                 <thead>
-                  
+                  <th>S no</th>
                   <th>PBC</th>
                   <th>Fabric_Name</th>
                   <th>Hsn</th> 
@@ -49,27 +49,19 @@
                 </thead>
                 <tbody id="fresh_data">
                   <tr id="0">
-                    
-                    <td><input type="text" class="form-control pbc" name="pbc[]" value=""></td>
-                    <td><select name="fabric_name[]" class="form-control fabric_name " >
-                          <option>Fabric</option>
-                           <?php foreach ($febName as $value): ?>
-                          <option value="<?php echo $value->id;?>"> <?php echo $value->fabricName;?></option>
-                            <?php endforeach;?>
-                     </select> </td>
-                    <td><input type="text" class="form-control " name="hsn[]" value="" id='hsn0'></td>
-                    <td><input type="text" class="form-control" name="fabType[]" value=""></td>
-                    <td><input type="text" class="form-control" name="quantity[]" value=""></td>
-                    <td><select name="unit[]" class="form-control unit " >
-                          <option>Unit</option>
-                           <?php foreach ($unit as $value): ?>
-                          <option value="<?php echo $value['id'];?>"> <?php echo $value['unitName'];?></option>
-                            <?php endforeach;?>
-                     </select></td>
-                   
-                    <td> <input type="text" class="form-control" name="ADNo[]" value=""></td>
-                    <td> <input type="text" class="form-control" name="challan[]" value=""></td>
-                    <td><input type="text" class="form-control" name="pcode[]" value=""></td>
+                    <td><input type="text" class="form-control sno" name="sno[]" value="1" readonly></td>
+                    <td><input type="text" class="form-control pbc" name="pbc[]" value="" id="pbc0" required></td>
+                    <td><input type="text" name="fabric_name[]" class="form-control  " id="fabric0" readonly required> 
+                    <input type="hidden" name="fabric_id[]" class="form-control  " id="fabric_id0"  ></td>
+                    <td><input type="text" class="form-control " name="hsn[]" id="hsn0" readonly></td>
+                    <td><input type="text" class="form-control" name="fabType[]" id="fabtype0" readonly></td>
+                    <td><input type="text" class="form-control" name="quantity[]" id="qty0" readonly></td>
+                    <td><input type="text" name="unit[]" class="form-control  " id="unit0" readonly></td>
+                   <td> <input type="text" class="form-control" name="ADNo[]" id="adno0" readonly></td>
+                    <td> <input type="text" class="form-control" name="challan[]" id="challan0" readonly></td>
+                    <td><input type="text" class="form-control" name="pcode[]" id="pcode0" readonly>
+                    <input type="hidden" class="form-control" name="prate[]" id="prate0" >
+                    </td>
                     <td> <button type="button" name="add_more" id="add_more" class="btn btn-success">+</button></td>
                   </tr>
                 </tbody>
@@ -83,7 +75,8 @@
             
           </div>
           <br>
-          
+           
+          <div class="col-md-6" id="summary"> </div>
         </form>
       </div>
     </div>

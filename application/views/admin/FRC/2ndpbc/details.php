@@ -13,8 +13,8 @@
 
                     <div class="widget-box">
                         
-                            <table class="table table-bordered data-table text-center table-responsive">
-                                <thead class="">
+                            <table class="table-bordered data-table text-center table-responsive">
+                                <thead class="bg-dark text-white">
                                     <tr class="odd" role="row">
                                         <th><input type="checkbox" class="sub_chk" id="master"></th>
                                         <th>Date</th>

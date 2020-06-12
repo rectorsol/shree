@@ -56,6 +56,10 @@
           </td>
           </tr>
           <tr>
+            <td>BARCODE: </td>
+            <td class="main-text"> <?php echo $value->barCode; ?></td>
+          </tr>
+          <tr>
             <td>DESIGN NAME: </td>
             <td class="main-text"> <?php echo $value->designName; ?></td>
           </tr>
@@ -65,7 +69,7 @@
           </tr>
           <tr>
             <td> DESIGN CODE: </td>
-            <td class="main-text"><?php echo $value->designCode; ?></td>
+            <td class="main-text"><?php echo $value->desCode; ?></td>
           </tr>
           <tr>
             <td> FABRIC: </td>
@@ -93,6 +97,10 @@
               </div>
             </td>
           </tr>
+           <tr>
+            <td>BARCODE: </td>
+            <td class="main-text"> <?php echo $value->barCode; ?></td>
+          </tr>
           <tr>
             <td> DESIGN NAME: </td>
             <td class="main-text"> <?php echo $value->designName; ?></td>
@@ -103,7 +111,7 @@
           </tr>
           <tr>
             <td> DESIGN CODE: </td>
-            <td class="main-text"><?php echo $value->designCode; ?></td>
+            <td class="main-text"><?php echo $value->desCode; ?></td>
           </tr>
           <tr>
             <td> FABRIC: </td>
@@ -131,6 +139,10 @@
               </div>
             </td>
           </tr>
+           <tr>
+            <td>BARCODE: </td>
+            <td class="main-text"> <?php echo $value->barCode; ?></td>
+          </tr>
           <tr>
             <td> DESIGN NAME: </td>
             <td class="main-text"> <?php echo $value->designName; ?></td>
@@ -141,7 +153,7 @@
           </tr>
           <tr>
             <td> DESIGN CODE: </td>
-            <td class="main-text"><?php echo $value->designCode; ?></td>
+            <td class="main-text"><?php echo $value->desCode; ?></td>
           </tr>
         </table>
       </td>

@@ -18,27 +18,17 @@
   .PrintThis table table {
       width: 300px;
   }
-  .PrintThis table table td:nth-child(1){
-      width:40%;
-  }
-  .PrintThis table table td:nth-child(2){
-      width:60%;
-  }
+  
   .PrintThis table table td {
       border: none;
       text-align: left;
   }
 
-  table img {
-      width: 100px;
-      height: 62px;
-      display: block;
-      margin: 0 auto;
-      padding-top: 5px;
-  }
+  
 
   </style>
-
+ <h4 class="card-title"><?php echo $title;?></h4>
+          <hr>
 <table border="1">
   <?php //echo print_r($data); ?>
   <thead class="">
@@ -50,7 +40,7 @@
                                         <th>Challan no</th>
                                         <th>Fabric Type</th>
                                         <th>Quantity</th>
-                                        <th>Unit</th>  
+                                       
                                         <th>Total amount</th> 
                                         
                                         
@@ -63,14 +53,13 @@
                                         
                                           <td><?php echo $value[0]['challan_date'];?></td>
 
-                                          <td><?php echo $value[0]['sort_name'];?></td>
+                                          <td><?php echo $value[0]['subDeptName'];?></td>
                                          <td><?php echo $value[0]['challan_no'];?></td>
                                            <td><?php echo $value[0]['fabric_type'];?></td>
                                           
                                           <td><?php echo $value[0]['total_quantity']?></td>
-                                          <td><?php echo $value[0]['unitName']?></td>
+                                         
                                           <td><?php echo $value[0]['total_amount']?></td>
                                           
        </tr>
   <?php $id=$id+1;  endforeach; ?>
-</table>

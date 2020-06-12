@@ -1,14 +1,73 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
+     var table=  $('.data-table').DataTable({
+      
+      
+     "pageLength": 50,
+     "lengthMenu": [[50, 100, 150, -1], [50, 100, 150, "All"]],
+     select: true,
+    
+     
+     dom: 'Bfrtip',
+        buttons: [
+            'pageLength', 'excel', 'pdf', 'print',
+            'selectAll',
+            'selectNone',
+            
+            'colvis'
+        ],
+  //  drawCallback: function () { // this gets rid of duplicate headers
+  //     $('.dataTables_scrollBody thead tr').css({ display: 'none' }); 
+  // },
+  //  "scrollX": '100%',
 
+  //   "scrollXInner": '100%',
+  // scrollY: '65vh',
+  
+  //  paging: true
+    } );
     // Multi Select
+     $(document).on('click','#master', function(e) {
+   
+      var rows = table.rows({
+        'search': 'applied'
+      }).nodes();
+      // Check/uncheck checkboxes for all rows in the table
+      $('input[type="checkbox"]', rows).prop('checked', this.checked);
+    });
 
+    $('#frc tbody').on('change', 'input[type="checkbox"]', function () {
+      // If checkbox is not checked
+      if (!this.checked) {
+        var el = $('#master').get(0);
+        // If "Select all" control is checked and has 'indeterminate' property
+        if (el && el.checked && ('indeterminate' in el)) {
+          // Set visual state of "Select all" control
+          // as 'indeterminate'
+          el.indeterminate = true;
+        }
+      }
+    });
      $(".select2").select2();
 
-    // Apply Data Table
-     $('table').DataTable();
-
+   
+    // $("tr").not(':first').hover(
+    // function () {
+    // $(this).css("background","#eeeeea");
+    
+    // }, 
+    // function () {
+    // $(this).css("background","");
+    
+    // }
+    // );
+    // $(".remove_datatable tr").hover(
+     
+    // function () {
+    // $(this).css("background","");
+    // }
+    // );
      // use Class to remove datatable
      $('.remove_datatable').DataTable().destroy();
 
@@ -191,39 +250,47 @@
       });
     });
 
-$("#frcFilter").on("submit", function(event) {
+$("#frcFilter, #frcAdvanceFilter").on("submit", function(event) {
       event.preventDefault();
       var form = $(this).serialize();
       console.log(form);
       $.ajax({
-        'url': "<?php echo base_url('/admin/frc/filter'); ?>",
+        'url': "",
         'type': 'POST',
         'data': form,
         'success': function(response) {
+        
           $('#frc').find('tbody').html(JSON.parse(response));
         }
       });
     });
    
- $("#frc_dateFilter").on("submit", function(event) {
-      event.preventDefault();
-      var form = $(this).serialize();
-      console.log(form);
-      $.ajax({
-        'url': "<?php echo base_url('/admin/frc/date_filter'); ?>",
-        'type': 'POST',
-        'data': form,
-        'success': function(response) {
-          $('#frc').find('tbody').html(JSON.parse(response));
-        }
-      });
-    });
+//  $("#frc_dateFilter").on("submit", function(event) {
+//       event.preventDefault();
+//       var form = $(this).serialize();
+//       console.log(form);
+//       $.ajax({
+//         'url': "<?php echo base_url('/admin/frc/date_filter'); ?>",
+//         'type': 'POST',
+//         'data': form,
+//         'success': function(response) {
+          
+//           $('#frc').find('tbody').html(JSON.parse(response));
+//         }
+//       });
+//     });
         	});
 
+  $(document).change(function() {
+  $(document).on('click','#master', function(e) {
+      if ($(this).is(':checked', true)) {
+        $(".sub_chk").prop('checked', true);
+      } else {
+        $(".sub_chk").prop('checked', false);
+      }
+    });
 
-
-
-
+	});
 
   function goPage(newURL) {
 

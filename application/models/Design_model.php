@@ -39,7 +39,7 @@ class Design_model extends CI_Model {
   public function get_single_value_by_id($id)
   {
     $this->db->select('*');
-    $this->db->from('design');
+    $this->db->from('design_view');
     // $this->db->like($searchByCat, $searchValue);
     $this->db->where('id',$id);
     $rec=$this->db->get();
@@ -52,7 +52,7 @@ class Design_model extends CI_Model {
     public function get_multi_value_by_id($id)
   {
     $this->db->select('*');
-    $this->db->from('design');
+    $this->db->from('design_view');
     $this->db->where('id',$id);
     $rec=$this->db->get();
     return $rec->row();

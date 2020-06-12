@@ -7,7 +7,7 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <!-- COMMON TAGS -->
   <meta charset="utf-8">
-  <title>printThis - jQuery printing plugin</title>
+  
   <link rel="stylesheet" href="<?php echo base_url('optimum/printThis/assets/css/normalize.css'); ?>">
   <link rel="stylesheet" href="<?php echo base_url('optimum/printThis/assets/css/skeleton.css'); ?>">
   <script src="<?php echo base_url('optimum/barcode/dist/JsBarcode.all.js'); ?>"></script>
