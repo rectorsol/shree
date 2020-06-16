@@ -102,8 +102,6 @@ $this->db->join('fabric','fabric.id=fabric_stock_received.fabric_id','inner');
  public function get_stock($data)
  {
    $this->db->select("*");
-   
-   
    $this->db->from('fabric_stock_view');
   
    if($data['from']==$data['to']){
@@ -114,38 +112,12 @@ $this->db->join('fabric','fabric.id=fabric_stock_received.fabric_id','inner');
    }
 
  $this->db->order_by('length(parent_barcode),parent_barcode'); 
-   $query['data'] = $this->db->get();
+   $query = $this->db->get();
     //echo"<pre>"; print_r($query);exit;
-   $query['data'] = $query['data']->result_array();
-   $this->db->select("fabric_type,fabricName,count(fabricName) as pcs,sum(stock_quantity) as qty,sum(total_value) as total");
-   
-   
-   $this->db->from('fabric_stock_view');
-  
-   if($data['from']==$data['to']){
-    $this->db->where('created_date ', $data['from']); 
-   }else{
-    $this->db->where('created_date >=', $data['from']);
-   $this->db->where('created_date <=', $data['to']);
-   }
-
- $this->db->group_by('fabric_type,fabricName');
-   $query['summary'] = $this->db->get();
-   $query['summary'] = $query['summary']->result_array();
-$this->db->select('distinct(fabric_type) as type');
-$this->db->from('fabric_stock_view');
-if($data['from']==$data['to']){
-    $this->db->where('created_date ', $data['from']); 
-   }else{
-    $this->db->where('created_date >=', $data['from']);
-   $this->db->where('created_date <=', $data['to']);
-   }
-    $query['type'] = $this->db->get();
-   $query['type'] = $query['type']->result_array();
+   $query = $query->result_array();
    return $query;
    
  }
- 
   public function get_tc()
  {
    $this->db->select("*");
@@ -198,12 +170,7 @@ if($data['from']==$data['to']){
                 }elseif($data['type']=="stock"){
                   $this->db->select('*');
                 $this->db->from('fabric_stock_view');
-                if($data['from']==$data['to']){
-                  $this->db->where('created_date ', $data['from']); 
-                }else{
-                  $this->db->where('created_date >=', $data['from']);
-                $this->db->where('created_date <=', $data['to']);
-                }
+                
                 if(!is_array($data['cat']) ){
                   if($data['cat']!=""){
                     $this->db->where($data['cat'], $data['Value']);

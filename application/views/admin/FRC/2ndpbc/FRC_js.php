@@ -6,6 +6,7 @@
     var total= 0;
     var color ='';
     var Pur_rate =0;
+    $('#fresh_form').hide();
     $('#master').on('click', function(e) {
       if ($(this).is(':checked', true)) {
         $(".sub_chk").prop('checked', true);
@@ -122,7 +123,7 @@ $(document).on('keypress',function(e) {
           success: function(data) {
             data =JSON.parse(data);
              if(data[0]!=""){
-               
+              $('#fresh_form').show();
               
                color =data[0][0]['color_name'];
                Pur_rate =data[0][0]['purchase_rate'];
@@ -142,6 +143,7 @@ $(document).on('keypress',function(e) {
             $('#hsn').val(data[0][0]['hsn']);  
             $('.rate').val(data[0][0]['purchase_rate']);
              }else{
+               $('#fresh_form').hide();
                $("#msg").html("<h6 class='text-danger'><b>PBC Not Found </b></h6>");
                 $('#fabric_id').val("");
                $('#fabric').val("");

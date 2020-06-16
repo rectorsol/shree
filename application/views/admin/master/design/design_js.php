@@ -11,7 +11,34 @@ jQuery('#master').on('click', function(e) {
    $(".sub_chk").prop('checked',false);
  }
 });
-
+ var table=  $('#design').DataTable({
+      
+      
+    
+     select: true,
+    
+     
+     dom: 'Bfrtip',
+        buttons: [
+            'pageLength', 'excel', 'pdf', {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            
+            'selectAll',
+            'selectNone',
+            'colvis'
+        ],
+         scrollY:        500,
+        scrollX:        false,
+        scrollCollapse: false,
+        paging:         false,
+        fixedColumns:   false,
+        fixedheader: true
+  
+    } );
 
 jQuery('.delete_all').on('click', function(e) {
 var allVals = [];

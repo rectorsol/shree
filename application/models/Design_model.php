@@ -8,12 +8,20 @@ class Design_model extends CI_Model {
 		// print_r($data); exit();
 		$this->db->insert('design', $data);
 	}
-	public function get()
+	public function get($limit, $start)
 	{
-    $sql = 'SELECT * FROM design_view';
-		$rec=$this->db->query($sql);
+    $this->db->limit($limit, $start);
+    $this->db->select('*');
+		$this->db->from('design_view');
+  
+    $rec=$this->db->get();
+    // print_r($this->db->last_query());exit;
+
 		return $rec->result();
-	}
+  }
+  public function get_count() {
+        return $this->db->count_all('design_view');
+    }
 	public function edit($id,$data)
 	{
 		$this->db->where('id', $id);

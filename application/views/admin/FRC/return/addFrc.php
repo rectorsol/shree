@@ -8,12 +8,13 @@
               <h5 class="modal-title"><i class="fa fa-plus"></i> Create Return Challan</h5>
             </div>
             <div class="modal-body">
+           <?php echo $this->session->flashdata('msg'); ?>
               <div class="row">
                
 
                 <div class="col-md-3">
                   <label>From Godown</label>
-                  <select name="fromGodown" class="form-control" id='fromGodown'>
+                  <select name="fromGodown" class="form-control" id='fromGodown' required>
                     <option value=''>Select Godown</option>
                     <?php foreach ($sub_dept_data as $value): ?>
                     <option value="<?php echo $value->id;?>"> <?php echo $value->subDeptName;?></option>
@@ -23,8 +24,8 @@
 
                 <div class="col-md-3">
                   <label>To Godown</label>
-                  <select name="toGodown" class="form-control" id="toGodown">
-                    <option>Select Godown </option>
+                  <select name="toGodown" class="form-control" id="toGodown" required>
+                    <option value=''>Select Godown </option>
                     <?php foreach ($sub_dept_data as $value): ?>
                     <option value="<?php echo $value->id?>"> <?php echo $value->subDeptName;?></option>
                     <?php endforeach;?>
@@ -33,7 +34,8 @@
               
                
               </div> <hr>
-               <table id="fresh_form" class=" remove_datatable">
+              <div class='container-fluid' id="fresh_form">
+               <table  class=" remove_datatable">
                 <thead>
                   <th>S no</th>
                   <th>PBC</th>
@@ -51,7 +53,7 @@
                   <tr id="0">
                     <td><input type="text" class="form-control sno" name="sno[]" value="1" readonly></td>
                     <td><input type="text" class="form-control pbc" name="pbc[]" value="" id="pbc0" required></td>
-                    <td><input type="text" name="fabric_name[]" class="form-control  " id="fabric0" readonly required> 
+                    <td><input type="text" name="fabric_name[]" class="form-control  " id="fabric0" readonly > 
                     <input type="hidden" name="fabric_id[]" class="form-control  " id="fabric_id0"  ></td>
                     <td><input type="text" class="form-control " name="hsn[]" id="hsn0" readonly></td>
                     <td><input type="text" class="form-control" name="fabType[]" id="fabtype0" readonly></td>
@@ -67,12 +69,19 @@
                 </tbody>
               </table>
               <hr>
+              
+              <div class="row">
               <div class="col-md-3">
-              <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
+                </div>
+                <div class="col-md-6 text-center" id='submit'> 
+                <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
                   <button type="submit" name="submit"  class="btn btn-success btn-md">Submit</button>
                 </div>
+                <div class="col-md-3" id='msg'> 
+                
+                </div>
             </div>
-            
+            </div>
           </div>
           <br>
            

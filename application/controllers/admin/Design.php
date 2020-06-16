@@ -10,14 +10,28 @@
         $this->load->model('common_model');
         $this->load->library('barcode');
 			  $this->load->library('pdf');
+			  $this->load->library("pagination");
+			  $this->load->helper('url');
     	}
 
 
 
     	public function index(){
+			 $config = array();
+        $config["base_url"] = base_url() . "admin/design";
+        $config["total_rows"] = $this->Design_model->get_count();
+        $config["per_page"] = 30;
+        $config["uri_segment"] = 3;
+			
+		$this->pagination->initialize($config);
+		 $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+
+		
+		
 				$data = array();
+				$data["links"] = $this->pagination->create_links();
 				$data['name']=' Design';
-				$data['design_data']=$this->Design_model->get();
+				$data['design_data']=$this->Design_model->get($config["per_page"], $page);
 				$data['febName']=$this->common_model->febric_name();
 				$data['febType']=$this->common_model->febric_type();
 				$data['main_content'] = $this->load->view('admin/master/design/design', $data, TRUE);

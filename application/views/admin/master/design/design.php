@@ -50,7 +50,7 @@
 
 
            </div><br>
-          <table class="table table-striped  table-responsive  table-bordered data-table table-responsive" id="design">
+          <table class="table table-striped  table-responsive  table-bordered  table-responsive" id="design">
               <thead>
                 <tr class="odd" role="row">
                   <th><input type="checkbox" class="sub_chk" id="master" ></th>
@@ -223,6 +223,9 @@
               <?php $id=$id+1; } } ?>
               </tbody>
             </table>
+                <?php echo $links ?>           
+               
+           
         </div>
       </div>
     </div>

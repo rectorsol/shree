@@ -70,7 +70,7 @@
                               </form>
                             </div>
                             </div> <hr> 
-                            <table class=" table-bordered data-table text-center table-responsive" id="frc">
+                            <table class="table table-bordered data-table text-center table-responsive" id="frc">
                                 
                                    <?php 
                                          echo $content;

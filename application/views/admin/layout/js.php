@@ -11,21 +11,24 @@
      
      dom: 'Bfrtip',
         buttons: [
-            'pageLength', 'excel', 'pdf', 'print',
+            'pageLength', 'excel', 'pdf', {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            
             'selectAll',
             'selectNone',
-            
             'colvis'
         ],
-  //  drawCallback: function () { // this gets rid of duplicate headers
-  //     $('.dataTables_scrollBody thead tr').css({ display: 'none' }); 
-  // },
-  //  "scrollX": '100%',
-
-  //   "scrollXInner": '100%',
-  // scrollY: '65vh',
+         scrollY:        500,
+        scrollX:        false,
+        scrollCollapse: false,
+        paging:         true,
+        fixedColumns:   false,
+        fixedheader: true
   
-  //  paging: true
     } );
     // Multi Select
      $(document).on('click','#master', function(e) {

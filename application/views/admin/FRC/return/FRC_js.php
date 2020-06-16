@@ -7,6 +7,10 @@
    var tqty=0;
     var stotal=0; 
      var summary=[];
+    $('#fresh_form').hide();
+    $('#submit').hide();
+    
+    
     $('#master').on('click', function(e) {
       if ($(this).is(':checked', true)) {
         $(".sub_chk").prop('checked', true);
@@ -14,7 +18,18 @@
         $(".sub_chk").prop('checked', false);
       }
     });
-     
+     $('#fromGodown ,#toGodown ').on('change',function() {
+      var from=$('#fromGodown option:selected').val();
+      var to=$('#toGodown option:selected').val();
+      console.log('from= '+from+'to = '+to);
+      if(from!="" && to!="")
+      {
+        $('#fresh_form').show();
+      }else{
+        $('#fresh_form').hide();
+      }
+
+     });
     $('#add_more').on('click', function() {
       
       addmore();
@@ -128,9 +143,10 @@ $(document).on('change' ,'.pbc', function(e) {
          
           success: function(data) {
             
-             if(data!='0'){
+             if(data!=0){
                data =JSON.parse(data);
                
+                 $('#submit').show();
                $("#msg").html("");
                $('#fabric'+id+'').val(data[0]['fabricName']);
                $('#fabric_id'+id+'').val(data[0]['fabric_id']);
@@ -143,6 +159,12 @@ $(document).on('change' ,'.pbc', function(e) {
             $('#unit'+id+'').val(data[0]['stock_unit']);
             $('#prate'+id+'').val(data[0]['purchase_rate']);
              }else{
+                if(id==0){
+                   $('#submit').hide();
+                }else{
+                  $('#submit').show();
+                }
+               
                $("#msg").html("<h6 class='text-danger'><b>PBC Not Found </b></h6>");
                 $('#fabric'+id+'').val("");
                $('#fabtype'+id+'').val("");

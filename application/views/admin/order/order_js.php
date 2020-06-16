@@ -5,6 +5,8 @@
     $('#order_form').hide();
     $('#prm_form').hide();
     var count =0;
+    
+
     $("#add_order").on('click', function() {
       $('#order_form').show();
       var order_type = $('#selectType').val();
@@ -15,18 +17,43 @@
       var session = $('#Select_Session').val();
       $('#session1').val(session);
       $('#session').val(session);
-      var type = $('#selectType').val();
-      if (type == 1) {
+      var stype = $('#selectType').val();
+      if (stype == 1) {
         $('#prm_form').hide();
         $('#fresh_form').show();
-      } else if (type == 2) {
+      } else if (stype == 2) {
         $('#fresh_form').hide();
         $('#prm_form').show();
       } else {
         $('#fresh_form').show();
       }
-    });
-  
+    }); 
+ $(document).on('change', '#type', function(e) { 
+var type = $(this).val();
+var fab = '<input type="text" class="form-control fabric_name" name="fabric_name[]" value="" >';
+var fab1='<select name="fabric_name[]" class="form-control fabric_name " >'
+                        fab1+=  '<option>Select Fabric</option>'
+                         fab1+=   '<?php foreach ($febName as $value): ?>'
+                        fab1+=   '<option value="<?php echo $value->id;?>" > <?php echo $value->fabricName;?></option>'
+                          fab1+=   '<?php endforeach;?>'
+                    fab1+=  '</select>';
+  var des='<input type="text" name="design_name[]" class="form-control" value="" >';
+  var des1='<select name="fabric_name[]" class="form-control fabric_name " >'
+                        des1+=  '<option>Select Design</option>'
+                      
+                    des1+=  '</select>';    
+   var id = $(this).parent().parent().attr("id");                               
+ if (type == 1) {
+        $('#tdfab'+ id + '').html(fab);
+        $('#tddesign'+ id + '').html(des);
+      } else if (type == 2) {
+         $('#tdfab'+ id + '').html(fab1);
+        $('#tddesign'+ id + '').html(des1);
+      } else {
+       $('#tdfab'+ id + '').html(fab);
+        $('#tddesign'+ id + '').html(des);
+      }
+ });
 $(document).on('change', '.fabric_name', function(e) {
       var fabric =$(this).val();
       console.log(fabric);

@@ -71,7 +71,7 @@
               <hr>
               <table id="fresh_form" class="remove_datatable">
                 <thead>
-                  <th>#</th>
+                  <th>#</th><th>Type</th>
                   <th>Serial N0.</th>
                   <th>Design Barcode</th>
                   <th>Fabric_Name</th>
@@ -91,17 +91,19 @@
                 <tbody id="fresh_data">
                   <tr id="0">
                     <td><input type="text" class="form-control" readonly value="1"></td>
+                     <td> <select name="type[]" class="form-control  " id='type'>
+                          <option>Select Type</option>
+                          
+                          <option value="1" >Barcode </option>
+                           <option value="2" > Manual </option> 
+                     </select></td>
                     <td><input type="text" class="form-control" name="serial_number[]" value=""></td>
                     <td><input type="text" class="form-control design_name"  value=""></td>
-                    <td><select name="fabric_name[]" class="form-control fabric_name select2" >
-                          <option>Select Fabric</option>
-                           <?php foreach ($febName as $value): ?>
-                          <option value="<?php echo $value->id;?>"> <?php echo $value->fabricName;?></option>
-                            <?php endforeach;?>
-                     </select> </td>
+                    <td id='tdfab0'><input type="text" class="form-control fabric_name" name="fabric_name[]" value="" >
+                     </td>
                     <td><input type="text" class="form-control " name="hsn[]" value="" id='hsn0'></td>
                      
-                    <td><input type="text" name="design_name[]" class="form-control" value="" id='designName0'></td>
+                    <td id='tddesign0'><input type="text" name="design_name[]" class="form-control" value="" id='designName0'></td>
                     <td> <input type="text" name="design_code[]" class="form-control" value="" id='designCode0'></td>
                     <td><input type="text" class="form-control" name="stitch[]" value="" id='stitch0'></td>
                     <td> <input type="text" class="form-control" name="dye[]" value="" id='dye0'></td>
@@ -120,7 +122,7 @@
               <table id="prm_form" class="remove_datatable">
                 <thead>
                   <th>#</th>
-                   <th>Serial N0.</th>
+                   <th>Serial N0.</th> 
                   <th>old Barcode</th>
                   <th>Fabric_Name</th>
                   <th>Hsn</th>
@@ -141,6 +143,7 @@
                 <tbody id="prm_data">
                   <tr id="0">
                    <td><input type="text" class="form-control" readonly value="1"></td>
+                   
                     <td><input type="text" class="form-control" name="serial_number[]" value=""></td>
                     <td> <input type="text" name="old_barcode[]" class="form-control" value=""></td>
                     <td> <select name="fabric_name[]" class="form-control fabric_name select2" >

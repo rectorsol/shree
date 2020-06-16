@@ -110,7 +110,7 @@
                                             <tr class="gradeU" id="tr_<?php echo $value['fc_id']?>">
 
                                                 <td><input type="checkbox" class="sub_chk"
-                                                        data-id="<?php echo $value['fc_id'] ?>"></td>
+                                                        data-id="<?php echo $value['fc_id'] ?>"> <span class="label label-info"><?php echo $c?></span></td>
                                                 <td><?php $date=date_create($value['challan_date']); echo date_format($date,"d-m-y "); ?>
                                                 </td>
 

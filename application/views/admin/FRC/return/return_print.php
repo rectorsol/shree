@@ -92,7 +92,8 @@ $html = <<<EOD
           <td colspan="2" class=" main-text"></td>
         </tr>
          <tr>
-          <td colspan="2" class=" main-text"></td>
+          <td> &nbsp;&nbsp; BARCODE</td>
+          <td >:-  $data->fabricName</td>
         </tr>
         
         <tr>

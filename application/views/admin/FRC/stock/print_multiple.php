@@ -53,7 +53,10 @@
               </script>
             </div>
         </tr>
-       
+       <tr>
+          <td> &nbsp;&nbsp; BARCODE</td>
+          <td >:-<?php echo  $value->parent_barcode?></td>
+        </tr>
         <tr>
           <td> &nbsp;&nbsp; FABRIC</td>
           <td >:-<?php echo  $value->fabricName?></td>
@@ -74,9 +77,7 @@
           <td> &nbsp;&nbsp; CHALLAN NO</td>
           <td >:-<?php echo  $value->challan_no ?></td>
         </tr>
-        <tr>
-          <td></td>
-        </tr>
+        
       </table>
     </td>
   </tr>

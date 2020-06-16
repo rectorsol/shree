@@ -12,7 +12,8 @@
         $this->load->model('Sub_department_model');
 		$this->load->model('Frc_model');
 		$this->load->library('pdf');
-        $this->load->library('barcode');
+		$this->load->library('barcode');
+		$this->load->library('session');
     	}
 
 
@@ -101,7 +102,7 @@
 							}
 							
 						}
-				
+			//echo '<pre>';	print_r($data['data']);exit;
 				 $data['title']=$_POST['title'];
 				 if($_POST['type']=='receive'){
 					 $data['frc_data']=$data['data'];
@@ -187,6 +188,9 @@
 						}
 					
 					$data['frc_data']=$this->Frc_model->get_stock($data);
+					
+
+					//echo '<pre>'; print_r($data['frc_data']['type']);exit;
 					$data['content'] = $this->load->view('admin/FRC/stock/index', $data, TRUE);
 					$data['main_content'] = $this->load->view('admin/FRC/stock/stock', $data, TRUE);
 				$this->load->view('admin/index', $data);
@@ -451,12 +455,15 @@
 				$count =count($data['pbc']);
 				$total_qty=0;$total_val=0;
 				for ($i=0; $i < $count ; $i++) {
+					
 					$qty= $data['quantity'][$i];
 					$prate=$data['prate'][$i];
 					$total= $qty * $prate;
 					$total_qty =$total_qty +  $qty;
 					$total_val =$total_val +$total;
 				}
+				if($total_val>0 && $total_qty>0){
+
 				
 				$id=$this->Frc_model->getId("return");
 				if(!$id){
@@ -486,6 +493,9 @@
 				$cc =$counter[0]['count'];
 				// print_r($counter[0]['count']);exit;
 				for ($i=0; $i < $count; $i++) { 
+					if($data['fabric_id'][$i]!=""){
+
+					
 					 $cc=$cc+ 1;
 					$pbc= "RETP".(string)$cc;
 					$qty= $data['quantity'][$i];
@@ -518,8 +528,11 @@
 				]	;
 					$this->Frc_model->update($data3,'parent_barcode',$data['pbc'][$i], 'fabric_stock_received');
 					$this->Frc_model->insert($data2, 'fabric_stock_received');
+					}
 				}
-				
+				}else{
+					 $this->session->set_flashdata('msg','Please enter some value'); 
+				}
 			} redirect($_SERVER['HTTP_REFERER']);
 		}
 		
@@ -655,15 +668,13 @@
 			$id= $this->security->xss_clean($_POST['id']);
 		$From= $this->security->xss_clean($_POST['from']);
 		$data = array();
-		$data['pbc']=$this->Frc_model->getPBC_by_godown($id);
+		$data['pbc']=$this->Frc_model->getPBC_by_godown($id,$From);
 			if($data['pbc']){
 
 			
-					if($data['pbc'][0]['challan_to']==$From){
+					
 					echo json_encode($data['pbc']);
-						}else{
-						echo "0";
-							} 
+						
 				}else{
 				echo "0";
 				} 

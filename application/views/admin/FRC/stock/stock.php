@@ -17,7 +17,7 @@
               </div>
               <div id="collapseOne" class="collapse show" data-parent="#accordion">
                 <div class="modal-body">
-                  <form action="<?php echo base_url('/admin/frc/filter'); ?>" method="post">
+                  <form action="<?php echo base_url('/admin/FRC/filter'); ?>" method="post">
                     <div class="form-row">
                       <div class="col-2">
 
@@ -71,7 +71,7 @@
               </div>
               <div id="collapseTwo" class="collapse" data-parent="#accordion">
                 <div class="modal-body">
-                  <form action="<?php echo base_url('/admin/frc/filter'); ?>" method="post">
+                  <form action="<?php echo base_url('/admin/FRC/filter'); ?>" method="post">
                     <table class=" remove_datatable">
                       <caption>Advance Filter</caption>
                       <thead>
@@ -118,7 +118,7 @@
                         <td>
                           <input type="text" name="current_stock" class="form-control form-control-sm" value=""
                             placeholder="Curr Qty"></td>
-                        
+
                         <td>
                           <input type="text" name="Color" class="form-control form-control-sm" value=""
                             placeholder="Color"></td>
@@ -176,10 +176,13 @@
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   &nbsp;&nbsp;<a type="button" class="btn  pull-left print_all_barcode btn-success" target="_blank"
                     style="color:#fff;"><i class="fa fa-print"></i></a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;<a type="button" class="btn btn-info   btn-success"  href='<?php echo base_url('/admin/FRC/show_stock'); ?>'
+                    style="color:#fff;">Clear filter</a>
                 </div>
                 <div class="col-6">
 
-                  <form action="<?php echo base_url('/admin/frc/show_stock'); ?>" method="post">
+                  <form action="<?php echo base_url('/admin/FRC/show_stock'); ?>" method="post">
 
                     <div class="form-row ">
                       <div class="col-5">
@@ -204,9 +207,52 @@
               </div>
               <hr>
               <table class=" table-bordered  data-table text-center table-responsive  " id="frc">
-                 <?php echo $content ; ?>
+                <?php echo $content ; ?>
               </table>
-            </div>
+            </div><hr>
+             <?php if(isset($frc_data['summary'])){ ; ?>
+            <table class=" table-bordered   text-center  table-responsive ">
+            <tr>
+              <caption class="text-center text-info" style='caption-side : top'>Summary</caption>
+              <?php foreach($frc_data['type'] as $fabtype) {?>
+              <td><table class=" table-bordered   text-center  table-responsive ">
+                <caption class="text-center text-info" style='caption-side : top' ><?php echo $fabtype['type']?></caption>
+                <thead>
+                  <th>Fabric</th>
+                  <th>Pcs</th>
+                  <th>Quantity</th>
+                  <th>Total</th>
+                </thead>
+                <tbody><?php 
+                $pcs=0;$qty=0; $total=0;
+                foreach($frc_data['summary'] as $value){ 
+                if($value['fabric_type']==$fabtype['type']){
+                 $pcs +=$value['pcs'];
+                 $qty +=$value['qty'];
+                 $total +=$value['total']; 
+                ?>
+                  <tr>
+                    <td><?php echo  $value['fabricName']?></td>
+                    <td><?php echo  $value['pcs']?></td>
+                    <td><?php echo  $value['qty']?></td>
+                    <td><?php echo  $value['total']?></td>
+                  </tr>
+                  
+                  <?php }
+               
+                }?>
+                </tbody><tr>
+                    <th>Total</th>
+                    <th><?php echo  $pcs?></th>
+                    <th><?php echo  $qty?></th>
+                    <th><?php echo  $total?></th>
+                  </tr>
+              </table></td><td></td>
+
+
+              <?php } ?></tr>
+            </table>
+              <?php } ?>
           </div>
         </div>
       </div>
@@ -218,7 +264,7 @@
 
 <script>
   $(document).ready(function () {
- 
+
   });
   jQuery('.print_all').on('click', function (e) {
     var allVals = [];
