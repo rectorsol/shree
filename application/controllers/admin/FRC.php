@@ -336,7 +336,7 @@
 				$total_val =0;
 				for ($i=0; $i < $count ; $i++) { 
 					$total_qty =$total_qty +  $data['qty'][$i];
-					$total_val =$total_val + $data['total'][$i];
+					$total_val =$total_val + ($data['prate'][$i]*$data['qty'][$i]);
 				}
 				$id=$this->Frc_model->getId("recieve");
 				if(!$id){
@@ -369,6 +369,7 @@
 				for ($i=0; $i < $count; $i++) { 
 					 $cc=$cc+ 1;
 					$pbc= "P".(string)$cc;
+					$total=	($data['prate'][$i]*$data['qty'][$i]);
 				$data2=[
 					'fabric_challan_id' => $id,
 					'parent_barcode' =>$pbc,
@@ -385,7 +386,7 @@
 					'color_name ' => $data['color'][$i],
 					'purchase_code' => $data['pcode'][$i],
 					'purchase_rate' => $data['prate'][$i],
-					'total_value' =>$data['total'][$i],
+					'total_value' =>$total,
 					'challan_type' => 'recieve'
 					
 				]	;
@@ -405,7 +406,7 @@
 				$total_val =0;
 				for ($i=0; $i < $count ; $i++) { 
 					$total_qty =$total_qty +  $data['qty'][$i];
-					$total_val =$total_val + $data['total'][$i];
+					$total_val =$total_val + ($data['prate'][$i]*$data['qty'][$i]);
 				}
 				
 				
@@ -423,7 +424,7 @@
 				$this->Frc_model->update($data1,'fc_id',$data['fc_id'], 'fabric_challan');
 				
 				for ($i=0; $i < $count; $i++) { 
-					
+				$total=	($data['prate'][$i]*$data['qty'][$i]);
 				$data2=[
 					
 					'fabric_id' => $data['fabric_name'][$i],
@@ -437,7 +438,7 @@
 					'color_name ' => $data['color'][$i],
 					'purchase_code' => $data['pcode'][$i],
 					'purchase_rate' => $data['prate'][$i],
-					'total_value' =>$data['total'][$i],
+					'total_value' =>$total,
 					
 				]	;
 					$this->Frc_model->update($data2,'fsr_id',$data['fsr_id'][$i], 'fabric_stock_received');

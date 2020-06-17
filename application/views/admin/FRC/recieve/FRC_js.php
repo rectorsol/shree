@@ -129,7 +129,50 @@
     $(document).on('keypress', function (e) {
       if (e.which == 13) {
         event.preventDefault();
-        var id = $(document.activeElement).parent().parent().attr("id");
+        
+        addmore();
+        var html =
+          '<table class=" table-bordered text-center " style="width:50%"><caption>Summary</caption><thead class="bg-secondary text-white">';
+        html += '<tr><th style="width:15%">Fabric</th>';
+        html += '<th style="width:10%">PCS</th>';
+        html += '<th style="width:10%">Quantity</th>';
+        html += '<th style="width:15%">Total</th>';
+        html += '</tr>';
+        html += '</thead>';
+        html += '<tbody>';
+        if(summary){
+
+       
+        summary.forEach(myFunction);
+
+        function myFunction(value, index, array) {
+          stotal += array[index][3];
+          tqty += array[index][2];
+          Tpcs += array[index][1];
+          html += ' <tr><td>' + array[index][0] + '</td>';
+          html += '<td>' + array[index][1] + '</td>';
+          html += '<td>' + array[index][2] + '</td>';
+          html += '<td>' + array[index][3] + '</td></tr></tbody>';
+        }
+        html += '<tr class="bg-secondary text-white"><th>Total</th><th>' + Tpcs + '</th><th>' + tqty +
+          '</th><th>' + stotal + '</th></tr>';
+        html += '</table>';
+        
+        $('#summary').html(html);
+         }
+      }
+    });
+    $(document).on('change', "input[name='prate[]']", function () {
+      var id = $(this).parent().parent().attr("id");
+     
+      var q = Number($('#qty' + id + '').val());
+     
+      var rate = Number($(this).val());
+      var val = rate * q;
+      $('#value' + id + '').val(val);
+      qty = get_total_value()
+      $('#th_total').html(qty)
+      console.log("th_total=" + qty);
         //  console.log("id="+id);
         tqty = 0;
         stotal = 0;
@@ -172,54 +215,21 @@
 
         }
 
-        addmore();
-        var html =
-          '<table class=" table-bordered text-center " style="width:50%"><caption>Summary</caption><thead class="bg-secondary text-white">';
-        html += '<tr><th style="width:15%">Fabric</th>';
-        html += '<th style="width:10%">PCS</th>';
-        html += '<th style="width:10%">Quantity</th>';
-        html += '<th style="width:15%">Total</th>';
-        html += '</tr>';
-        html += '</thead>';
-        html += '<tbody>';
-
-        summary.forEach(myFunction);
-
-        function myFunction(value, index, array) {
-          stotal += array[index][3];
-          tqty += array[index][2];
-          Tpcs += array[index][1];
-          html += ' <tr><td>' + array[index][0] + '</td>';
-          html += '<td>' + array[index][1] + '</td>';
-          html += '<td>' + array[index][2] + '</td>';
-          html += '<td>' + array[index][3] + '</td></tr></tbody>';
-        }
-        html += '<tr class="bg-secondary text-white"><th>Total</th><th>' + Tpcs + '</th><th>' + tqty +
-          '</th><th>' + stotal + '</th></tr>';
-        html += '</table>';
-
-        $('#summary').html(html);
-      }
-    });
-    $(document).on('change', "input[name='prate[]']", function () {
-      var id = $(this).parent().parent().attr("id");
-      console.log("id=" + id);
-      var q = Number($('#qty' + id + '').val());
-      console.log("q=" + q);
-      var rate = Number($(this).val());
-      var val = rate * q;
-      console.log("val=" + val);
-      $('#value' + id + '').val(val);
-      qty = get_total_value()
-      $('#th_total').html(qty)
-      console.log("th_total=" + qty);
+     
 
     });
 
 
 
     $(document).on('change', "input[name='qty[]']", function () {
-
+      var id = $(this).parent().parent().attr("id");
+     
+      var q = Number($('#prate' + id + '').val());
+     
+      var rate = Number($(this).val());
+      var val = rate * q;
+      
+      $('#value' + id + '').val(val);
 
       qty = get_total_quntity()
       $('#th_qty').html(qty)

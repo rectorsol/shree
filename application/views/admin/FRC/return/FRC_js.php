@@ -40,44 +40,12 @@
       var id =$(document.activeElement).parent().parent().attr("id");
     //  console.log("id="+id);
    
-      if(summary==""){
-      
-    var  fabric=$('#fabric' + id + '').val();
-    var  pcs=1;
-    var  qty=Number($('#qty' + id + '').val());
-    
-      var arr=[fabric,pcs,qty];
-      summary.push(arr); 
-    
-      }else{
-        var found=0;
-      summary.forEach(myFunction);
-        
-        function myFunction(value, index, array) {
-          var fabric=$('#fabric' + id + '').val();
-        //  console.log('#fabric='+fabric);console.log('#value='+value); 
-          if(fabric==array[index][0]){
-           found=1;
-            array[index][1]+=1;
-            array[index][2]+=Number($('#qty' + id + '').val());
-            
-            //  console.log('#fabric found'+summary);
-          }
-          
-        }
-        if(found==0){
-           fabric=$('#fabric' + id + '').val();
-           pcs=1;
-      qty=Number($('#qty' + id + '').val());
      
-      arr=[fabric,pcs,qty];
-      summary.push(arr); 
-        // console.log(summary);
-        }
-             
-      }
       
       addmore();
+      if(summary){
+
+      
       var html='<table class=" table-bordered text-center remove_datatable"><caption>Summary</caption><thead class="bg-secondary text-white">';
           html+='<tr><th>fabric</th>';
           html+='<th>PCS</th>';
@@ -100,6 +68,7 @@
                   html+='</table>';
         
       $('#summary').html(html);
+      }
      }
 });
 $(document).on('change' ,'.pbc', function(e) {
@@ -157,7 +126,43 @@ $(document).on('change' ,'.pbc', function(e) {
              $('#adno'+id+'').val(data[0]['ad_no']);
              $('#pcode'+id+'').val(data[0]['purchase_code']);
             $('#unit'+id+'').val(data[0]['stock_unit']);
-            $('#prate'+id+'').val(data[0]['purchase_rate']);
+            $('#prate'+id+'').val(data[0]['purchase_rate']); if(summary==""){
+      
+    var  fabric=$('#fabric' + id + '').val();
+    var  pcs=1;
+    var  qty=Number($('#qty' + id + '').val());
+    
+      var arr=[fabric,pcs,qty];
+      summary.push(arr); 
+    
+      }else{
+        var found=0;
+      summary.forEach(myFunction);
+        
+        function myFunction(value, index, array) {
+          var fabric=$('#fabric' + id + '').val();
+        //  console.log('#fabric='+fabric);console.log('#value='+value); 
+          if(fabric==array[index][0]){
+           found=1;
+            array[index][1]+=1;
+            array[index][2]+=Number($('#qty' + id + '').val());
+            
+            //  console.log('#fabric found'+summary);
+          }
+          
+        }
+        if(found==0){
+           fabric=$('#fabric' + id + '').val();
+           pcs=1;
+      qty=Number($('#qty' + id + '').val());
+     
+      arr=[fabric,pcs,qty];
+      summary.push(arr); 
+        // console.log(summary);
+        }
+             
+      }
+
              }else{
                 if(id==0){
                    $('#submit').hide();

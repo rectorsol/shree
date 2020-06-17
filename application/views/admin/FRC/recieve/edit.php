@@ -84,7 +84,7 @@
                     <td> <input type="text" class="form-control" name="ADNo[]" value="<?php echo $row['ad_no'] ?>" required></td>
                     
                     <td><input type="text" class="form-control" name="pcode[]" value="<?php echo $row['purchase_code'] ?>" required></td>
-                    <td><input type="text" class="form-control" name="prate[]" value="<?php echo $row['purchase_rate'] ?>" required></td>
+                    <td><input type="text" class="form-control" name="prate[]" value="<?php echo $row['purchase_rate'] ?>" id="prate<?php echo $count ?>" required></td>
                     <td><input type="text" class="form-control" name="total[]" readonly value="<?php echo $row['total_value'] ?>" id="value<?php echo $count ?>"></td>
                      <input type="hidden"  name="fsr_id[]" value="<?php echo $row['fsr_id']?>" > 
                     
