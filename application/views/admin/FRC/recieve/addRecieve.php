@@ -76,8 +76,8 @@
                     <td> <input type="text" class="form-control" name="color[]" value="" required></td>
                     <td> <input type="text" class="form-control" name="ADNo[]" value="" required></td>
 
-                    <td><input type="text" class="form-control" name="pcode[]" value="" required></td>
-                    <td><input type="text" class="form-control" name="prate[]" value="" required></td>
+                    <td><input type="text" class="form-control" name="pcode[]" value=""  required></td>
+                    <td><input type="text" class="form-control" name="prate[]" value="" id='prate0' required></td>
                     <td><input type="text" class="form-control" name="total[]" readonly value="" id="value0"></td>
 
                     <td> <button type="button" name="add_more" id="add_more1" class="btn btn-success">+</button></td>

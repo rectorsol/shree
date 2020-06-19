@@ -241,6 +241,88 @@ public function date_filter()
               echo json_encode($output);
             }
         }
+		public function filter1()
+							{
+						$data1=array();
+						$this->security->xss_clean($_POST);
+								if ($_POST) {
+						//	echo"<pre>";	print_r($_POST); exit;
+								$data1['from']=$this->input->post('date_from');
+								$data1['to']=$this->input->post('date_to');
+								$data1['search']=$this->input->post('search');
+								$data1['type']=$this->input->post('type');
+
+								$data['from']=$data1['from'];
+								$data['to']=$data1['to'];
+								$data['type']=$data1['type'];
+								$caption='Search Result For : ';
+										if($data1['search']=='simple'){
+											if($_POST['searchByCat']!="" || $_POST['searchValue']!=""){
+												$data1['cat']=$this->input->post('searchByCat');
+												$data1['Value']=$this->input->post('searchValue');
+												$caption=$caption.$data1['cat']." = ".$data1['Value']." ";
+											}
+										$data['frc_data']=$this->Transaction_model->search1($data1);
+
+							}else{
+							if(isset($_POST['sort_name']) && $_POST['sort_name']!="" ){
+								$data1['cat'][]='sort_name';
+								$fab=$this->input->post('sort_name');
+								$data1['Value'][]=$fab;
+								$caption=$caption.' sort_name'." = ".$fab." ";
+								}
+								if(isset($_POST['challan']) && $_POST['challan']!="" ){
+								  $data1['cat'][]='challan_no';
+										$fab=$this->input->post('challan');
+									$data1['Value'][]=$fab;
+									$caption=$caption.'Challan No'." = ".$fab." ";
+									}
+									if(isset($_POST['unitName']) && $_POST['unitName']!="" ){
+										 $data1['cat'][]='unitName';
+											$fab=$this->input->post('unitName');
+									   $data1['Value'][]=$fab;
+										$caption=$caption.'unitName'." = ".$fab." ";
+										}
+										if(isset($_POST['total_amount']) && $_POST['total_amount']!="" ){
+										$data1['cat'][]='total_amount';
+										$fab=$this->input->post('total_amount');
+										$data1['Value'][]=$fab;
+										$caption=$caption.'total_amount'." = ".$fab." ";
+										}
+										if(isset($_POST['total_quantity']) && $_POST['total_quantity']!="" ){
+											$data1['cat'][]='total_quantity';
+											$fab=$this->input->post('total_quantity');
+											$data1['Value'][]=$fab;
+											$caption=$caption.'total_quantity'." = ".$fab." ";
+											}
+											if(isset($_POST['fabric_type']) && $_POST['fabric_type']!="" ){
+										  $data1['cat'][]='fabric_type';
+											$fab=$this->input->post('fabric_type');
+											$data1['Value'][]=$fab;
+											$caption=$caption.'fab_type'." = ".$fab." ";
+											}
+								$data['frc_data']=$this->Transaction_model->search1($data1);
+							}
+								if($data1['type']=='recieve'){
+									$data['caption']=$caption;
+									$data['febName']=$this->Common_model->febric_name();
+									$data['main_content'] = $this->load->view('admin/transaction/bill/list_bill', $data, TRUE);
+									$this->load->view('admin/index', $data);
+
+								}	elseif($data1['type']=='return'){
+												$data['caption']=$caption;
+												$data['febName']=$this->Common_model->febric_name();
+												$data['main_content'] = $this->load->view('admin/transaction/challan/list_challan', $data, TRUE);
+												$this->load->view('admin/index', $data);
+											}
+												else{
+													 $data['main_content'] = $this->load->view('admin/FRC/stock/search');
+													 $this->load->view('admin/index', $data);
+												}
+
+
+									}
+							}
 
 
 	}

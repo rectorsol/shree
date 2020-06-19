@@ -14,27 +14,148 @@
   <div class="col-12">
   <div class="card">
     <div class="card-body">
-        <form id="designFilter">
-          <div class="form-row">
-            <div class="col-4">
-              <select id="searchByCat" name="searchByCat" class="form-control">
-                <option value="">-- Select Category --</option>
-                <option value="designName">Design Name</option>
-                <option value="designCode">Design Code</option>
-                <option value="stitch">Stitch</option>
-                <option value="dye">Dye</option>
-                <option value="matching">Matching</option>
-                <option value="saleRate">Sale Rate</option>
-                <option value="htCattingRate">HT Catting Rate</option>
-                <option value="fabricName">Design On</option>
-              </select>
-            </div>
-          <div class="col-4">
-            <input type="text" name="searchValue" placeholder="Search" id="searchByValue" class="form-control">
-          </div>
-          <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>" />
-          <button type="submit" class="btn btn-info"> <i class="fas fa-search"></i> Search</button>  </div>
-        </form>
+        <div id="accordion">
+
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <a class="card-link" data-toggle="collapse" href="#collapseOne">
+                      Simple filter
+                    </a>
+                  </div>
+                  <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                    <div class="modal-body">
+                      <form action="<?php echo base_url('/admin/Design/filter1'); ?>" method="post">
+                        <div class="form-row">
+                          <div class="col-2">
+                            <input type="date" name="date_from" class="form-control form-control-sm"
+                              value="<?php echo date('Y-m-01')?>">
+                          </div>
+                          <div class="col-2">
+                            <input type="date" name="date_to" class="form-control form-control-sm"
+                              value="<?php echo date('Y-m-d')?>">
+                          </div>
+                          <div class="col-2">
+                            <select id="searchByCat" name="searchByCat" class="form-control form-control-sm" required>
+                              <option value="">-- Select Category --</option>
+                              <option value="designName">Design Name</option>
+                              <option value="desCode">Design Code</option>
+                              <option value="designSeries">Series</option>
+                              <option value="barCode"> Barcode</option>
+                              <option value="fabricName">Fabric Name</option>
+                              <option value="rate">Emb Rate</option>
+                              <option value="stitch">Stitch</option>
+                              <option value="dye">Dye</option>
+                              <option value="matching">Matching</option>
+                              <option value="sale_rate">Sale rate</option>
+                              <option value="htCattingRate">Ht cating rate</option>
+                              <option value="designOn">Design On</option>
+                            </select>
+                          </div>
+                          <div class="col-2">
+                            <input type="text" name="searchValue" class="form-control form-control-sm" value=""
+                              placeholder="Search" required>
+                          </div>
+                          <input type="hidden" name="type" value="design"><input type="hidden" name="search" value="simple">
+                          <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>"
+                            value="<?=$this->security->get_csrf_hash();?>" />
+                          <button type="submit" name="search" value="simple" class="btn btn-info btn-xs"> <i
+                              class="fas fa-search"></i> Search</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+                      Advance filter
+                    </a>
+                  </div>
+                  <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                    <div class="modal-body">
+                      <form action="<?php echo base_url('/admin/Design/filter1'); ?>" method="post">
+                        <table class=" remove_datatable">
+                          <caption>Advance Filter</caption>
+                          <thead>
+                            <tr>
+                              <th>Date_from</th>
+                              <th>Date_to</th>
+                              <th>Design name</th>
+                              <th>Design Series</th>
+                              <th>Design Code</th>
+                              <th>Emb Rate</th>
+                              <th>Stitch</th>
+
+
+                            </tr>
+                          </thead>
+                          <tr>
+                            <td>
+                              <input type="date" name="date_from" class="form-control form-control-sm"
+                                value="<?php echo date('Y-m-01')?>"></td>
+
+                            <td>
+                              <input type="date" name="date_to" class="form-control form-control-sm"
+                                value="<?php echo date('Y-m-d')?>"></td>
+                                <td><input type="text" name="designName" class="form-control form-control-sm" value=""
+                                    placeholder="designName"></td>
+
+                                <td><input type="text" name="designSeries" class="form-control form-control-sm" value=""
+                                        placeholder="design Series"></td>
+
+                                  <td><input type="text" name="desCode" class="form-control form-control-sm" value=""
+                                            placeholder="DesignCode"></td>
+
+                                  <td><input type="text" name="rate" class="form-control form-control-sm" value=""
+                                                placeholder="Emb rate"></td>
+
+                                  <td><input type="text" name="stitch" class="form-control form-control-sm" value=""
+                                                    placeholder="stitch"></td>
+                          </tr>
+                          <th>Dye</th>
+                          <th>Matching</th>
+                          <th>Sale Rate</th>
+                          <th>Ht Cathing Rate</th>
+                          <th>Fabric Name</th>
+                          <th>Barcode</th>
+                          <th>designOn</th>
+                          <tr>
+
+                            <td><input type="text" name="dye" class="form-control form-control-sm" value=""
+                            placeholder="Dye"></td>
+
+                            <td><input type="text" name="matching" class="form-control form-control-sm" value=""
+                            placeholder="Matching"></td>
+
+                            <td><input type="text" name="sale_rate" class="form-control form-control-sm" value=""
+                            placeholder="Sale Rate"></td>
+
+                            <td><input type="text" name="htCattingRate" class="form-control form-control-sm" value=""
+                            placeholder="Ht Cathing Rate"></td>
+
+                            <td><input type="text" name="fabricName" class="form-control form-control-sm" value=""
+                            placeholder="Fabric Name"></td>
+
+                            <td><input type="text" name="barCode" class="form-control form-control-sm" value=""
+                            placeholder=" BarCode"></td>
+
+                            <td><input type="text" name="designOn" class="form-control form-control-sm" value=""
+                            placeholder="Design On"></td>
+                          </tr>
+                        </table>
+                        <input type="hidden" name="search" value="advance">
+                        <input type="hidden" name="type" value="design">
+                        <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>"
+                          value="<?=$this->security->get_csrf_hash();?>" />
+                        <button type="submit" name="search" value="advance" class="btn btn-info btn-xs"> <i
+                            class="fas fa-search"></i> Search</button>
+
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
       </div>
       </div>
       <div class="card">

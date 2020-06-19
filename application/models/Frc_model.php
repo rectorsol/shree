@@ -189,12 +189,28 @@ if($data['from']==$data['to']){
  {
    //echo"<pre>";	print_r( $data); exit;
                 if($data['type']=="recieve" || $data['type']=="return" ){
-                  $this->db->select('*');
+                  $this->db->select("fabric_challan.*,sb1.subDeptName as sub1,sb2.subDeptName as sub2");
                 $this->db->from('fabric_challan');
-
-                $this->db->like($data['cat'], $data['Value']);
+                if(!is_array($data['cat']) ){
+                  if($data['cat']!=""){
+                    $this->db->where($data['cat'], $data['Value']);
+                  }
+                  
+                }else{
+                  $count =count($data['cat']);
+                  for($i=0;$i<$count;$i++){
+                    $this->db->like($data['cat'][$i], $data['Value'][$i]);
+                  }
+                }
+                      if($data['from']==$data['to']){
+                  $this->db->where('fabric_challan.challan_date ', $data['from']); 
+                  }else{
+                  $this->db->where('fabric_challan.challan_date >=', $data['from']);
+                  $this->db->where('fabric_challan.challan_date <=', $data['to']);
+                  }
                 $this->db->where("challan_type", $data['type']);
-                  $this->db->join('sub_department','sub_department.id=fabric_challan.challan_from','inner');
+                  $this->db->join('sub_department sb1','sb1.id=fabric_challan.challan_from  ','left');
+                $this->db->join('sub_department sb2','sb2.id=fabric_challan.challan_to  ','left');
                 }elseif($data['type']=="stock"){
                   $this->db->select('*');
                 $this->db->from('fabric_stock_view');
@@ -215,19 +231,54 @@ if($data['from']==$data['to']){
                     $this->db->like($data['cat'][$i], $data['Value'][$i]);
                   }
                 }
-                
+                if($data['from']==$data['to']){
+                  $this->db->where('created_date ', $data['from']); 
+                }else{
+                  $this->db->where('created_date >=', $data['from']);
+                $this->db->where('created_date <=', $data['to']);
+                }
                
                 }elseif($data['type']=="pbc"){
                   $this->db->select('*');
                 $this->db->from('second_pbc_view');
-                $this->db->like($data['cat'], $data['Value']);
-                
+                if(!is_array($data['cat']) ){
+                  if($data['cat']!=""){
+                    $this->db->where($data['cat'], $data['Value']);
+                  }
+                  
+                }else{
+                  $count =count($data['cat']);
+                  for($i=0;$i<$count;$i++){
+                    $this->db->like($data['cat'][$i], $data['Value'][$i]);
+                  }
+                }
+                if($data['from']==$data['to']){
+                  $this->db->where('created_date ', $data['from']); 
+                }else{
+                  $this->db->where('created_date >=', $data['from']);
+                $this->db->where('created_date <=', $data['to']);
+                }
                 $this->db->order_by('parent_barcode'); 
                 }elseif($data['type']=="tc") {
                   $this->db->select("*");
                 $this->db->from('tc_view');
-                $this->db->like($data['cat'], $data['Value']);
-              
+                 if(!is_array($data['cat']) ){
+                  if($data['cat']!=""){
+                    $this->db->where($data['cat'], $data['Value']);
+                  }
+                  
+                }else{
+                  $count =count($data['cat']);
+                  for($i=0;$i<$count;$i++){
+                    $this->db->like($data['cat'][$i], $data['Value'][$i]);
+                  }
+                }
+              if($data['from']==$data['to']){
+                  $this->db->where('created_date ', $data['from']); 
+                }else{
+                  $this->db->where('created_date >=', $data['from']);
+                $this->db->where('created_date <=', $data['to']);
+                }
                   $this->db->group_by('parent_barcode');
                   }
    
