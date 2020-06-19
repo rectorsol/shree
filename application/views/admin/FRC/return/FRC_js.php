@@ -37,15 +37,11 @@
    $(document).on('keypress',function(e) {
     if(e.which == 13) {
       event.preventDefault();
-      var id =$(document.activeElement).parent().parent().attr("id");
-    //  console.log("id="+id);
-   
      
-      
       addmore();
       if(summary){
 
-      
+       stotal=0; tqty=0;
       var html='<table class=" table-bordered text-center remove_datatable"><caption>Summary</caption><thead class="bg-secondary text-white">';
           html+='<tr><th>fabric</th>';
           html+='<th>PCS</th>';
@@ -56,7 +52,7 @@
                      html+='<tbody>';
                      
       summary.forEach(myFunction);
-      
+     
         function myFunction(value, index, array) {
           stotal+=array[index][2];tqty+=array[index][1];
          html+=' <tr><td>'+array[index][0]+'</td>';
@@ -157,7 +153,9 @@ $(document).on('change' ,'.pbc', function(e) {
       qty=Number($('#qty' + id + '').val());
      
       arr=[fabric,pcs,qty];
-      summary.push(arr); 
+      summary.push(arr);
+    
+       
         // console.log(summary);
         }
              
@@ -189,7 +187,22 @@ $(document).on('change' ,'.pbc', function(e) {
     });
 
     $(document).on('click', '.remove', function() {
-      $(this).parent().parent().remove();count=count-1;
+      var id =$(this).parent().parent().attr("id");
+      summary.forEach(myFunction);
+        
+        function myFunction(value, index, array) {
+          var fabric=$('#fabric' + id + '').val();
+        //  console.log('#fabric='+fabric);console.log('#value='+value); 
+          if(fabric==array[index][0]){
+           found=1;
+            array[index][1]-=1;
+            array[index][2]-=Number($('#qty' + id + '').val());
+            
+            //  console.log('#fabric found'+summary);
+          }
+          
+        }
+      $(this).parent().parent().remove();
     });
 
     $('.delete_all').on('click', function(e) {

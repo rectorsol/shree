@@ -62,7 +62,7 @@
                 <tbody id="fresh_data">
                   <tr id="0">
 
-                    <td><input type="text" class="form-control sno" name="sno[]" value="1" readonly></td>
+                    <td><input type="text" class="form-control " id='sno0'  value="1" readonly></td>
                     <td><select name="fabric_name[]" class="form-control fabric_name " id='fabric0' required>
                         <option>Fabric</option>
                         <?php foreach ($febName as $value): ?>
@@ -102,7 +102,7 @@
                 </tr>
               </table>
               <hr>
-              
+             
               <div class="col-md-3" id="submit">
                 <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>"
                   value="<?=$this->security->get_csrf_hash();?>" />
@@ -120,7 +120,6 @@
 
   </div>
 </div>
-<script>
 
-</script>
+ 
 <?php include('FRC_js.php');?>

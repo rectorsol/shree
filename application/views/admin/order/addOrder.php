@@ -77,7 +77,7 @@
                   <th>Fabric_Name</th>
                   <th>Hsn</th> 
                   
-                  <th>Design Name</th>
+                  <th>Design_Name</th>
                   <th>Design Code</th>
                   <th>Stitch</th>
                   <th>Dye</th>
@@ -98,8 +98,8 @@
                            <option value="2" > Manual </option> 
                      </select></td>
                     <td><input type="text" class="form-control" name="serial_number[]" value=""></td>
-                    <td><input type="text" class="form-control design_name"  value=""></td>
-                    <td id='tdfab0'><input type="text" class="form-control fabric_name" name="fabric_name[]" value="" >
+                    <td><input type="text" class="form-control design_barcode"  value=""></td>
+                    <td id='tdfab0'><input type="text" class="form-control fabric_name select2" name="fabric_name[]" value="" id='fabric0'>
                      </td>
                     <td><input type="text" class="form-control " name="hsn[]" value="" id='hsn0'></td>
                      

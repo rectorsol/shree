@@ -17,7 +17,7 @@
 <!-- Charts js Files -->
 <script src="<?php echo base_url('optimum/admin') ?>/assets/libs/flot/excanvas.js"></script>
 
-<script src="<?php echo base_url('optimum/admin') ?>/assets/extra-libs/multicheck/jquery.multicheck.js"></script> -->
+<script src="<?php echo base_url('optimum/admin') ?>/assets/extra-libs/multicheck/jquery.multicheck.js"></script> 
 <script src="<?php echo base_url('optimum/admin') ?>/assets/extra-libs/DataTables/datatables.min.js"></script>
 <script src="<?php echo base_url('optimum/admin') ?>/assets/extra-libs/DataTables/DataTables-1.10.21/js/jquery.dataTables.min.js"></script>
 <script src="<?php echo base_url('optimum/admin') ?>/assets/extra-libs/DataTables/Buttons-1.6.2/js/dataTables.buttons.min.js"></script>
@@ -26,7 +26,7 @@
 <script src="<?php echo base_url('optimum/admin') ?>/assets/extra-libs/DataTables/pdfmake-0.1.36/pdfmake.min.js"></script>
 <script src="<?php echo base_url('optimum/admin') ?>/assets/extra-libs/DataTables/pdfmake-0.1.36/vfs_fonts.js"></script>
 <script src="<?php echo base_url('optimum/admin') ?>/assets/extra-libs/DataTables/Buttons-1.6.2/js/buttons.html5.min.js"></script>
-<script src="<?php echo base_url('optimum/admin') ?>/assets/extra-libs/DataTables/Buttons-1.6.2/js/buttons.print.min.js"></script> -->
+<script src="<?php echo base_url('optimum/admin') ?>/assets/extra-libs/DataTables/Buttons-1.6.2/js/buttons.print.min.js"></script> 
 <script src="<?php echo base_url('optimum/admin') ?>/assets/extra-libs/DataTables/Select-1.3.1/js/dataTables.select.min.js"></script>
 <script src="<?php echo base_url('optimum/admin') ?>/assets/extra-libs/DataTables/Buttons-1.6.2/js/buttons.colVis.min.js"></script>
 <script src="<?php echo base_url('optimum/admin') ?>/assets/extra-libs/DataTables/FixedHeader-3.1.7/js/dataTables.fixedHeader.min.js"></script>

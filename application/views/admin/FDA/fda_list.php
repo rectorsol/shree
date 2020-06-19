@@ -18,7 +18,7 @@
 
             </div>
             <div class="table-responsive">
-              <table class="table table-striped table-bordered" id="asign_tb">
+              <table class="table table-striped table-bordered data-table" id="asign_tb">
                 <thead>
                   <tr class="odd" role="row">
                     <th>Fabric Name</th>

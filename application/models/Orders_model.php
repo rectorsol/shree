@@ -17,7 +17,17 @@
    $this->db->select('hsn.unit,fabric.fabHsnCode');
    $this->db->from('fabric');
    $this->db->join('hsn','hsn.hsn_code=fabric.fabHsnCode','left');
-   $this->db->where('fabric.id',$id);
+   $this->db->where('fabric.fabricName',$id);
+   $query = $this->db->get();
+   $query = $query->result_array();
+   return $query;
+ }
+ 	public function getFabricDesign($id)
+ {
+   $this->db->select('distinct (design.designName)');
+   $this->db->from('fda_table');
+   $this->db->join('design','design.id=fda_table.design_id','inner');
+   $this->db->where('fda_table.fabric_name',$id);
    $query = $this->db->get();
    $query = $query->result_array();
    return $query;

@@ -107,6 +107,13 @@ public function getFabricDetails(){
      $data['febName']=$this->Orders_model->getFabricDetails($id);
      echo json_encode($data['febName']);
   }
+  public function getFabricDesign(){
+     $id= $this->security->xss_clean($_POST['id']);
+    $data = array();
+     $data['febName']=$this->Orders_model->getFabricDetails($id);
+     $data['design']=$this->Orders_model->getFabricDesign($id);
+     echo json_encode($data);
+  }
   public function getFabricName(){
     if ($_POST) {
     $fabric=$this->security->xss_clean($_POST);

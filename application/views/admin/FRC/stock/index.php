@@ -6,7 +6,7 @@
                            <th>Select<input type="checkbox" class="sub_chk" id="master"></th>
 
                            <th>Date</th>
-                           <th>Challan No</th>
+                           <th>Challan No</th> <th>Godown</th>
                            <th>Pbc</th>
                            <th>Fabric </th>
 
@@ -46,6 +46,7 @@
                            <td><?php $date=date_create($value['created_date']); echo date_format($date,"d-m-y "); ?>
                            </td>
                            <td><?php echo $value['challan_no']?></td>
+                           <td><?php echo $value['challan_to']?></td>
                            <td><?php echo $value['parent_barcode'];?></td>
                            <td><?php echo $value['fabricName'];?></td>
                            <td><?php echo $value['hsn'];?></td>

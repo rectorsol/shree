@@ -80,8 +80,23 @@
 
 
     $(document).on('click', '.remove', function () {
+       var id =$(this).parent().parent().attr("id");
+      summary.forEach(myFunction);
+        
+        function myFunction(value, index, array) {
+          var fabric=$('#fabric' + id + '').val();
+        //  console.log('#fabric='+fabric);console.log('#value='+value); 
+          if(fabric==array[index][0]){
+           found=1;
+            array[index][1]-=1;
+            array[index][2]-=Number($('#qty' + id + '').val());
+            
+            //  console.log('#fabric found'+summary);
+          }
+          
+        }
       $(this).parent().parent().remove();
-      count = count - 1;
+     
     });
 
     $('.delete_all').on('click', function (e) {

@@ -1,7 +1,32 @@
 <script type="text/javascript">
 
   $(document).ready(function() {
-   
+  $('#table ').DataTable({
+      
+      
+     "pageLength": 50,
+     "lengthMenu": [[50, 100, 150, -1], [50, 100, 150, "All"]],
+     
+    select:true,
+     dom: 'Bfrtip',
+        buttons: [
+            'pageLength', 'excel', 'pdf', {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            
+            
+        ],
+         scrollY:        500,
+        scrollX:        false,
+        scrollCollapse: false,
+        paging:         true,
+        fixedColumns:   false,
+        fixedheader: true
+  
+    } );
     $( window ).on("load", function() {
         get_list();
       });
@@ -74,6 +99,7 @@
       // $("#table tr").removeClass("selected");
       $(this).toggleClass('selected');
       // $(event).addClass("selected");
+       
     });
 
     // });

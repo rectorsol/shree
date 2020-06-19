@@ -1,7 +1,7 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-     var table=  $('.data-table').DataTable({
+     var table=  $('.data-table ').DataTable({
       
       
      "pageLength": 50,

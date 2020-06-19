@@ -30,19 +30,20 @@
     }); 
  $(document).on('change', '#type', function(e) { 
 var type = $(this).val();
+ var id = $(this).parent().parent().attr("id"); 
 var fab = '<input type="text" class="form-control fabric_name" name="fabric_name[]" value="" >';
-var fab1='<select name="fabric_name[]" class="form-control fabric_name " >'
+var fab1='<select name="fabric_name[]" class="form-control fabric_name select2" >'
                         fab1+=  '<option>Select Fabric</option>'
                          fab1+=   '<?php foreach ($febName as $value): ?>'
-                        fab1+=   '<option value="<?php echo $value->id;?>" > <?php echo $value->fabricName;?></option>'
+                        fab1+=   '<option value="<?php echo $value->fabricName;?>" > <?php echo $value->fabricName;?></option>'
                           fab1+=   '<?php endforeach;?>'
                     fab1+=  '</select>';
   var des='<input type="text" name="design_name[]" class="form-control" value="" >';
-  var des1='<select name="fabric_name[]" class="form-control fabric_name " >'
+  var des1='<select name="design_name[]" class="form-control design_name select2" id=designName'+id+' >'
                         des1+=  '<option>Select Design</option>'
                       
                     des1+=  '</select>';    
-   var id = $(this).parent().parent().attr("id");                               
+                                
  if (type == 1) {
         $('#tdfab'+ id + '').html(fab);
         $('#tddesign'+ id + '').html(des);
@@ -59,11 +60,11 @@ $(document).on('change', '.fabric_name', function(e) {
       console.log(fabric);
       var button_id = $(this).parent().parent().attr("id");
        console.log(button_id);  
-      var csrf_name = $("#get_csrf_hash").attr('name');
+     var csrf_name = $("#get_csrf_hash").attr('name');
         var csrf_val = $("#get_csrf_hash").val();
         $.ajax({
           type: "POST",
-          url: "<?php echo base_url('admin/orders/getFabricDetails') ?>",
+          url: "<?php echo base_url('admin/orders/getFabricDesign') ?>",
           data: {
             
             'id': fabric,
@@ -72,14 +73,23 @@ $(document).on('change', '.fabric_name', function(e) {
          
           success: function(data) {
             data =JSON.parse(data);
-             
-            $('#hsn'+ button_id + '').val(data[0]['fabHsnCode']);
-             $('#unit'+ button_id + '').val(data[0]['unit']);
+            
+            $('#hsn'+ button_id + '').val(data.febName[0]['fabHsnCode']);
+             $('#unit'+ button_id + '').val(data.febName[0]['unit']);
+             var html='';
+            data.design.forEach(myFunction);
+
+        function myFunction(value, index, array) {
+          
+          html += '  <option value=' + array[index]['designName'] + '>'+ array[index]['designName'] +'</option>';
+         
+        }
+         $('#designName'+ button_id + '').append(html);
           }
         });
     });
     
-    $(document).on('blur', '.design_name', function(e) {
+    $(document).on('blur', '.design_barcode', function(e) {
       var design =$(this).val();
       console.log(design);
       var button_id = $(this).parent().parent().attr("id");
@@ -98,15 +108,34 @@ $(document).on('change', '.fabric_name', function(e) {
           success: function(data) {
             data =JSON.parse(data);
              if(data!=""){
+               fabric=data[0]['fabricName'];
                $(".msg").html("");
                $('#designName'+ button_id + '').val(data[0]['designName']);
              $('#designCode'+ button_id + '').val(data[0]['designCode']);
              $('#stitch'+ button_id + '').val(data[0]['stitch']);
              $('#dye'+ button_id + '').val(data[0]['dye']);
              $('#matching'+ button_id + '').val(data[0]['matching']);
-             $('#fabric_name'+ button_id + '').val(data[0]['fabricName']);
+             $('#fabric'+ button_id + '').val(fabric);
              $('#image'+ button_id + '').val(data[0]['designPic']);
               $("#preview").attr('src','<?php echo base_url('upload/') ?>'+data[0]['designPic']);
+               var csrf_name = $("#get_csrf_hash").attr('name');
+        var csrf_val = $("#get_csrf_hash").val();
+        $.ajax({
+          type: "POST",
+          url: "<?php echo base_url('admin/orders/getFabricDetails') ?>",
+          data: {
+            
+            'id': fabric,
+            '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php  echo $this->security->get_csrf_hash(); ?>'
+          },
+         
+          success: function(data) {
+            data =JSON.parse(data);
+             
+            $('#hsn'+ button_id + '').val(data[0]['fabHsnCode']);
+             $('#unit'+ button_id + '').val(data[0]['unit']);
+          }
+        });
              }else{
                $(".msg").html("<h6 class='text-danger'><b>Design Not Found </b></h6>");
                 $('#designName'+ button_id + '').val("");
@@ -133,17 +162,17 @@ $(document).on('change', '.fabric_name', function(e) {
       count=count+1;
       var element = '<tr id='+count+'>'
       element +='<td><input type="text" class="form-control" readonly value='+(count+1)+'></td>'
+      element +='<td> <select name="type[]" class="form-control  " id="type">'
+      element +='                    <option>Select Type</option>' 
+      element +='                    <option value="1" >Barcode </option>'
+      element +='                     <option value="2" > Manual </option>' 
+      element +='               </select></td>'
       element += '<td> <input type="text" class="form-control" name="serial_number[]" value="" ></td>'
-      element += '<td> <input type="text" class="form-control design_name"  value="" ></td>'
-      element += '<td> <select name="fabric_name[]" class="form-control fabric_name select2" >'
-         element +=            '<option>Select Fabric</option>'
-         element +=            '<?php foreach ($febName as $value): ?>'
-         element +=            '<option value="<?php echo $value->id;?>"> <?php echo $value->fabricName;?></option>'
-         element +=          '<?php endforeach;?>'
-          element +=         '</select></td>'
+      element += '<td> <input type="text" class="form-control design_barcode"  value="" ></td>'
+      element += ' <td id=tdfab'+count+'><input type="text" class="form-control fabric_name" name="fabric_name[]" value="" id=fabric'+count+'></td>'
       element += '<td><input type="text" class="form-control" name="hsn[]" value="" id=hsn'+count+'></td>'
       
-      element += '<td><input type="text" name="design_name[]" class="form-control" value="" id=designName'+count+'></td>'
+      element += '<td id=tddesign'+count+'><input type="text" name="design_name[]" class="form-control" value="" id=designName'+count+'></td>'
       element += '<td> <input type="text" name="design_code[]" class="form-control" value="" id=designCode'+count+'></td>'
       element += '<td><input type="text" class="form-control" name="stitch[]" value="" id=stitch'+count+'></td>'
       element += '<td>  <input type="text" class="form-control" name="dye[]" value="" id=dye'+count+'></td>'
