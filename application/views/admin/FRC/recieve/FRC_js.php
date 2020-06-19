@@ -239,9 +239,9 @@
     $(document).on('change', "input[name='qty[]']", function () {
       var id = $(this).parent().parent().attr("id");
      
-      var q = Number($('#prate' + id + '').val());
-     
-      var rate = Number($(this).val());
+      var rate = Number($('#prate' + id + '').val());
+      console.log("quantity=" + qty);
+      var q = Number($(this).val());
       var val = rate * q;
       
       $('#value' + id + '').val(val);
@@ -274,7 +274,7 @@
       element += '<td> <input type="text" class="form-control" name="color[]" value="" required></td>'
       element += '<td> <input type="text" class="form-control" name="ADNo[]" value="" required></td>'
       element += '<td><input type="text" class="form-control" name="pcode[]" value="" required></td>'
-      element += '<td><input type="text" class="form-control" name="prate[]" value="" required></td>'
+      element += '<td><input type="text" class="form-control" name="prate[]" value="" id="prate' + count + '" required></td>'
       element += '<td><input type="text" class="form-control" name="total[]" readonly value="" id="value' + count +
         '"></td>'
       element += '<td> <button type="button" name="remove"  class="btn btn-danger btn-xs remove">-</button></td>'

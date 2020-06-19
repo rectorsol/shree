@@ -236,6 +236,55 @@ public function date_filter()
               echo json_encode($output);
             }
         }
+public function filter1()
+							{
+						$data1=array();
+						$this->security->xss_clean($_POST);
+									if ($_POST) {
+						//	echo"<pre>";	print_r($_POST); exit;
+								$data1['from']=$this->input->post('date_from');
+								$data1['to']=$this->input->post('date_to');
+								$data1['search']=$this->input->post('search');
+								$data1['type']=$this->input->post('type');
+								$data['from']=$data1['from'];
+								$data['to']=$data1['to'];
+								$data['type']=$data1['type'];
+								$caption='Search Result For : ';
+										if($data1['search']=='simple'){
+											if($_POST['searchByCat']!="" || $_POST['searchValue']!=""){
+												$data1['cat']=$this->input->post('searchByCat');
+												$data1['Value']=$this->input->post('searchValue');
+												$caption=$caption.$data1['cat']." = ".$data1['Value']." ";
+											}
+										$data['frc_data']=$this->DyeTransaction_model->search($data1);
+
+							}else{
+							if(isset($_POST['from_godown']) && $_POST['from_godown']!="" ){
+							  $data1['cat'][]='from_godown';
+							  $fab=$this->input->post('from_godown');
+								$data1['Value'][]=$fab;
+								$caption=$caption.'from godown'." = ".$fab." ";
+								}
+								$data['frc_data']=$this->DyeTransaction_model->search($data1);
+							}
+								if($data1['type']=='issue'){
+									$data['caption']=$caption;
+									$data['febName']=$this->Common_model->febric_name();
+									$data['main_content'] = $this->load->view('admin/dye_transaction/issue/list_issue', $data, TRUE);
+									$this->load->view('admin/index', $data);
+
+								}	elseif($data1['type']=='receive'){
+												$data['caption']=$caption;
+												$data['febName']=$this->Common_model->febric_name();
+												$data['main_content'] = $this->load->view('admin/dye_transaction/recieve/list_recieve', $data, TRUE);
+												$this->load->view('admin/index', $data);
+											}
+												else{
+													 $data['main_content'] = $this->load->view('admin/FRC/stock/search');
+													 $this->load->view('admin/index', $data);
+												}
+									}
+							}
 
 
 	}

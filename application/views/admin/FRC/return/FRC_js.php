@@ -33,6 +33,7 @@
     $('#add_more').on('click', function() {
       
       addmore();
+     
     });
    $(document).on('keypress',function(e) {
     if(e.which == 13) {
@@ -50,7 +51,9 @@
                        html+='</tr>';
                      html+='</thead>';
                      html+='<tbody>';
-                     
+        tqty = 0;
+        stotal = 0;
+                    
       summary.forEach(myFunction);
      
         function myFunction(value, index, array) {
@@ -122,7 +125,8 @@ $(document).on('change' ,'.pbc', function(e) {
              $('#adno'+id+'').val(data[0]['ad_no']);
              $('#pcode'+id+'').val(data[0]['purchase_code']);
             $('#unit'+id+'').val(data[0]['stock_unit']);
-            $('#prate'+id+'').val(data[0]['purchase_rate']); if(summary==""){
+            $('#prate'+id+'').val(data[0]['purchase_rate']); 
+            if(summary==""){
       
     var  fabric=$('#fabric' + id + '').val();
     var  pcs=1;
