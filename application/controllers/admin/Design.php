@@ -20,9 +20,28 @@
 			 $config = array();
         $config["base_url"] = base_url() . "admin/design";
         $config["total_rows"] = $this->Design_model->get_count();
-        $config["per_page"] = 30;
-        $config["uri_segment"] = 3;
-			
+        $config["per_page"] = 100;
+		$config["uri_segment"] = 3;
+		$config['use_page_numbers'] = TRUE;
+		$config['next_link']        = 'Next';
+    $config['prev_link']        = 'Prev';
+    $config['first_link']       = 'First';
+    $config['last_link']        = 'Last';
+    $config['full_tag_open']    = '<ul class="pagination justify-content-center">';
+    $config['full_tag_close']   = '</ul>';
+    $config['attributes']       = ['class' => 'page-link'];
+    $config['first_tag_open']   = '<li class="page-item">';
+    $config['first_tag_close']  = '</li>';
+    $config['prev_tag_open']    = '<li class="page-item">';
+    $config['prev_tag_close']   = '</li>';
+    $config['next_tag_open']    = '<li class="page-item">';
+    $config['next_tag_close']   = '</li>';
+    $config['last_tag_open']    = '<li class="page-item">';
+    $config['last_tag_close']   = '</li>';
+    $config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
+    $config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
+    $config['num_tag_open']     = '<li class="page-item">';
+    $config['num_tag_close']    = '</li>';	
 		$this->pagination->initialize($config);
 		 $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
@@ -123,7 +142,14 @@
 		     		$data['pdf'] = new Pdf(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 		     		$this->load->view('admin/master/design/index', $data);
 		     }
-
+			public function getDesign(){
+			
+					$id=$this->security->xss_clean($_POST['id']);
+					
+					 $data['data'] = $this->Design_model->get_single_value_by_id($id);
+					
+		     		echo json_encode($data['data']);
+		     }
 
 
      public function edit($id)
@@ -208,46 +234,9 @@
         }
        $data['pdf'] = new Pdf(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
       	$this->load->view('admin/master/design/multiple', $data);
-	   }
-// 	 public function deleteUser(){
-// 		 $ids = $this->input->post('ids');
 
-// 		 $userid= explode(",", $ids);
-// 		 foreach ($userid as $value) {
-// 		  $this->db->delete( 'design',array('id' => $value));
-// 		  echo $this->db->last_query();exit;
 
-// 		}
-// 	}
-
-        public function filter()
-        {
-            $data=array();
-            if ($_POST) {
-              $searchByCat=$this->input->post('searchByCat');
-              $searchValue=$this->input->post('searchValue');
-                $output = "";
-
-                $data=$this->Design_model->search($searchByCat,$searchValue);
-                foreach ($data as $value) {
-                    $url= base_url('/upload/').$value['designPic'];
-                    $output .= "<tr id='tr_".$value['id']."'>";
-                    $output .="<td><input type='checkbox' class='sub_chk' data-id=".$value['id']."></td>";
-
-                    foreach ($value as $temp)
-                    {
-                        $output .= "<td>".$temp."</td>";
-                    }
-
-                    $output .="<td><a class='btn default btn-outline image-popup-vertical-fit el-link' href=' ".$url."'><img src='".$url."' alt='image' style='height: 40px; width: 40px;'></a></td> ";
-                    $output .= "<td><a href='#".$value['id']."' class='text-center tip' data-toggle='modal' data-original-title='Edit'><i class='fas fa-edit blue'></i></a>
-                    <a class='text-danger text-center tip' href='javascript:void(0)' onclick='delete_detail(".$value['id'].")' data-original-title='Delete'><i class='mdi mdi-delete red' ></i></a>
-                    </td>";
-                   $output .= "</tr>";
-                            }
-              echo json_encode($output);
-            }
-        }
+	}
 
 				public function designExist()
 			{
@@ -266,10 +255,7 @@
 					}
 
 			}
-
-
-	}
-			public function filter1()
+	public function filter1()
 			{
 								$data1=array();
 									$this->security->xss_clean($_POST);
@@ -384,8 +370,10 @@
 								}
 
 
-
 	}
-	/* End of file Dashboard.php */
-	/* Location: ./application/controllers/admin/Dashboard.php */
+		
+
+
+
+	
  ?>

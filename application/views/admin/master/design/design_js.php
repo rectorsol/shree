@@ -12,15 +12,10 @@ jQuery('#master').on('click', function(e) {
  }
 });
  var table=  $('#design').DataTable({
-      
-      
     
-     select: true,
-    
-     
      dom: 'Bfrtip',
         buttons: [
-            'pageLength', 'excel', 'pdf', {
+             'excel', 'pdf', {
                 extend: 'print',
                 exportOptions: {
                     columns: ':visible'
@@ -32,11 +27,10 @@ jQuery('#master').on('click', function(e) {
             'colvis'
         ],
          scrollY:        500,
-        scrollX:        false,
+        scrollX:        true,
         scrollCollapse: false,
         paging:         false,
-        fixedColumns:   false,
-        fixedheader: true
+        select:true
   
     } );
 

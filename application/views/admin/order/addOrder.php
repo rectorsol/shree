@@ -99,7 +99,7 @@
                      </select></td>
                     <td><input type="text" class="form-control" name="serial_number[]" value=""></td>
                     <td><input type="text" class="form-control design_barcode"  value=""></td>
-                    <td id='tdfab0'><input type="text" class="form-control fabric_name select2" name="fabric_name[]" value="" id='fabric0'>
+                    <td id='tdfab0'><input type="text" class="form-control fabric_name " name="fabric_name[]" value="" id='fabric0'>
                      </td>
                     <td><input type="text" class="form-control " name="hsn[]" value="" id='hsn0'></td>
                      

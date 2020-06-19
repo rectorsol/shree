@@ -50,10 +50,12 @@ class Design_model extends CI_Model {
     $this->db->from('design_view');
     // $this->db->like($searchByCat, $searchValue);
     $this->db->where('id',$id);
+    
     $rec=$this->db->get();
+     //print_r($this->db->last_query());exit;
     return $rec->row();
     // print_r($searchValue);
-    // print_r($this->db->last_query());
+    
 
   }
 

@@ -31,14 +31,14 @@
  $(document).on('change', '#type', function(e) { 
 var type = $(this).val();
  var id = $(this).parent().parent().attr("id"); 
-var fab = '<input type="text" class="form-control fabric_name" name="fabric_name[]" value="" >';
-var fab1='<select name="fabric_name[]" class="form-control fabric_name select2" >'
+var fab = '<input type="text" class="form-control fabric_name" name="fabric_name[]" value="" id=fabric'+id+'>';
+var fab1='<select name="fabric_name[]" class="form-control fabric_name select2" id=fabric'+id+'>'
                         fab1+=  '<option>Select Fabric</option>'
                          fab1+=   '<?php foreach ($febName as $value): ?>'
                         fab1+=   '<option value="<?php echo $value->fabricName;?>" > <?php echo $value->fabricName;?></option>'
                           fab1+=   '<?php endforeach;?>'
                     fab1+=  '</select>';
-  var des='<input type="text" name="design_name[]" class="form-control" value="" >';
+  var des='<input type="text" name="design_name[]" class="form-control" value="" id=designName'+id+'>';
   var des1='<select name="design_name[]" class="form-control design_name select2" id=designName'+id+' >'
                         des1+=  '<option>Select Design</option>'
                       
@@ -219,7 +219,7 @@ $(document).on('change', '.fabric_name', function(e) {
   });
 
     $(document).on('click', '.remove', function() {
-      $(this).parent().parent().remove();count=count-1;
+      $(this).parent().parent().remove();
     });
 
     $('.delete_all').on('click', function(e) {

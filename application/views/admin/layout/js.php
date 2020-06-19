@@ -12,7 +12,7 @@
      dom: 'Bfrtip',
         buttons: [
             'pageLength', 'excel', 'pdf', {
-                extend: 'print',
+                extend: 'print', footer: true, 
                 exportOptions: {
                     columns: ':visible'
                 }
@@ -23,11 +23,10 @@
             'colvis'
         ],
          scrollY:        500,
-        scrollX:        false,
+        scrollX:        true,
         scrollCollapse: false,
         paging:         true,
-        fixedColumns:   false,
-        fixedheader: true
+        
   
     } );
     // Multi Select

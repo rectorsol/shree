@@ -70,7 +70,7 @@
                        <tfoot class="bg-dark text-white">
                          <tr>
                            <th>Total</th>
-
+                          <th></th>                
                            <th></th>
                            <th> </th>
                            <th></th>
