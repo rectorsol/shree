@@ -152,7 +152,7 @@
 		     }
 
 
-     public function edit($id)
+     public function edit()
         {
             if ($_POST)
 
@@ -166,7 +166,8 @@
                 $this->upload->do_upload('designPic');
                 $img=$this->upload->data();
 
-                $pic=$img['file_name'];
+				$pic=$img['file_name'];
+				$id=$_POST['designId'];
               if($pic!='')
               {
                 $data=array(

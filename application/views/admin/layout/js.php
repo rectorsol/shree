@@ -11,7 +11,17 @@
      
      dom: 'Bfrtip',
         buttons: [
-            'pageLength', 'excel', 'pdf', {
+            'pageLength', {
+                extend: 'excel', footer: true, 
+                exportOptions: {
+                    columns: ':visible'
+                }
+            }, {
+                extend: 'pdf', footer: true, 
+                exportOptions: {
+                    columns: ':visible'
+                }
+            }, {
                 extend: 'print', footer: true, 
                 exportOptions: {
                     columns: ':visible'
@@ -23,8 +33,8 @@
             'colvis'
         ],
          scrollY:        500,
-        scrollX:        true,
-        scrollCollapse: false,
+        scrollX:        false,
+        scrollCollapse: true,
         paging:         true,
         
   

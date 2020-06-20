@@ -17,7 +17,7 @@
               </div>
               <div id="collapseOne" class="collapse show" data-parent="#accordion">
                 <div class="modal-body">
-                  <form action="<?php echo base_url('/admin/frc/filter'); ?>" method="post">
+                  <form action="<?php echo base_url('/admin/FRC/filter'); ?>" method="post">
                     <div class="form-row">
                       <div class="col-2">
                         <input type="date" name="date_from" class="form-control form-control-sm"
@@ -65,7 +65,7 @@
               </div>
               <div id="collapseTwo" class="collapse" data-parent="#accordion">
                 <div class="modal-body">
-                  <form action="<?php echo base_url('/admin/frc/filter'); ?>" method="post">
+                  <form action="<?php echo base_url('/admin/FRC/filter'); ?>" method="post">
                     <table class=" remove_datatable">
                       <caption>Advance Filter</caption>
                       <thead>
@@ -135,15 +135,12 @@
                     <div class="widget-box">
                         <div class="widget-content nopadding">
                             <div class="row well">
-                                <div class="col-6"> <a type="button"
-                                        class="btn btn-info pull-left delete_all  btn-danger" style="color:#fff;"><i
-                                            class="mdi mdi-delete red"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;<a type="button" class="btn btn-info pull-left print_all btn-success"
-                                        style="color:#fff;"><i class="fa fa-print"></i></a>
+                                <div class="col-6"> <a type="button" class="btn btn-info   btn-success"  href='<?php echo base_url('/admin/FRC/show_tc'); ?>'
+                    style="color:#fff;">Clear filter</a>
                                 </div>
                                 <div class="col-6">
 
-                                    <form action="<?php echo base_url('/admin/frc/showRecieveList'); ?>" method="post">
+                                    <form action="<?php echo base_url('/admin/FRC/show_tc'); ?>" method="post">
 
                                         <div class="form-row ">
                                             <div class="col-5">
@@ -175,7 +172,7 @@
                                     <table class=" table-bordered data-table text-center table-responsive" id="frc">
                                         <thead class="bg-dark text-white">
                                             <tr class="odd" role="row">
-                                                <th><input type="checkbox" class="sub_chk" id="master"></th>
+                                                <th>Sno</th>
                                                 <th>Date</th>
 
 
@@ -196,8 +193,7 @@
                                         foreach ($frc_data as $value) { ?>
                                             <tr class="gradeU" id="tr_<?php echo $value['fc_id']?>">
 
-                                                <td><input type="checkbox" class="sub_chk"
-                                                        data-id="<?php echo $value['fc_id'] ?>"> <span class="label label-info"><?php echo $c?></span></td>
+                                                <td> <span class="label label-info"><?php echo $c?></span></td>
                                                 <td><?php $date=date_create($value['challan_date']); echo date_format($date,"d-m-y "); ?>
                                                 </td>
 
@@ -227,7 +223,10 @@
                                 </div>
 
                             </div>
-                            <div class="col-4">
+                            <div class="col-4">  <?php 
+                                    if ($summary) {  
+                                     
+                                           ?>
                                     <table class=" table-bordered text-center remove_datatable">
                                         <caption>Summary</caption>
                                         <thead class="bg-secondary text-white">
@@ -256,7 +255,7 @@
                                             <th><?php echo $value['Totaltc'];?></th>
                                         </tr>
                                     </table>
-                                </div>
+                               <?php }?>   </div>
                         </div>
                     </div>
                 </div>
@@ -274,7 +273,15 @@
             window.location = "<?php echo base_url()?>admin/Orders/deleteOrders/" + id;
         }
     }
-
+<?php if($this->session->flashdata('success')){ ?>
+    toastr.success("<?php echo $this->session->flashdata('success'); ?>");
+<?php }else if($this->session->flashdata('error')){  ?>
+    toastr.error("<?php echo $this->session->flashdata('error'); ?>");
+<?php }else if($this->session->flashdata('warning')){  ?>
+    toastr.warning("<?php echo $this->session->flashdata('warning'); ?>");
+<?php }else if($this->session->flashdata('info')){  ?>
+    toastr.info("<?php echo $this->session->flashdata('info'); ?>");
+<?php } ?>
     jQuery('.print_all').on('click', function (e) {
         var allVals = [];
         $(".sub_chk:checked").each(function () {

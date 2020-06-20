@@ -268,8 +268,9 @@
                 <div class="row well">
                   &nbsp; &nbsp;&nbsp; <a type="button" class="btn btn-info pull-left delete_all  btn-danger"
                     style="color:#fff;"><i class="mdi mdi-delete red"></i></a>
-                  &nbsp;&nbsp;<a type="button" class="btn btn-info pull-left print_all btn-success"
-                    style="color:#fff;"><i class="fa fa-print"></i></a>
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;<a type="button" class="btn btn-info   btn-success"  href='<?php echo base_url('/admin/design'); ?>'
+                    style="color:#fff;">Clear filter</a>
 
 
                 </div><br>
@@ -364,7 +365,7 @@
 <div id="edit" class="modal hide">
   <div class="modal-dialog" role="document ">
     <div class="modal-content">
-      <form class="form-horizontal" method="post" action="<?php echo base_url('admin/Design/edit/').$value->id ?>"
+      <form class="form-horizontal" method="post" action="<?php echo base_url('admin/Design/edit/') ?>"
         name="basic_validate" novalidate="novalidate" enctype="multipart/form-data">
         <div class="modal-header">
 
@@ -451,6 +452,7 @@
           </div>
         </div>
         <div class="modal-footer">
+         <input type="hidden"  name="designId" id='designId'>
           <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>"
             value="<?php echo $this->security->get_csrf_hash();?>">
           <input type="submit" value="Update" class="btn btn-primary">
@@ -487,7 +489,8 @@
          success: function(response)
          {
            response = JSON.parse(response); 
-           console.log(response['designPic']);
+         
+           $("#designId").val(id);
         $("#designName1").val(response['designName']);
         $("#designSeries1").val(response['designSeries']);
         $("#stitch1").val(response['stitch']);

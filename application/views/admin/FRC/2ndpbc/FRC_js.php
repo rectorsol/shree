@@ -1,5 +1,14 @@
 <script src="<?php echo base_url('jexcelmaster/')?>asset/js/jquery.3.1.1.js"></script>
 <script type="text/javascript">
+<?php if($this->session->flashdata('success')){ ?>
+    toastr.success("<?php echo $this->session->flashdata('success'); ?>");
+<?php }else if($this->session->flashdata('error')){  ?>
+    toastr.error("<?php echo $this->session->flashdata('error'); ?>");
+<?php }else if($this->session->flashdata('warning')){  ?>
+    toastr.warning("<?php echo $this->session->flashdata('warning'); ?>");
+<?php }else if($this->session->flashdata('info')){  ?>
+    toastr.info("<?php echo $this->session->flashdata('info'); ?>");
+<?php } ?>
   $(document).ready(function() {
  
     var count =0;
@@ -81,7 +90,7 @@ $(document).on('keypress',function(e) {
 
           $.ajax({
             type: "POST",
-            url: "<?= base_url()?>admin/orders/deleteorder",
+            url: "<?= base_url()?>admin/FRC/deletePbc",
             cache: false,
             data: {
               'ids': join_selected_values,
@@ -144,7 +153,7 @@ $(document).on('keypress',function(e) {
             $('.rate').val(data[0][0]['purchase_rate']);
              }else{
                $('#fresh_form').hide();
-               $("#msg").html("<h6 class='text-danger'><b>PBC Not Found </b></h6>");
+               toastr.error("PBC Not Found");
                 $('#fabric_id').val("");
                $('#fabric').val("");
              $('#Tquantity').val("");

@@ -1,5 +1,14 @@
 <script src="<?php echo base_url('jexcelmaster/')?>asset/js/jquery.3.1.1.js"></script>
 <script type="text/javascript">
+<?php if($this->session->flashdata('success')){ ?>
+    toastr.success("<?php echo $this->session->flashdata('success'); ?>");
+<?php }else if($this->session->flashdata('error')){  ?>
+    toastr.error("<?php echo $this->session->flashdata('error'); ?>");
+<?php }else if($this->session->flashdata('warning')){  ?>
+    toastr.warning("<?php echo $this->session->flashdata('warning'); ?>");
+<?php }else if($this->session->flashdata('info')){  ?>
+    toastr.info("<?php echo $this->session->flashdata('info'); ?>");
+<?php } ?>
   $(document).ready(function () {
 
     var count = 0;
@@ -118,7 +127,7 @@
 
           $.ajax({
             type: "POST",
-            url: "<?= base_url()?>admin/frc/delete",
+            url: "<?= base_url()?>admin/FRC/delete",
             cache: false,
             data: {
               'ids': join_selected_values,

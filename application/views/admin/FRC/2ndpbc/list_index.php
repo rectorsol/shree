@@ -14,10 +14,10 @@
                                     </tr>
                                 </thead>
                                 <tbody><?php
-                                        $id=1;$t=0.0;$q=0.0;
+                                        $id=1;$t=0.0;$q=0.0;$cq=0;
                                         foreach ($frc_data as $value) { 
                                           $t+=$value['tc'];
-                                          
+                                          $cq+=$value['current_stock']
                                           ?>
                                         <tr class="<?php if($value['parent']=='') {echo 'font-weight-bold text-primary'; $q+=$value['stock_quantity'];} ?>" id="tr_<?php echo $value['fsr_id']?>">
 
@@ -52,7 +52,9 @@
                                         <th><?php 
                                         echo $q;
                                            ?></th>
-                                        <th></th>  
+                                        <th><?php 
+                                        echo $cq;
+                                           ?></th>  
                                         <th></th>
                                         <th><?php 
                                         echo $t;

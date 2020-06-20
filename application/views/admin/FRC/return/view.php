@@ -14,10 +14,8 @@
 
         <div class="widget-box">
           <div class="widget-content nopadding">
-            <div class="col-6"><a type="button" class="btn btn-info pull-left print_all btn-success" style="color:#fff;"
-                target="_blank"><i class="fa fa-print"></i></a>
-            </div>
-            <hr>
+            
+           
             <table class="table-bordered data-table text-center table-responsive" id="frc">
               <caption style='caption-side : top' class=" text-info ">
                 <div class="row well container">
@@ -116,51 +114,7 @@
 
 
 <script>
-  jQuery('.print_all').on('click', function (e) {
-    var allVals = [];
-    $(".sub_chk:checked").each(function () {
-      allVals.push($(this).attr('data-id'));
-    });
-    //alert(allVals.length); return false;
-    if (allVals.length <= 0) {
-      alert("Please select row.");
-    } else {
-      //$("#loading").show();
-      WRN_PROFILE_DELETE = "Are you sure you want to Print this rows?";
-      var check = confirm(WRN_PROFILE_DELETE);
-      if (check == true) {
-        //for server side
-        var join_selected_values = allVals.join(",");
-        // alert (join_selected_values);exit;
-        var ids = join_selected_values.split(",");
-        var data = [];
-        $.each(ids, function (index, value) {
-          if (value != "") {
-            data[index] = value;
-          }
-        });
-        $.ajax({
-          type: "POST",
-          url: "<?= base_url()?>admin/FRC/return_print_multiple",
-          cache: false,
-          data: {
-            'ids': data,
-            'title': 'Challan Return Detail',
-            'type': 'return',
-            '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php  echo $this->security->get_csrf_hash(); ?>'
-          },
-          success: function (response) {
-            var w = window.open('about:blank');
-            w.document.open();
-            w.document.write(response);
-            w.document.close();
-          }
-        });
-        //for client side
-
-      }
-    }
-  });
+  
 </script>
 
 <?php include('FRC_js.php');?>

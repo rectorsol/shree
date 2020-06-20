@@ -302,7 +302,8 @@
 					$this->Frc_model->update($data3,'fsr_id',$data['fsr_id'][$i], 'fabric_stock_received');
 				}
 				
-			} redirect($_SERVER['HTTP_REFERER']);
+			} $this->session->set_flashdata('success', 'Added Successfully!!');
+			redirect($_SERVER['HTTP_REFERER']);
 		}
 		public function addPBC(){
 	        $data = array();
@@ -312,20 +313,56 @@
 		      $data['main_content'] = $this->load->view('admin/FRC/2ndpbc/2ndPbc', $data, TRUE);
   	      $this->load->view('admin/index', $data);
     	}
-          public function delete($id)
+          public function delete()
         {
             
            $ids = $this->input->post('ids');
 
 		 $userid= explode(",", $ids);
+		  if($userid){
 		 foreach ($userid as $value) {
-		  $this->db->delete( 'fabric_challan',array('id' => $value));
+			
+		  $this->Frc_model-> update(array('deleted' => 1),'fc_id',$value, 'fabric_challan');
+		  
+		  $this->Frc_model->update(array('deleted' => 1),'fabric_challan_id',$value, 'fabric_stock_received');
 			}
+		}
+			else{
+			$this->session->set_flashdata('error', 'OOPs..  Something went wrong !!');
+		}
+		$this->session->set_flashdata('success', 'Deleted Successfully!!');
         }
-  		public function delete_fda($id)
+  		public function deleteReturn()
         {
-            $this->FDA_model->delete($id);
-            redirect($_SERVER['HTTP_REFERER']);
+		   $id = $this->input->post('ids');
+
+		 $userid= explode(",", $id);
+		 if($userid){
+
+		 
+		 foreach ($userid as $value) {
+			$pbc=$this->Frc_model->get_parent_barcode($value);	
+			//print_r($pbc);exit;
+			if($pbc){
+				foreach($pbc[0] as $value1){
+					$data3=[
+					
+					'isStock' => 0
+					]	;
+					$this->Frc_model->update($data3,'parent_barcode',$value1, 'fabric_stock_received');
+					}
+				 $this->Frc_model-> update(array('deleted' => 1),'fc_id',$value, 'fabric_challan');
+		  
+		 		 $this->Frc_model->update(array('deleted' => 1),'fabric_challan_id',$value, 'fabric_stock_received');
+				}	
+				else{
+					$this->session->set_flashdata('error', 'OOPs..  Something went wrong !!');
+				}
+			}
+		}else{
+			$this->session->set_flashdata('error', 'OOPs..  Something went wrong !!');
+		}	
+		$this->session->set_flashdata('success', 'Deleted Successfully!!');	
         }
 		public function addRecieve(){
 			if($_POST){
@@ -393,7 +430,9 @@
 					$this->Frc_model->insert($data2, 'fabric_stock_received');
 				}
 				
-			} redirect($_SERVER['HTTP_REFERER']);
+			}
+					$this->session->set_flashdata('success', 'Added Successfully !!');
+				redirect($_SERVER['HTTP_REFERER']);
 		}
 		
 		public function EditRecieve(){
@@ -445,6 +484,9 @@
 				}
 				
 			} 
+			
+					$this->session->set_flashdata('success', 'Updated Successfully !!');
+				
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 
@@ -532,9 +574,13 @@
 					}
 				}
 				}else{
-					 $this->session->set_flashdata('msg','Please enter some value'); 
+					 $this->session->set_flashdata('info','Please enter some value'); 
 				}
-			} redirect($_SERVER['HTTP_REFERER']);
+			} 
+			
+					$this->session->set_flashdata('success', 'Updated Successfully !!');
+				
+			redirect($_SERVER['HTTP_REFERER']);
 		}
 		
 	   public function submitPbc(){
@@ -584,6 +630,9 @@
 				}
 				
 			} 
+			
+					$this->session->set_flashdata('success', 'Added Successfully !!');
+				
 			redirect($_SERVER['HTTP_REFERER']);
 	}
 		 
@@ -677,7 +726,9 @@
 					echo json_encode($data['pbc']);
 						
 				}else{
-				echo "0";
+				
+					$this->session->set_flashdata('info', 'Not found !!');
+				
 				} 
 
 	}
@@ -694,7 +745,12 @@
 					'tc' => $tc,
 					'isSecond' =>1
 				]	;
-					$this->Frc_model->update($data3,'parent_barcode',$pbc, 'fabric_stock_received');
+				$done=	$this->Frc_model->update($data3,'parent_barcode',$pbc, 'fabric_stock_received');
+				if($done){
+					$this->session->set_flashdata('success', 'Updated Successfully !!');
+				}else{
+					$this->session->set_flashdata('error', 'OOPs..  Something went wrong !!');
+				}
 	}
 	
 	public function getfabric()
@@ -729,7 +785,13 @@
 								$data['frc_data']=$this->Frc_model->search($data1);
 
 					}else{
-
+						
+						if(isset($_POST['challan_to']) && $_POST['challan_to']!="" ){
+						  $data1['cat'][]='challan_to';
+						  $fab=$this->input->post('challan_to');
+							$data1['Value'][]=$fab;
+							$caption=$caption.'Godown'." = ".$fab." ";
+							}
 						if(isset($_POST['fabricName']) && $_POST['fabricName']!="" ){
 						  $data1['cat'][]='fabricName';
 						  $fab=$this->input->post('fabricName');
@@ -737,7 +799,7 @@
 							$caption=$caption.'Fabric Name'." = ".$fab." ";
 							}
 						if(isset($_POST['pbc']) && $_POST['pbc']!="" ){
-							$data1['cat'][]='pbc';
+							$data1['cat'][]='parent_barcode';
 								$fab=$this->input->post('pbc');
 								$data1['Value'][]=$fab;
 							$caption=$caption.'PBC'." = ".$fab." ";
@@ -767,31 +829,31 @@
 							$caption=$caption.'Ad_no'." = ".$fab." ";
 							}
 						if(isset($_POST['unit']) && $_POST['unit']!="" ){
-						   $data1['cat'][]='stock_unit';
+						   	$data1['cat'][]='stock_unit';
 								$fab=$this->input->post('unit');
-						$data1['Value'][]=$fab;
-							$caption=$caption.'Unit'." = ".$fab." ";
+								$data1['Value'][]=$fab;
+								$caption=$caption.'Unit'." = ".$fab." ";
 							}
 							if(isset($_POST['rate']) && $_POST['rate']!="" ){
-						   $data1['cat'][]='purchase_rate';
+						   		$data1['cat'][]='purchase_rate';
 								$fab=$this->input->post('rate');
 								$data1['Value'][]=$fab;
-							$caption=$caption.'Purchase_Rate'." = ".$fab." ";
+								$caption=$caption.'Purchase_Rate'." = ".$fab." ";
 							}
 						if(isset($_POST['total']) && $_POST['total']!="" ){
-						  $data1['cat'][]='total_value';
+						  	$data1['cat'][]='total_value';
 								$fab=$this->input->post('total');
 							$data1['Value'][]=$fab;
 							$caption=$caption.'Total'." = ".$fab." ";
 							}
-	            if(isset($_POST['current_stock']) && $_POST['current_stock']!="" ){
-						  $data1['cat'][]='current_stock';
+	            		if(isset($_POST['current_stock']) && $_POST['current_stock']!="" ){
+						  	$data1['cat'][]='current_stock';
 							$fab=$this->input->post('current_stock');
 							$data1['Value'][]=$fab;
 							$caption=$caption.'Curr_qty'." = ".$fab." ";
 							}
 							if(isset($_POST['fabric_type']) && $_POST['fabric_type']!="" ){
-						  $data1['cat'][]='fabric_type';
+						  	$data1['cat'][]='fabric_type';
 							$fab=$this->input->post('fabric_type');
 							$data1['Value'][]=$fab;
 							$caption=$caption.'fab_type'." = ".$fab." ";
@@ -850,8 +912,14 @@
 									$data1['Value'][]=$fab;
 									$caption=$caption.'total_tc'." = ".$fab." ";
 									}
-						//echo"<pre>";	print_r( $data1); exit;
-						$data['frc_data']=$this->Frc_model->search($data1);
+									if(isset($data1['cat']) && $data1['Value'] ){
+										//echo"<pre>";	print_r( $data1); exit;
+										$data['frc_data']=$this->Frc_model->search($data1);
+									}else{
+										$this->session->set_flashdata('error', 'please enter some keyword');
+									redirect($_SERVER['HTTP_REFERER']);	
+									}
+						
 
 
 						}
@@ -860,7 +928,7 @@
 							$data['febName']=$this->Common_model->febric_name();
 							$data['content'] = $this->load->view('admin/FRC/stock/index', $data, TRUE);
 			     		$data['main_content'] = $this->load->view('admin/FRC/stock/stock', $data, TRUE);
-	  	      	$this->load->view('admin/index', $data);
+	  	      			$this->load->view('admin/index', $data);
 
 								}elseif($data1['type']=='pbc'){
 									$data['caption']=$caption;

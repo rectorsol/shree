@@ -33,7 +33,7 @@
 
                         <select id="searchByCat" name="searchByCat" class="form-control form-control-sm" required>
                           <option value="">-- Select Category --</option>
-
+                           <option value="challan_to">Godown</option>
                           <option value="parent_barcode">PBC</option>
                           <option value="fabricName">fabricName</option>
                           <option value="challan_no">Challan no</option>
@@ -81,7 +81,7 @@
                           <th>Fabric_name</th>
                           <th>PbC</th>
                           <th>Challan</th>
-                          <th>Fab Type</th>
+                         <th>Godown</th>
                         </tr>
                       </thead>
                       <tr>
@@ -103,10 +103,11 @@
                         <td>
                           <input type="text" name="challan" class="form-control form-control-sm" value=""
                             placeholder="challan"></td>
-                        <td>
-                          <input type="text" name="fabric_type" class="form-control form-control-sm" value=""
-                            placeholder="Fab Type"></td>
+                        <td colspan='2'>
+                          <input type="text" name="challan_to" class="form-control form-control-sm" value=""
+                            placeholder="Godown"></td>
                       </tr>
+                       <th>Fab Type</th>
                       <th>Curr Qty</th>
                       <th>Color</th>
                       <th>Ad No</th>
@@ -115,6 +116,9 @@
                       <th>Total</th>
 
                       <tr>
+                      <td>
+                          <input type="text" name="fabric_type" class="form-control form-control-sm" value=""
+                            placeholder="Fab Type"></td>
                         <td>
                           <input type="text" name="current_stock" class="form-control form-control-sm" value=""
                             placeholder="Curr Qty"></td>
@@ -169,12 +173,8 @@
           <div class="widget-box">
             <div class="widget-content nopadding">
               <div class="row well">
-                <div class="col-6"> <a type="button" class="btn btn-info pull-left delete_all  btn-danger"
-                    style="color:#fff;"><i class="mdi mdi-delete red"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  &nbsp;&nbsp;<a type="button" class="btn btn-info pull-left print_all btn-success" target="_blank"
-                    style="color:#fff;"><i class="fa fa-print"></i></a>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  &nbsp;&nbsp;<a type="button" class="btn  pull-left print_all_barcode btn-success" target="_blank"
+                <div class="col-6"> 
+                  <a type="button" class="btn  pull-left print_all_barcode btn-success" target="_blank"
                     style="color:#fff;"><i class="fa fa-print"></i></a>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   &nbsp;&nbsp;<a type="button" class="btn btn-info   btn-success"  href='<?php echo base_url('/admin/FRC/show_stock'); ?>'
@@ -264,54 +264,17 @@
 
 <script>
   $(document).ready(function () {
-
+<?php if($this->session->flashdata('success')){ ?>
+    toastr.success("<?php echo $this->session->flashdata('success'); ?>");
+<?php }else if($this->session->flashdata('error')){  ?>
+    toastr.error("<?php echo $this->session->flashdata('error'); ?>");
+<?php }else if($this->session->flashdata('warning')){  ?>
+    toastr.warning("<?php echo $this->session->flashdata('warning'); ?>");
+<?php }else if($this->session->flashdata('info')){  ?>
+    toastr.info("<?php echo $this->session->flashdata('info'); ?>");
+<?php } ?>
   });
-  jQuery('.print_all').on('click', function (e) {
-    var allVals = [];
-    $(".sub_chk:checked").each(function () {
-      allVals.push($(this).attr('data-id'));
-    });
-    //alert(allVals.length); return false;
-    if (allVals.length <= 0) {
-      alert("Please select row.");
-    } else {
-      //$("#loading").show();
-      WRN_PROFILE_DELETE = "Are you sure you want to Print this rows?";
-      var check = confirm(WRN_PROFILE_DELETE);
-      if (check == true) {
-        //for server side
-        var join_selected_values = allVals.join(",");
-        // alert (join_selected_values);exit;
-        var ids = join_selected_values.split(",");
-        var data = [];
-        $.each(ids, function (index, value) {
-          if (value != "") {
-            data[index] = value;
-          }
-        });
-        $.ajax({
-          type: "POST",
-          url: "<?= base_url()?>admin/FRC/return_print_multiple",
-          cache: false,
-          data: {
-            'ids': data,
-            'title': 'Stock of Plain Fabric',
-            'type': 'stock',
-            '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php  echo $this->security->get_csrf_hash(); ?>'
-          },
-          success: function (response) {
-            var w = window.open('about:blank');
-            w.document.open();
-            w.document.write(response);
-            w.document.close();
-            // $("body").html(response);
-          }
-        });
-        //for client side
-
-      }
-    }
-  });
+  
   jQuery('.print_all_barcode').on('click', function (e) {
     var allVals = [];
     $(".sub_chk:checked").each(function () {

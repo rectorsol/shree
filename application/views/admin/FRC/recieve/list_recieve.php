@@ -18,7 +18,7 @@
               </div>
               <div id="collapseOne" class="collapse show" data-parent="#accordion">
                 <div class="modal-body">
-                  <form action="<?php echo base_url('/admin/frc/filter'); ?>" method="post">
+                  <form action="<?php echo base_url('/admin/FRC/filter'); ?>" method="post">
                     <div class="form-row">
                       <div class="col-2">
                         <input type="date" name="date_from" class="form-control form-control-sm"
@@ -65,7 +65,7 @@
               </div>
               <div id="collapseTwo" class="collapse" data-parent="#accordion">
                 <div class="modal-body">
-                  <form action="<?php echo base_url('/admin/frc/filter'); ?>" method="post">
+                  <form action="<?php echo base_url('/admin/FRC/filter'); ?>" method="post">
                     <table class=" remove_datatable">
                       <caption>Advance Filter</caption>
                       <thead>
@@ -141,12 +141,12 @@
               <div class="row well">
                 <div class="col-6"> <a type="button" class="btn btn-info pull-left delete_all  btn-danger"
                     style="color:#fff;"><i class="mdi mdi-delete red"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  &nbsp;&nbsp;<a type="button" class="btn btn-info pull-left print_all btn-success" style="color:#fff;"
-                    target="_blank"><i class="fa fa-print"></i></a>
+                  &nbsp;&nbsp;<a type="button" class="btn btn-info   btn-success"  href='<?php echo base_url('/admin/FRC/showRecieveList'); ?>'
+                    style="color:#fff;">Clear filter</a>
                 </div>
                 <div class="col-6">
 
-                   <form action="<?php echo base_url('/admin/frc/showRecieveList'); ?>" method="post">
+                   <form action="<?php echo base_url('/admin/FRC/showRecieveList'); ?>" method="post">
 
                     <div class="form-row ">
                       <div class="col-5">
@@ -193,7 +193,10 @@
               </table>
               <hr>
               <div class="row well">
-
+                   <?php 
+                                    if ($summary) {  
+                                     
+                                           ?>
                 <div class="col-8"> </div>
                 <div class="col-4">
                   <table class=" table-bordered text-center remove_datatable">
@@ -225,7 +228,8 @@
                     </tr>
                   </table>
                 </div>
-              </div>
+              </div> 
+              <?php }?>
             </div>
           </div>
         </div>

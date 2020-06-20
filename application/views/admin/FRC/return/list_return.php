@@ -16,7 +16,7 @@
               </div>
               <div id="collapseOne" class="collapse show" data-parent="#accordion">
                 <div class="modal-body">
-                  <form action="<?php echo base_url('/admin/frc/filter'); ?>" method="post">
+                  <form action="<?php echo base_url('/admin/FRC/filter'); ?>" method="post">
                     <div class="form-row">
                       <div class="col-2">
                         <input type="date" name="date_from" class="form-control form-control-sm"
@@ -62,7 +62,7 @@
               </div>
               <div id="collapseTwo" class="collapse" data-parent="#accordion">
                 <div class="modal-body">
-                  <form action="<?php echo base_url('/admin/frc/filter'); ?>" method="post">
+                  <form action="<?php echo base_url('/admin/FRC/filter'); ?>" method="post">
                     <table class=" remove_datatable">
                       <caption>Advance Filter</caption>
                       <thead>
@@ -136,11 +136,11 @@
               <div class="row well">
                 <div class="col-6"><a type="button" class="btn btn-info pull-left delete_all  btn-danger"
                     style="color:#fff;"><i class="mdi mdi-delete red"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  &nbsp;&nbsp;<a type="button" class="btn btn-info pull-left print_all btn-success"
-                    style="color:#fff;" target="_blank"><i class="fa fa-print"></i></a>
+                  &nbsp;&nbsp;<a type="button" class="btn btn-info   btn-success"  href='<?php echo base_url('/admin/FRC/showReturnList'); ?>'
+                    style="color:#fff;">Clear filter</a>
                 </div>
                 <div class="col-6">
-                  <form action="<?php echo base_url('/admin/frc/showReturnList'); ?>" method="post">
+                  <form action="<?php echo base_url('/admin/FRC/showReturnList'); ?>" method="post">
 
                     <div class="form-row ">
                       <div class="col-5">
@@ -163,7 +163,7 @@
                 </div>
               </div>
               <hr>
-              <table class=" table table-bordered  text-center table-responsive">
+              <table class="  table-bordered data-table text-center table-responsive">
                 <thead class="bg-dark text-white">
                   <tr class="odd" role="row">
                     <th><input type="checkbox" class="sub_chk" id="master"></th>
@@ -244,6 +244,7 @@
       window.location = "<?php echo base_url()?>admin/Orders/deleteOrders/" + id;
     }
   }
+  
    jQuery('.print_all').on('click', function(e) {
   var allVals = [];
    $(".sub_chk:checked").each(function() {

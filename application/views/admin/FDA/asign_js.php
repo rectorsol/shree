@@ -77,7 +77,7 @@
           },
           success: function(data) {
             if (data.error) {
-              toastr.error('Faild!', data.msg);
+              toastr.error('Failed!', data.msg);
               $("#show").html('');
             }else{
               toastr.success('Success!', data.msg);
