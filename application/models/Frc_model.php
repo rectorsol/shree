@@ -42,7 +42,7 @@ public function get($data)
     $this->db->where('fabric_challan.challan_date >=', $data['from']);
    $this->db->where('fabric_challan.challan_date <=', $data['to']);
    }
-   $this->db->where('fabric_challan.deleted ', 0); 
+   $this->db->where('fabric_challan.deleted', 0); 
   $this->db->join('sub_department sb1','sb1.id=fabric_challan.challan_from  ','left');
  $this->db->join('sub_department sb2','sb2.id=fabric_challan.challan_to  ','left');
    $query = $this->db->get();
@@ -62,7 +62,7 @@ public function get($data)
     $this->db->where('fabric_challan.challan_date >=', $data['from']);
    $this->db->where('fabric_challan.challan_date <=', $data['to']);
    }
-   $this->db->where('fabric_challan.deleted ', 0); 
+   $this->db->where('fabric_challan.deleted', 0); 
   $this->db->group_by('fabric_type');
    $query = $this->db->get();
    $query = $query->result_array();
@@ -89,7 +89,7 @@ public function get_by_id($id)
    $this->db->from('fabric_stock_received');
   
    $this->db->where("fabric_challan_id", $id);
-   $this->db->where('deleted ', 0); 
+   $this->db->where('deleted', 0); 
     $this->db->join('fabric','fabric.id=fabric_stock_received.fabric_id','inner');
  
  

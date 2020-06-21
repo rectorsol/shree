@@ -17,7 +17,6 @@
                 }
             },
             
-            
         ],
          scrollY:        500,
         scrollX:        false,

@@ -1,6 +1,6 @@
                                       <thead class="bg-dark text-white">
                                     <tr >
-                                        <th><input type="checkbox" class="sub_chk" id="master"></th>
+                                        <th>Sno</th>
                                         <th>Date</th>
                                         <th>PBC</th>
                                         <th>Fabric</th> 
@@ -21,7 +21,7 @@
                                           ?>
                                         <tr class="<?php if($value['parent']=='') {echo 'font-weight-bold text-primary'; $q+=$value['stock_quantity'];} ?>" id="tr_<?php echo $value['fsr_id']?>">
 
-                                          <td><input type="checkbox" class="sub_chk" data-id="<?php echo $value['fsr_id'] ?>"> <span class="label label-info"><?php echo $id?></span></td>
+                                          <td> <span class="label label-info"><?php echo $id?></span></td>
                                           <td><?php $date=date_create($value['created_date']);echo date_format($date,"d-m-y "); ?></td>
 
                                           

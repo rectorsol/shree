@@ -146,9 +146,7 @@
 
                     <div class="widget-box">
                       <div class="row well" >
-                            <div class="col-6"> <a type="button" class="btn btn-info pull-left delete_all  btn-danger"
-                    style="color:#fff;"><i class="mdi mdi-delete red"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  &nbsp;&nbsp;
+                            <div class="col-6"> 
                   <a type="button" class="btn btn-info   btn-success"  href='<?php echo base_url('/admin/FRC/Show_PBC'); ?>'
                     style="color:#fff;">Clear filter</a>
                              </div><div class="col-6">

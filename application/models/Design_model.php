@@ -6,7 +6,8 @@ class Design_model extends CI_Model {
 	public function add($data)
 	{
 		// print_r($data); exit();
-		$this->db->insert('design', $data);
+    return($this->db->insert('design', $data));
+    
 	}
 	public function get($limit, $start)
 	{
@@ -33,17 +34,7 @@ class Design_model extends CI_Model {
 		$this->db->where('id', $id);
      	$this->db->delete('design');
 	}
-	public function search($searchByCat,$searchValue)
-	{
-		$this->db->select('*');
-		$this->db->from('design');
-		$this->db->like($searchByCat, $searchValue);
-		$rec=$this->db->get();
-		return $rec->result_array();
-		// print_r($searchValue);
-		// print_r($this->db->last_query());
-
-	}
+	
   public function get_single_value_by_id($id)
   {
     $this->db->select('*');
@@ -134,7 +125,28 @@ function getLastId(){
     			$query = $query->row();
     			return $query;
     		}
-
+    public function search1($data)
+    {
+     
+        $this->db->select('*');
+        $this->db->from('design_view');
+        $this->db->limit($data['per_page'], $data['page']);
+        if (!is_array($data['cat'])) {
+          if ($data['cat'] != "") {
+            $this->db->where($data['cat'], $data['Value']);
+          }
+        } else {
+          $count = count($data['cat']);
+          for ($i = 0; $i < $count; $i++) {
+            $this->db->like($data['cat'][$i], $data['Value'][$i]);
+          }
+        }
+     
+      $rec = $this->db->get();
+      //echo $this->db->last_query($rec);exit;
+      return $rec->result();
+    }
+              //end arti
 }
 
 /* End of file Branch_model.php */

@@ -44,9 +44,6 @@
                   <th>Hsn </th>
                   <th>Total qty</th>
 
-                  <th>Curr qty</th>
-
-
                   <th>Color</th>
                   <th>Ad_no</th>
                   <th>P_ code </th>
@@ -72,7 +69,7 @@
 
                   <td><?php echo $value['stock_quantity']?></td>
 
-                  <td><?php echo $value['current_stock']?></td>
+                 
                   <td><?php echo $value['color_name']?></td>
                   <td><?php echo $value['ad_no'];?></td>
                   <td><?php echo $value['purchase_code'];?></td>
@@ -92,7 +89,7 @@
                   <th></th>
                   <th>Total</th>
                   <th id="th_qty"><?php echo $total_qty ?></th>
-                  <th></th>
+                 
                   <th> </th>
                   <th></th>
 

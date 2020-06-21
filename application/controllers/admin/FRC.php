@@ -912,7 +912,7 @@
 									$data1['Value'][]=$fab;
 									$caption=$caption.'total_tc'." = ".$fab." ";
 									}
-									if(isset($data1['cat']) && $data1['Value'] ){
+									if(isset($data1['cat']) && isset($data1['Value']) ){
 										//echo"<pre>";	print_r( $data1); exit;
 										$data['frc_data']=$this->Frc_model->search($data1);
 									}else{
