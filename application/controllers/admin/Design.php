@@ -20,9 +20,20 @@ class Design extends CI_Controller
 
 	public function index()
 	{
+		$data = array();
 		$config=$this->pagination_Config();
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-		$data = array();
+		if($page==0){
+			$start = (int) $this->uri->segment(3) * $config['per_page'] + 1;
+			$end = (int) $this->uri->segment(3) + $config['per_page'];
+		}else{
+			$start = ((int) $this->uri->segment(3)-1 )* $config['per_page'] + 1;
+			$end = ((int) $this->uri->segment(3) * $config['per_page'] > $config['total_rows']) ? $config['total_rows'] : (int) $this->uri->segment(3) * $config['per_page'] ;
+		}
+		
+
+		$data['result_count'] = "Showing " . $start . " - " . $end . " of " . $config['total_rows'] . " Results";
+		
 		$data["links"] = $this->pagination->create_links();
 		$data['caption'] = ' Design List';
 		$data['design_data'] = $this->Design_model->get($config["per_page"], $page);
@@ -231,7 +242,7 @@ class Design extends CI_Controller
 		$data1 = array();
 		$this->security->xss_clean($_POST);
 		if ($_POST) {
-			//	echo"<pre>";	print_r($_POST); exit;
+				echo"<pre>";	print_r($_POST); exit;
 			
 			$data1['search'] = $this->input->post('search');
 			
@@ -354,6 +365,10 @@ class Design extends CI_Controller
 		$config["per_page"] = 100;
 		$config["uri_segment"] = 3;
 		$config['use_page_numbers'] = TRUE;
+		$config['num_links'] =9;
+		$config['reuse_query_string'] = TRUE;
+		$config['display_pages'] = TRUE;
+		
 		$config['next_link']        = 'Next';
 		$config['prev_link']        = 'Prev';
 		$config['first_link']       = 'First';

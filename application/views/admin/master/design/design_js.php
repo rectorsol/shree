@@ -27,8 +27,8 @@
       scrollX: true,
       scrollCollapse: false,
       paging: false,
-      select: true
-
+      select: true,
+       "info": false
     });
 
     jQuery('.delete_all').on('click', function(e) {

@@ -302,11 +302,16 @@ public function select($table)
     // print_r($this->db->last_query());
     return $rec->result_array();
   }
- public function select_PBC()
+ public function select_PBC($data)
  {
    $this->db->select('*');
    $this->db->from('second_pbc_view');
-   
+    if ($data['from'] == $data['to']) {
+      $this->db->where('created_date ', $data['from']);
+    } else {
+      $this->db->where('created_date >=', $data['from']);
+      $this->db->where('created_date <=', $data['to']);
+    }
    $rec=$this->db->get();
    //echo $this->db->last_query();exit;
    return $rec->result_array();

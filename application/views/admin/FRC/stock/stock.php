@@ -200,12 +200,12 @@
                   <a type="button" class="btn  pull-left  btn-success" target="_blank" id='Print_summary'><i class="fa fa-print"></i></a>
                   <hr>
                   <?php if (isset($frc_data['summary'])) {; ?>
-                    <table class=" table-bordered  text-center  table-responsive " id='dt_summary'>
+                    <table class=" table-bordered data-table text-center  table-responsive " id='dt_summary'>
                       <tr>
                         <caption class="text-center text-info" style='caption-side : top'>Summary</caption>
                         <?php foreach ($frc_data['type'] as $fabtype) { ?>
-                          <td>
-                            <table class=" table-bordered   text-center  table-responsive ">
+                          <td class="align-top">
+                            <table class=" table-bordered  data-table text-center  table-responsive ">
                               <caption class="text-center text-info" style='caption-side : top'><?php echo $fabtype['type'] ?></caption>
                               <thead>
                                 <th>Fabric</th>

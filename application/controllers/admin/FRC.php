@@ -47,10 +47,12 @@
 			  $data['from']=$this->input->post('date_from');
 			  $data['to']=$this->input->post('date_to');
 			  $data['type']=$this->input->post('type');
+			$data['caption'] = 'From : ' . $data['from'] . ' - To : ' . $data['to'];
 				}else{
 			$data['type']='recieve';
 			$data['to']=date('Y-m-d');
 			$data['from']=date('Y-m-01');
+			$data['caption'] = 'Challan Receive List';
 				}
 			$data['frc_data']=$this->Frc_model->get($data);
 			$data['summary']=$this->Frc_model->get_summary($data);
@@ -68,10 +70,12 @@
 			  $data['from']=$this->input->post('date_from');
 			  $data['to']=$this->input->post('date_to');
 			  $data['type']=$this->input->post('type');
+			$data['caption'] = 'From : ' . $data['from'] . ' - To : ' . $data['to'];
 				}else{
 			$data['type']='return';
 			$data['to']=date('Y-m-d');
 			$data['from']=date('Y-m-01');
+			$data['caption'] = 'Challan Return List';
 				}
 			$data['frc_data']=$this->Frc_model->get($data);
 			$data['summary']=$this->Frc_model->get_summary($data);
@@ -198,16 +202,16 @@
 		
 		public function show_tc(){
 	        $data = array();
-			$data['name']='FRC List';
+			$data['name']='TC List';
 			$data['febName']=$this->Common_model->febric_name();
 			$data['type']='tc';
 			if ($_POST) {
              
 			  $data['from']=$this->input->post('date_from');
 			  $data['to']=$this->input->post('date_to');
-			 
+			$data['caption'] = 'From : ' . $data['from'] . ' - To : ' . $data['to'];
 				}else{
-			
+			$data['caption'] = 'TC List';
 			$data['to']=date('Y-m-d');
 			$data['from']=date('Y-m-01');
 				}
@@ -638,18 +642,18 @@
 		 
 		public function Show_PBC(){
 			 $data = array();
-	        $data['name']='Show PBC';
+	        
 			if ($_POST) {
-             
+			
 			  $data['from']=$this->input->post('date_from');
 			  $data['to']=$this->input->post('date_to');
-			 
+			$data['caption'] = 'From : '. $data['from']. ' - To : '. $data['to'];
 				}else{
-			
+			$data['caption'] = 'Show PBC';
 			$data['to']=date('Y-m-d');
 			$data['from']=date('Y-m-01');
 				}
-			$data['frc_data']=$this->Frc_model->select_PBC();
+			$data['frc_data']=$this->Frc_model->select_PBC($data);
 			$data['content'] = $this->load->view('admin/FRC/2ndpbc/list_index', $data, TRUE);
 		    $data['main_content'] = $this->load->view('admin/FRC/2ndpbc/showPBC', $data, TRUE);
   	      	$this->load->view('admin/index', $data);

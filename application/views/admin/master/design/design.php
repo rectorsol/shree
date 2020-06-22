@@ -137,11 +137,16 @@
                         <div class="col-3">
                           <input type="text" name="searchValue" class="form-control form-control-sm" value="" placeholder="Search" required>
                         </div>
+
                         <input type="hidden" name="type" value="design"><input type="hidden" name="search" value="simple">
                         <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" />
                         <button type="submit" name="search" value="simple" class="btn btn-info btn-xs"> <i class="fas fa-search"></i> Search</button>
+                       
                       </div>
                     </form>
+
+
+
                   </div>
                 </div>
               </div>
@@ -170,7 +175,7 @@
                           </tr>
                         </thead>
                         <tr>
-                          
+
                           <td><input type="text" name="designName" class="form-control form-control-sm" value="" placeholder="designName"></td>
 
                           <td><input type="text" name="designSeries" class="form-control form-control-sm" value="" placeholder="design Series"></td>
@@ -230,7 +235,6 @@
                   &nbsp; &nbsp;&nbsp; <a type="button" class="btn btn-info pull-left delete_all  btn-danger" style="color:#fff;"><i class="mdi mdi-delete red"></i></a>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   &nbsp;&nbsp;<a type="button" class="btn btn-info   btn-success" href='<?php echo base_url('/admin/design'); ?>' style="color:#fff;">Clear filter</a>
-
 
                 </div>
                 <hr>
@@ -310,6 +314,7 @@
                     } ?>
                   </tbody>
                 </table>
+                <?php echo $result_count; ?>
                 <?php echo $links ?>
 
 
