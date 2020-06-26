@@ -85,17 +85,12 @@ class Design_model extends CI_Model {
         }
     }
   //
-  // public function delete_data($ids){
-  // //  echo $ids;exit;
-  //    $userid= explode(",",$ids){
-  //      echo print_r($userid);exit;
-  //       $this->db->delete('design', 'id' => $userid);
-  //     }
-  //       $this->db->last_query();exit;
-  //
-  //
-  //    return 1;
-  // }
+  public function update($data){
+      $this->db->where($data['searchByCat'], $data['searchValue'] );
+      $this->db->update('design', array($data['searchByCat'] => $data['replaceValue']));
+      return true;
+     
+  }
 
   function select_value($table,$id){
     // echo $id.$table;exit;

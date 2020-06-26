@@ -157,6 +157,8 @@
                 <div class="col-6">
                   <a type="button" class="btn  pull-left print_all_barcode btn-success" target="_blank" style="color:#fff;"><i class="fa fa-print"></i></a>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;<a type="button" class="btn  pull-left  btn-warning" id='print_all_barcode1' target="_blank" style="color:#fff;"><i class="fa fa-print"></i></a>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   &nbsp;&nbsp;<a type="button" class="btn btn-info   btn-success" href='<?php echo base_url('/admin/FRC/show_stock'); ?>' style="color:#fff;">Clear filter</a>
                 </div>
                 <div class="col-6">
@@ -197,7 +199,8 @@
                 </div>
 
                 <div id="summary" class="tab-pane fade p-20" role="tabpanel">
-                  <a type="button" class="btn  pull-left  btn-success" target="_blank" id='Print_summary'><i class="fa fa-print"></i></a>
+                  <a type="button" class="btn  pull-left  btn-info" target="_blank" id='Print_summary' style="color:#fff;"><i class="fa fa-print"></i></a>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a type="button" class="btn  pull-left  btn-info" id='Excel' style="color:#fff;">Excel</a>
                   <hr>
                   <?php if (isset($frc_data['summary'])) {; ?>
                     <table class=" table-bordered data-table text-center  table-responsive " id='dt_summary'>
@@ -271,8 +274,15 @@
 
           $('#Print_summary').on('click', function() {
             printData();
-          })
 
+          })
+          $('#Excel').on('click', function() {
+
+            var htmltable = document.getElementById('dt_summary');
+            var html = htmltable.outerHTML;
+            window.open('data:application/vnd.ms-excel,' + encodeURIComponent(html));
+
+          })
           <?php if ($this->session->flashdata('success')) { ?>
             toastr.success("<?php echo $this->session->flashdata('success'); ?>");
           <?php } else if ($this->session->flashdata('error')) {  ?>
@@ -315,6 +325,51 @@
                   'ids': data,
                   'title': 'Challan Receive Detail',
                   'type': 'barcode',
+                  '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'
+                },
+                success: function(response) {
+                  var w = window.open('about:blank');
+                  w.document.open();
+                  w.document.write(response);
+                  w.document.close();
+                }
+              });
+              //for client side
+
+            }
+          }
+        });
+        jQuery('#print_all_barcode1').on('click', function(e) {
+          var allVals = [];
+          $(".sub_chk:checked").each(function() {
+            allVals.push($(this).attr('data-id'));
+          });
+          //alert(allVals.length); return false;
+          if (allVals.length <= 0) {
+            alert("Please select row.");
+          } else {
+            //$("#loading").show();
+            WRN_PROFILE_DELETE = "Are you sure you want to Print this rows?";
+            var check = confirm(WRN_PROFILE_DELETE);
+            if (check == true) {
+              //for server side
+              var join_selected_values = allVals.join(",");
+              // alert (join_selected_values);exit;
+              var ids = join_selected_values.split(",");
+              var data = [];
+              $.each(ids, function(index, value) {
+                if (value != "") {
+                  data[index] = value;
+                }
+              });
+              $.ajax({
+                type: "POST",
+                url: "<?= base_url() ?>admin/FRC/return_print_multiple",
+                cache: false,
+                data: {
+                  'ids': data,
+                  'title': 'Challan Receive Detail',
+                  'type': 'barcode1',
                   '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'
                 },
                 success: function(response) {

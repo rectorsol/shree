@@ -123,7 +123,8 @@
                     <div class="widget-box">
                         <div class="widget-content nopadding">
                             <div class="row well">
-                                <div class="col-6"> <a type="button" class="btn btn-info   btn-success" href='<?php echo base_url('/admin/FRC/show_tc'); ?>' style="color:#fff;">Clear filter</a>
+                                <div class="col-6"><a type="button" class="btn btn-info pull-left delete_all  btn-danger" style="color:#fff;"><i class="mdi mdi-delete red"></i></a>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a type="button" class="btn btn-info   btn-success" href='<?php echo base_url('/admin/FRC/show_tc'); ?>' style="color:#fff;">Clear filter</a>
                                 </div>
                                 <div class="col-6">
 
@@ -149,65 +150,65 @@
                                 </div>
                             </div>
                             <hr>
-                           
-
-                                
-                                    <table class=" table-bordered data-table text-center table-responsive" id="frc">
-                                        <caption style='caption-side : top' class=" text-info">
-                                            <h6 class="text-center"> <?php echo $caption; ?></h6>
-                                        </caption>
-                                        <thead class="bg-dark text-white">
-                                            <tr class="odd" role="row">
-                                                <th>Sno</th>
-                                                <th>Date</th>
 
 
-                                                <th>Challan no</th>
+
+                            <table class=" table-bordered data-table text-center table-responsive" id="frc">
+                                <caption style='caption-side : top' class=" text-info">
+                                    <h6 class="text-center"> <?php echo $caption; ?></h6>
+                                </caption>
+                                <thead class="bg-dark text-white">
+                                    <tr class="odd" role="row">
+                                        <th><input type="checkbox" class="sub_chk" id="master"></th>
+                                        <th>Date</th>
 
 
-                                                <th>Quantity</th>
-                                                <th>Total PCS</th>
-                                                <th>Total tc</th>
-
-                                                <th>View</th>
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            $c = 1;
-                                            foreach ($frc_data as $value) { ?>
-                                                <tr class="gradeU" id="tr_<?php echo $value['fc_id'] ?>">
-
-                                                    <td> <span class="label label-info"><?php echo $c ?></span></td>
-                                                    <td><?php $date = date_create($value['challan_date']);
-                                                        echo date_format($date, "d-m-y "); ?>
-                                                    </td>
+                                        <th>Challan no</th>
 
 
-                                                    <td><?php echo $value['challan_no']; ?></td>
+                                        <th>Quantity</th>
+                                        <th>Total PCS</th>
+                                        <th>Total tc</th>
+
+                                        <th>View</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $c = 1;
+                                    foreach ($frc_data as $value) { ?>
+                                        <tr class="gradeU" id="tr_<?php echo $value['fc_id'] ?>">
+
+                                            <td><input type="checkbox" class="sub_chk hover" data-id="<?php echo $value['fc_id'] ?> "> <span class="label label-info"><?php echo $c ?></span></td>
+                                            <td><?php $date = date_create($value['challan_date']);
+                                                echo date_format($date, "d-m-y "); ?>
+                                            </td>
 
 
-                                                    <td><?php echo $value['total_quantity'] ?></td>
-                                                    <td><?php echo $value['total_pcs'] ?></td>
-                                                    <td><?php echo $value['total_tc'] ?></td>
+                                            <td><?php echo $value['challan_no']; ?></td>
 
-                                                    <td>
 
-                                                        <a href="<?php echo base_url('admin/FRC/viewtc/') . $value['fc_id'] ?> ">
-                                                            <i class="fas fa-eye"></i>
-                                                        </a>
+                                            <td><?php echo $value['total_quantity'] ?></td>
+                                            <td><?php echo $value['total_pcs'] ?></td>
+                                            <td><?php echo $value['total_tc'] ?></td>
 
-                                                    </td>
+                                            <td>
 
-                                                </tr>
+                                                <a href="<?php echo base_url('admin/FRC/viewtc/') . $value['fc_id'] ?> ">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
 
-                                            <?php $c = $c + 1;
-                                            } ?>
-                                        </tbody>
-                                    </table>
+                                            </td>
 
-                                
+                                        </tr>
+
+                                    <?php $c = $c + 1;
+                                    } ?>
+                                </tbody>
+                            </table>
+
+
                             <div class="col-4"> <?php
                                                 if ($summary) {
 
@@ -267,6 +268,45 @@
     <?php } else if ($this->session->flashdata('info')) {  ?>
         toastr.info("<?php echo $this->session->flashdata('info'); ?>");
     <?php } ?>
+
+    $('.delete_all').on('click', function(e) {
+        var allVals = [];
+        $(".sub_chk:checked").each(function() {
+            allVals.push($(this).attr('data-id'));
+        });
+        //alert(allVals.length); return false;
+        if (allVals.length <= 0) {
+            alert("Please select row.");
+        } else {
+            //$("#loading").show();
+            WRN_PROFILE_DELETE = "Are you sure you want to delete this row?";
+            var check = confirm(WRN_PROFILE_DELETE);
+            if (check == true) {
+                //for server side
+                var join_selected_values = allVals.join(",");
+                // alert (join_selected_values);exit;
+
+                $.ajax({
+                    type: "POST",
+                    url: "<?= base_url() ?>admin/FRC/delete_tc",
+                    cache: false,
+                    data: {
+                        'ids': join_selected_values,
+                        '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'
+                    },
+                    success: function(response) {
+
+                        //referesh table
+                        $(".sub_chk:checked").each(function() {
+                            var id = $(this).attr('data-id');
+                            $('#tr_' + id).remove();
+                        });
+                    }
+                });
+            }
+        }
+    });
+
     jQuery('.print_all').on('click', function(e) {
         var allVals = [];
         $(".sub_chk:checked").each(function() {

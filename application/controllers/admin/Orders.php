@@ -45,26 +45,43 @@ public function __construct(){
   public function add_new_order() {
     if($_POST)
   	{
+      $id = $this->Orders_model->getId();
+      if (!$id) {
+        $orderno = "ORD1";
+        $cc = 1;
+      } else {
+        $cc = $id[0]['count'];
+        $cc = $cc + 1;
+        $orderno = "ORD" . (string) $cc;
+      }
   		$data=array(
-  			'order_number'=>$_POST['order_number'],
+  			'order_number'=> $orderno,
         'customer_name'=>$_POST['customer_name'],
         'session' => $_POST['session'],
         'data_category' =>$_POST['category'],
         'order_type' => $_POST['order_type'],
-  			'order_date'=>date('Y-m-d')
+        'order_date'=>date('Y-m-d'),
+        'counter' => $cc,
   		);
   		$order_number =	$this->Orders_model->insert($data, 'order_table');
   		if ($order_number) {
+        $counter = $this->Orders_model->getCount();
+        $cc = $counter[0]['count'];
   			for($i = 0; $i < count($_POST['serial_number']); $i++) {
-            $lastId = $this->Orders_model->last_id();
+          $cc = $cc + 1;
+          $pbc = "O" . (string) $cc;
+          if($_POST['serial_number']!=""){
+
+          
   					$data=array(
-                'product_order_id' => 'O'. ($lastId + 1),
+                
                 'order_id' => $order_number,
-  							'series_number' => $_POST['serial_number'][$i],
+                'series_number' => $_POST['serial_number'][$i],
+                'counter' => $cc,
   							'unit' => $_POST['unit'][$i],
   							'quantity' => $_POST['quantity'][$i],
   							'priority' => $_POST['priority'][$i],
-  							'order_barcode' => $_POST['order_barcode'][$i],
+  							'order_barcode' => $pbc,
   							'design_name' => $_POST['design_name'][$i],
   							'design_code' => $_POST['design_code'][$i],
   							'remark' => $_POST['remark'][$i],
@@ -75,6 +92,7 @@ public function __construct(){
   							'matching'=> $_POST['matching'][$i]
   						);
               $this->Orders_model->insert($data,'order_product');
+            }
           }
           $txt = 'order save <a href="'.base_url('admin/Orders').'"> show order </a>';
           $this->session->set_flashdata(array('error' => 0, 'msg' => $txt));
@@ -101,11 +119,35 @@ public function __construct(){
     $data['main_content'] = $this->load->view('admin/order/addOrder', $data, TRUE);
     $this->load->view('admin/index', $data);
   }
+  public function getOrder_id()
+  {
+    $id = $this->Orders_model->getId();
+    if (!$id) {
+      $data['orderno'] = "ORD1";
+      $cc = 1;
+    } else {
+      $cc = $id[0]['count'];
+      $cc = $cc + 1;
+      $data['orderno'] = "ORD" . (string) $cc;
+    }
+    $counter = $this->Orders_model->getCount();
+    $data['count'] = $counter[0]['count'];
+    echo json_encode($data);
+  }
+
+  public function getOrderDetails()
+  {
+    $id = $this->security->xss_clean($_POST['id']);
+    $data = array();
+    $data['febName'] = $this->Orders_model->getOrderDetails($id);
+    echo json_encode($data['febName']);
+  }
+  
 public function getFabricDetails(){
      $id= $this->security->xss_clean($_POST['id']);
     $data = array();
-     $data['febName']=$this->Orders_model->getFabricDetails($id);
-     echo json_encode($data['febName']);
+     $data['order']=$this->Orders_model->getFabricDetails($id);
+     echo json_encode($data['order']);
   }
   public function getFabricDesign(){
      $id= $this->security->xss_clean($_POST['id']);
@@ -126,6 +168,13 @@ public function getFabricDetails(){
     $data = array();
      $data['design']=$this->Orders_model->getDesignDetails($id);
      echo json_encode($data['design']);
+  }
+  public function getDesign()
+  {
+    $id = $this->security->xss_clean($_POST['id']);
+    $data = array();
+    $data['design'] = $this->Orders_model->getDesign($id);
+    echo json_encode($data['design']);
   }
   public function CheckOrder(){
     $order = $this->security->xss_clean($_POST['order']);
@@ -160,17 +209,31 @@ public function getFabricDetails(){
     {
       if($_POST)
     	{
+      $id = $this->Orders_model->getId();
+      if (!$id) {
+        $orderno = "ORD1";
+        $cc=1;
+      } else {
+        $cc = $id[0]['count'];
+        $cc = $cc + 1;
+        $orderno = "ORD" . (string) $cc;
+      }
     		$data=array(
-    			'order_number'=>$_POST['order_number'],
+    			'order_number'=> $orderno,
           'customer_name'=>$_POST['customer_name'],
           'session' => $_POST['session'],
           'data_category' =>$_POST['category'],
           'order_type' => $_POST['order_type'],
-    			'order_date'=>date('Y-m-d')
+          'order_date'=>date('Y-m-d'),
+        'counter' => $cc,
     		);
-    		$order_number =	$this->Orders_model->insert($data, 'order_table');
+        $order_number =	$this->Orders_model->insert($data, 'order_table');
+      $counter = $this->Frc_model->getCount();
+      $cc = $counter[0]['count'];
     		if ($order_number) {
     			for($i = 0; $i < count($_POST['serial_number']); $i++){
+          $cc = $cc + 1;
+          $pbc = "O" . (string) $cc;
     					$data=array(
                   'order_id' => $order_number,
     							'series_number' => $_POST['serial_number'][$i],
@@ -178,7 +241,7 @@ public function getFabricDetails(){
                   'design_barcode' => $_POST['dbc'][$i],
     							'quantity' => $_POST['quantity'][$i],
     							'priority' => $_POST['priority'][$i],
-    							'order_barcode' => $_POST['order_barcode'][$i],
+    							'order_barcode' => $pbc,
     							'design_name' => $_POST['design_name'][$i],
     							'design_code' => $_POST['design_code'][$i],
     							'remark' => $_POST['remark'][$i],

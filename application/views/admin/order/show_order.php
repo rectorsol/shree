@@ -48,9 +48,9 @@
                                   <?php
                                         $id=1;
                                         foreach ($order_data as $value) { ?>
-                                        <tr class="gradeU" id="tr_<?php echo $value['product_order_id']?>">
+                                        <tr class="gradeU" id="tr_<?php echo $value['order_id']?>">
 
-                                          <td><input type="checkbox" class="sub_chk" data-id="<?php echo $value['product_order_id'] ?>"></td>
+                                          <td><input type="checkbox" class="sub_chk" data-id="<?php echo $value['order_id'] ?>"></td>
                                           <td><?php echo $id ?></td>
 
                                           <td><?php echo $value['series_number']?></td>
@@ -73,10 +73,10 @@
                                           <td><?php echo $value['priority']?></td>
                                           <td>
 
-                                            <a href="<?php echo base_url('admin/Orders/edit_order_product_details/').$value['product_order_id'] ?> ">
+                                            <a href="<?php echo base_url('admin/Orders/edit_order_product_details/').$value['order_id'] ?> ">
                                               <i class="fas fa-edit"></i>
                                             </a>
-                                            <a class="text-danger text-center tip" href="javascript:void(0)" onclick="delete_detail(<?php echo $value['product_order_id'];?>)" data-original-title="Delete">
+                                            <a class="text-danger text-center tip" href="javascript:void(0)" onclick="delete_detail(<?php echo $value['order_id'];?>)" data-original-title="Delete">
                                               <i class="mdi mdi-delete red"></i>
                                             </a>
 

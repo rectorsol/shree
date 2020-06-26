@@ -126,7 +126,10 @@
 				 }elseif($_POST['type']=='barcode'){
 					 $data['frc_data']=$data['data'];
 					$data['main_content'] = $this->load->view('admin/FRC/stock/print_multiple', $data, TRUE);
-				 }
+				 } elseif ($_POST['type'] == 'barcode1') {
+			$data['frc_data'] = $data['data'];
+			$data['main_content'] = $this->load->view('admin/FRC/stock/print_multiple2', $data, TRUE);
+		}
 
 				 else{
 					$data['main_content'] =''; 
@@ -330,30 +333,61 @@
 		  
 		  $this->Frc_model->update(array('deleted' => 1),'fabric_challan_id',$value, 'fabric_stock_received');
 			}
-		}
+			}
 			else{
 			$this->session->set_flashdata('error', 'OOPs..  Something went wrong !!');
-		}
-		$this->session->set_flashdata('success', 'Deleted Successfully!!');
+			}
+			$this->session->set_flashdata('success', 'Deleted Successfully!!');
         }
-  		public function deleteReturn()
+
+	public function delete_tc(){
+		$id = $this->input->post('ids');
+
+		$userid = explode(",", $id);
+		if ($userid) {
+
+
+			foreach ($userid as $value) {
+				$pbc = $this->Frc_model->get_parent_barcode($value);
+				print_r($pbc);exit;
+				if ($pbc) {
+					foreach ($pbc as $value1) {
+						$data3 = [
+
+							'tc' => $value1['tc']
+						];
+						$this->Frc_model->update($data3, 'parent_barcode', $value1['parent'], 'fabric_stock_received');
+					}
+					$this->Frc_model->update(array('deleted' => 1), 'fc_id', $value, 'fabric_challan');
+
+					$this->Frc_model->update(array('deleted' => 1), 'fabric_challan_id', $value, 'fabric_stock_received');
+				} else {
+					$this->session->set_flashdata('error', 'OOPs..  Something went wrong !!');
+				}
+			}
+		} else {
+			$this->session->set_flashdata('error', 'OOPs..  Something went wrong !!');
+		}
+		$this->session->set_flashdata('success', 'Deleted Successfully!!');	
+	}
+
+		public function deleteReturn()
         {
 		   $id = $this->input->post('ids');
 
 		 $userid= explode(",", $id);
 		 if($userid){
 
-		 
 		 foreach ($userid as $value) {
 			$pbc=$this->Frc_model->get_parent_barcode($value);	
 			//print_r($pbc);exit;
 			if($pbc){
-				foreach($pbc[0] as $value1){
+				foreach($pbc as $value1){
 					$data3=[
 					
-					'isStock' => 0
+					'isStock' => 1
 					]	;
-					$this->Frc_model->update($data3,'parent_barcode',$value1, 'fabric_stock_received');
+					$this->Frc_model->update($data3,'parent_barcode',$value1['parent'], 'fabric_stock_received');
 					}
 				 $this->Frc_model-> update(array('deleted' => 1),'fc_id',$value, 'fabric_challan');
 		  
@@ -363,10 +397,10 @@
 					$this->session->set_flashdata('error', 'OOPs..  Something went wrong !!');
 				}
 			}
-		}else{
-			$this->session->set_flashdata('error', 'OOPs..  Something went wrong !!');
-		}	
-		$this->session->set_flashdata('success', 'Deleted Successfully!!');	
+				}else{
+					$this->session->set_flashdata('error', 'OOPs..  Something went wrong !!');
+				}	
+				$this->session->set_flashdata('success', 'Deleted Successfully!!');	
         }
 		public function addRecieve(){
 			if($_POST){
@@ -654,6 +688,7 @@
 			$data['from']=date('Y-m-01');
 				}
 			$data['frc_data']=$this->Frc_model->select_PBC($data);
+			$data['summary'] = $this->Frc_model->PBC_summary($data);
 			$data['content'] = $this->load->view('admin/FRC/2ndpbc/list_index', $data, TRUE);
 		    $data['main_content'] = $this->load->view('admin/FRC/2ndpbc/showPBC', $data, TRUE);
   	      	$this->load->view('admin/index', $data);

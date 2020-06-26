@@ -25,24 +25,24 @@
                     <th>Fabric Type</th>
                     <th>Design Name</th>
                     <th>Design Code</th>
-                    <th>Design Series</th>
+                    <th>Stitch</th>
                     <th>Assign Date</th>
                     <th>Delete</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <?php foreach ($fda_data as $row):?>
-                  <tr>
-                    <td><?php echo $row['fabric_name'];?></td>
-                    <td><?php echo $row['fabric_type'];?></td>
-                    <td><?php echo $row['designName'];?></td>
-                    <td><?php echo $row['designCode'];?></td>
-                    <td><?php echo $row['designSeries'];?></td>
-                    <td><?php echo my_date_show_time($row['asign_date']);?></td>
-                    <td><a class="text-danger text-center tip" onclick="delete_detail(<?php echo $row['id'] ;?>)" data-original-title="Delete">
-                        <i class="mdi mdi-delete"></i>
-                    </td>
-                  </tr>
+                  <?php foreach ($fda_data as $row) : ?>
+                    <tr>
+                      <td><?php echo $row['fabric_name']; ?></td>
+                      <td><?php echo $row['fabric_type']; ?></td>
+                      <td><?php echo $row['designName']; ?></td>
+                      <td><?php echo $row['designCode']; ?></td>
+                      <td><?php echo $row['stitch']; ?></td>
+                      <td><?php echo my_date_show_time($row['asign_date']); ?></td>
+                      <td><a class="text-danger text-center tip" onclick="delete_detail(<?php echo $row['id']; ?>)" data-original-title="Delete">
+                          <i class="mdi mdi-delete"></i>
+                      </td>
+                    </tr>
                   <?php endforeach; ?>
                 </tbody>
               </table>
@@ -69,7 +69,7 @@
       if (del == true) {
         var sureDel = confirm("Are you sure want to delete");
         if (sureDel == true) {
-          window.location = "<?php echo base_url()?>admin/fda/delete_fda/" + id;
+          window.location = "<?php echo base_url() ?>admin/fda/delete_fda/" + id;
         }
 
       }

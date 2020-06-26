@@ -24,7 +24,7 @@
  }
  	public function getFabricDesign($id)
  {
-   $this->db->select('distinct (design.designName)');
+   $this->db->select('design.designName,fda_table.design_id');
    $this->db->from('fda_table');
    $this->db->join('design','design.id=fda_table.design_id','inner');
    $this->db->where('fda_table.fabric_name',$id);
@@ -35,13 +35,40 @@
  public function getDesignDetails($id)
  {
    $this->db->select();
-   $this->db->from('design');
+   $this->db->from('design_view');
    
    $this->db->where('barCode',$id);
    $query = $this->db->get();
    $query = $query->result_array();
    return $query;
  }
+	public function getCount()
+	{
+		$this->db->select('Max(counter) as count');
+		$this->db->from("order_product");
+		$rec = $this->db->get();
+		//  print_r($rec);exit;
+		return $rec->result_array();
+	}
+	public function getId()
+	{
+		$this->db->select('Max(counter) as count');
+		$this->db->from("order_table");
+		$rec = $this->db->get();
+		//  print_r($rec);exit;
+		return $rec->result_array();
+	}	
+ 
+ public function getDesign($id)
+	{
+		$this->db->select('designCode,stitch,dye,matching');
+		$this->db->from('design');
+
+		$this->db->where('id', $id);
+		$query = $this->db->get();
+		$query = $query->result_array();
+		return $query;
+	}
 public function get_design_name()
  {
    $this->db->select('distinct(designName)');
@@ -372,6 +399,16 @@ public function get_design_name()
 			return $query;
 	}
 
+	public function getOrderDetails($id)
+	{
+		$this->db->select('*');
+		$this->db->from('order_product');
+		$this->db->where('order_barcode', $id);
+		$query = $this->db->get();
+		//echo $this->db->last_query();exit;
+		$query = $query->result_array();
+		return $query;
+	}
 	public function update($id,$data)
 	{
 		 // print_r($designName);

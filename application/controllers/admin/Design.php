@@ -24,11 +24,11 @@ class Design extends CI_Controller
 		$config=$this->pagination_Config();
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 		if($page==0){
-			$start = (int) $this->uri->segment(3) * $config['per_page'] + 1;
-			$end = (int) $this->uri->segment(3) + $config['per_page'];
+			$start =  1;
+			$end =  $config['per_page'];
 		}else{
-			$start = ((int) $this->uri->segment(3)-1 )* $config['per_page'] + 1;
-			$end = ((int) $this->uri->segment(3) * $config['per_page'] > $config['total_rows']) ? $config['total_rows'] : (int) $this->uri->segment(3) * $config['per_page'] ;
+			$start = ((int) $this->uri->segment(3) ) + 1;
+			$end = ((int) $this->uri->segment(3) + $config['per_page']  > $config['total_rows']) ? $config['total_rows'] : (int) $this->uri->segment(3)+ $config['per_page']  ;
 		}
 		
 
@@ -242,7 +242,7 @@ class Design extends CI_Controller
 		$data1 = array();
 		$this->security->xss_clean($_POST);
 		if ($_POST) {
-				echo"<pre>";	print_r($_POST); exit;
+				// echo"<pre>";	print_r($_POST); exit;
 			
 			$data1['search'] = $this->input->post('search');
 			
@@ -355,6 +355,9 @@ class Design extends CI_Controller
 			$data['main_content'] = $this->load->view('admin/master/design/design', $data, TRUE);
 			$this->load->view('admin/index', $data);
 		}
+		// else{
+		// 	$id =	$this->Design_model->update($_POST);
+		// }
 	}
 
 	public function pagination_Config()
@@ -364,9 +367,9 @@ class Design extends CI_Controller
 		$config["total_rows"] = $this->Design_model->get_count();
 		$config["per_page"] = 100;
 		$config["uri_segment"] = 3;
-		$config['use_page_numbers'] = TRUE;
+		// $config['use_page_numbers'] = TRUE;
 		$config['num_links'] =9;
-		$config['reuse_query_string'] = TRUE;
+		
 		$config['display_pages'] = TRUE;
 		
 		$config['next_link']        = 'Next';

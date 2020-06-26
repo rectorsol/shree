@@ -17,6 +17,8 @@ class Frc_model extends CI_Model {
     function update($action, $id,$column, $table){
         $this->db->where($id,$column);
         $this->db->update($table,$action);
+    // print_r($this->db->last_query());
+    // exit;
         return;
     }
 
@@ -318,7 +320,27 @@ public function select($table)
  
 
  }
- 
+  public function PBC_summary($data)
+  {
+
+    $this->db->select("fabricName,count(fabricName) as pcs,sum(current_stock) as qty,sum(tc) as tc");
+    $this->db->from('second_pbc_view');
+
+    $this->db->group_by('fabricName', 'fabric_type');
+
+    if ($data['from'] == $data['to']) {
+      $this->db->where('created_date ', $data['from']);
+    } else {
+      $this->db->where('created_date >=', $data['from']);
+      $this->db->where('created_date <=', $data['to']);
+    }
+    $this->db->group_by('fabricName');
+    $query = $this->db->get();
+    //echo"<pre>"; print_r($query);exit;
+    $query = $query->result_array();
+    return $query;
+  }
+
  public function select_PBC_by_id($pbc)
  {
    $this->db->select('*');
@@ -365,10 +387,13 @@ public function getPBC_deatils($id)
    $this->db->select('*');
    $this->db->from("fabric_stock_received");
    $this->db->where($col,$id);
+    $this->db->or_like($col, $id.'/');
    $this->db->where("isStock",1);
    $this->db->where('deleted ', 0);
    $this->db->join('fabric','fabric.id=fabric_stock_received.fabric_id','inner');
-   $rec=$this->db->get(); 
+   $rec=$this->db->get();
+    // echo $this->db->last_query();
+    // exit;
    return $rec->result_array();
  
 
@@ -422,13 +447,14 @@ public function getId($type)
 
  public function get_parent_barcode($id)
   {
-  $this->db->select('parent');
+  $this->db->select('parent,tc');
    $this->db->from("fabric_stock_received");
    $this->db->where("fabric_challan_id",$id);
    $rec=$this->db->get(); 
   //  print_r($rec);exit;
    return $rec->result_array();
   }
+
   public function get_stock_value_by_id($id)
   {
     $this->db->select('fabric_stock_received.fsr_id AS fsr_id,
@@ -458,7 +484,7 @@ public function getId($type)
     $this->db->join('sub_department sb1','sb1.id=fc.challan_from  ','left');
     $this->db->join('sub_department sb2','sb2.id=fc.challan_to  ','left');
     $this->db->where('fsr_id',$id);
-    $this->db->where('deleted ', 0);
+    $this->db->where('fabric_stock_received.deleted ', 0);
     $rec=$this->db->get(); //print_r($rec);exit;
     return $rec->row();
 

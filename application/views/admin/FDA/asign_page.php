@@ -16,8 +16,8 @@
                            <th><b>Design Name</b></th>
                            <th><b>Design Code</b></th>
                            <th><b>Stitch</b></th>
-                           <th><b>Dye</b></th>
-                           <th><b>Desig On</b></th>
+                          
+                           
                          </tr>
                         </thead>
                       <tbody>
@@ -29,8 +29,7 @@
                           <td><?php echo $value['designName'];?></td>
                           <td><?php echo $value['desCode']?></td>
                           <td><?php echo $value['stitch'] ?></td>
-                          <td><?php echo $value['dye'] ?></td>
-                          <td><?php echo $value['designOn']?></td>
+                         
              						</tr>
                       <?php endforeach;?>
                       </tbody>
