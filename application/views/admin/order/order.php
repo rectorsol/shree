@@ -14,46 +14,46 @@
           &nbsp;&nbsp; &nbsp;&nbsp; <a type="button" class="btn btn-info pull-left delete_all  btn-danger" style="color:#fff;"><i class="mdi mdi-delete red"></i></a>&nbsp;
 
         </div><br>
-        <table class="table">
+        <table class="table table-bordered data-table text-center table-responsive">
           <thead>
             <tr>
               <th><input type="checkbox" class="sub_chk" id="master"></th>
-                <th>SESSION</th>
+              <th>SESSION</th>
               <th>ORDER DATE</th>
               <th>ORDER NUMBER</th>
-              
-              
-            
+              <th>NO. OF ORDERS</th>
+
+
               <th>CUSTOMER NUMBER</th>
               <th>TYPE</th>
               <th>DATA CATEGORY</th>
               <th>STATUS</th>
-              
+
               <th>ACTION</th>
             </tr>
           </thead>
           <tbody>
             <?php foreach ($all_Order as $orders_value) { ?>
-            <tr>
-              <td><input type="checkbox" class="sub_chk" data-id="<?php echo $orders_value['order_id'] ?>"></td>
-               <td><?php echo $orders_value['financial_year'];?></td>
-              <td><?php echo my_date_show($orders_value['order_date']);?></td>
-              <td><?php echo $orders_value['order_number'];?></td>
-              
-              
-             
-              <td><?php echo $orders_value['customer_name'];?></td>
-              <td><?php echo $orders_value['order_type'];?></td>
-              <td><?php echo $orders_value['data_category'];?></td>
-              <td><?php echo $orders_value['status'];?></td>
-              
-              <td>
-                <a href="<?php echo base_url('admin/orders/get_details/').serve_url($orders_value['order_id']) ?> ">
-                  View
-                </a>
-              </td>
-            </tr>
-            <?php }?>
+              <tr>
+                <td><input type="checkbox" class="sub_chk" data-id="<?php echo $orders_value['order_id'] ?>"></td>
+                <td><?php echo $orders_value['financial_year']; ?></td>
+                <td><?php echo my_date_show($orders_value['order_date']); ?></td>
+                <td><?php echo $orders_value['order_number']; ?></td>
+                <td><?php echo $orders_value['pcs']; ?></td>
+
+
+                <td><?php echo $orders_value['customer_name']; ?></td>
+                <td><?php echo $orders_value['order_type']; ?></td>
+                <td><?php echo $orders_value['data_category']; ?></td>
+                <td><?php echo $orders_value['status']; ?></td>
+
+                <td>
+                  <a href="<?php echo base_url('admin/orders/get_details/') . serve_url($orders_value['order_id']) ?> ">
+                    <i class="fas fa-eye"></i>
+                  </a>
+                </td>
+              </tr>
+            <?php } ?>
           </tbody>
         </table>
       </div>
@@ -65,4 +65,4 @@
 
 
 
-<?php include('order_js.php');?>
+<?php include('order_js.php'); ?>

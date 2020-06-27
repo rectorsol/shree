@@ -9,13 +9,52 @@
                 <span class="badge badge-pill badge-info"><?php echo $order_count->pending ?></span></a></li>
             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#get_cancel" aria-selected="false">CANCEL
                 <span class="badge badge-pill badge-secondary"><?php echo $order_count->cancel ?></span></a></li>
-            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#get_complete" aria-selected="false">COMPLETED <span class="badge badge-pill badge-success"><?php echo $order_count->done ?></span></a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#get_complete" aria-selected="false">Program in P.G List <span class="badge badge-pill badge-success"><?php echo $order_count->done ?></span></a></li>
           </ul>
           <div class="tab-content tabcontent-border">
             <div id="home" class="tab-pane active show" role="tabpanel">
               <p>
                 <div class="col-lg-12">
                   <div class="row">
+                    <div class="col-md-6 col-lg-3 col-xlg-3">
+                      <div class="card card-hover">
+                        <div class="box bg-success text-center">
+                          <h1 class="font-light text-white">
+                            <i class="mdi mdi-plus"></i>
+                          </h1>
+                          <a href="<?php echo base_url('admin/Orders/addOrders'); ?>">
+                            <h4 class="font-light text-white"> <i class="mdi mdi-cart"></i></h4>
+                            <h5 class="text-white">ADD ORDERS</h5>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 col-xlg-3">
+                      <div class="card card-hover">
+                        <div class="box bg-info text-center">
+                          <h1 class="font-light text-white">
+                            <i class="mdi mdi-eye"></i>
+                          </h1>
+                          <a href="<?php echo base_url('admin/Orders/'); ?>">
+                            <h4 class="font-light text-white"><i class="mdi mdi-cart"></i></h4>
+                            <h5 class="text-white">SHOW ORDERS</h5>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 col-xlg-3">
+                      <div class="card card-hover">
+                        <div class="box bg-warning text-center">
+                          <h1 class="font-light text-white">
+                            <i class="mdi mdi-chart-bar"></i>
+                          </h1>
+                          <a href="<?php echo base_url('admin/Orders/order_flow'); ?>">
+                            <h4 class="font-light text-white"><i class="mdi mdi-cart"></i></h4>
+                            <h5 class="text-white">ORDERS FLOW</h5>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
                     <div class="col-md-6 col-lg-3 col-xlg-3">
                       <div class="card card-hover">
                         <div class="box bg-info text-center">
@@ -93,7 +132,7 @@
                       <th><input type="checkbox" id="master"></th>
 
                       <th>Series Number</th>
-                      <th>Order Number</th>
+                      <th>Order Barcode</th>
                       <th>Fabric Name</th>
                       <th>Hsn</th>
                       <th>Design Name</th>
@@ -109,12 +148,12 @@
                   </thead>
                   <tbody>
                     <?php foreach ($get_pending as $value) : ?>
-                      <tr class="gradeU" id="tr_<?php echo $value['product_order_id'] ?>">
-                        <td><input type="checkbox" class="sub_chk" data-id="<?php echo $value['product_order_id'] ?>">
+                      <tr class="gradeU" id="tr_<?php echo $value['order_product_id'] ?>">
+                        <td><input type="checkbox" class="sub_chk" data-id="<?php echo $value['order_product_id'] ?>">
                         </td>
 
                         <td><?php echo $value['series_number'] ?></td>
-                        <td><?php echo $value['product_order_id']; ?></td>
+                        <td><?php echo $value['order_barcode']; ?></td>
                         <td><?php echo $value['fabric_name']; ?></td>
                         <td><?php echo $value['hsn']; ?></td>
                         <td><?php echo $value['design_name'] ?></td>
@@ -134,14 +173,14 @@
               </p>
             </div>
             <div id="get_cancel" class="tab-pane fade p-20" role="tabpanel">
-              <h3>CANCEL ORDER</h3>
+              <h3>CANCEL ORDER</h3><hr>
               <p>
                 <table class="table table-bordered data-table text-center table-responsive">
                   <thead class="">
                     <tr class="odd" role="row">
 
                       <th>Series Number</th>
-                      <th>Order Number</th>
+                      <th>Order Barcode</th>
                       <th>Fabric Name</th>
                       <th>Hsn</th>
                       <th>Design Name</th>
@@ -159,10 +198,10 @@
                   </thead>
                   <tbody>
                     <?php foreach ($get_cancel as $value) : ?>
-                      <tr class="gradeU" id="tr_<?php echo $value['product_order_id'] ?>">
+                      <tr class="gradeU" id="tr_<?php echo $value['order_product_id'] ?>">
 
                         <td><?php echo $value['series_number'] ?></td>
-                        <td><?php echo $value['product_order_id']; ?></td>
+                        <td><?php echo $value['order_barcode']; ?></td>
                         <td><?php echo $value['fabric_name']; ?></td>
                         <td><?php echo $value['hsn']; ?></td>
                         <td><?php echo $value['design_name'] ?></td>
@@ -183,20 +222,21 @@
               </p>
             </div>
             <div id="get_complete" class="tab-pane fade p-20" role="tabpanel">
-              <h3>Program in P.G List</h3>
+              <h3>Program in P.G List</h3><hr>
               <div class="row ">
 
-                <div class="col-md-11 "><button class="btn btn-danger cancel_all2" href="#Cancel" data-toggle="modal" data-original-title="Edit"><i class="mdi mdi-delete "></i> Cancel</button> </div>
+                <div class="col-md-2 "><button class="btn btn-danger cancel_all2" href="#Cancel" data-toggle="modal" data-original-title="Edit"><i class="mdi mdi-delete "></i> Cancel</button> </div>
+                <div class="col-md-2 "><button class="btn btn-info print_all"><i class="fa fa-print "></i> Print </button> </div>
 
               </div>
-
+<hr>
               <p>
                 <table class="table table-bordered data-table text-center table-responsive">
                   <thead class="">
                     <tr class="odd" role="row">
                       <th><input type="checkbox" id="master2"></th>
                       <th>Series Number</th>
-                      <th>Order Number</th>
+                      <th>Order Barcode</th>
                       <th>Fabric Name</th>
                       <th>Hsn</th>
                       <th>Design Name</th>
@@ -212,11 +252,11 @@
                   </thead>
                   <tbody>
                     <?php foreach ($get_complete as $value) : ?>
-                      <tr class="gradeU" id="tr_<?php echo $value['product_order_id'] ?>">
-                        <td><input type="checkbox" class="sub_chk2" data-id="<?php echo $value['product_order_id'] ?>">
+                      <tr class="gradeU" id="tr_<?php echo $value['order_product_id'] ?>">
+                        <td><input type="checkbox" class="sub_chk2" data-id="<?php echo $value['order_product_id'] ?>">
                         </td>
                         <td><?php echo $value['series_number']; ?></td>
-                        <td><?php echo $value['product_order_id']; ?></td>
+                        <td><?php echo $value['order_barcode']; ?></td>
                         <td><?php echo $value['fabric_name']; ?></td>
                         <td><?php echo $value['hsn']; ?></td>
                         <td><?php echo $value['design_name']; ?></td>
@@ -289,7 +329,50 @@
       $(".sub_chk").prop('checked', false);
     }
   });
+  jQuery('.print_all').on('click', function(e) {
+    var allVals = [];
+    $(".sub_chk2:checked").each(function() {
+      allVals.push($(this).attr('data-id'));
+    });
+    //alert(allVals.length); return false;
+    if (allVals.length <= 0) {
+      alert("Please select row.");
+    } else {
+      //$("#loading").show();
+      WRN_PROFILE_DELETE = "Are you sure you want to Print this rows?";
+      var check = confirm(WRN_PROFILE_DELETE);
+      if (check == true) {
+        //for server side
+        var join_selected_values = allVals.join(",");
+        // alert (join_selected_values);exit;
+        var ids = join_selected_values.split(",");
+        var data = [];
+        $.each(ids, function(index, value) {
+          if (value != "") {
+            data[index] = value;
+          }
+        });
+        $.ajax({
+          type: "POST",
+          url: "<?= base_url() ?>admin/Orders/return_print_multiple",
+          cache: false,
+          data: {
+            'ids': data,
 
+            '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'
+          },
+          success: function(response) {
+            var w = window.open('about:blank');
+            w.document.open();
+            w.document.write(response);
+            w.document.close();
+          }
+        });
+        //for client side
+
+      }
+    }
+  });
   $('.cancel_all').on('click', function(e) {
     var allVals = [];
     $(".sub_chk:checked").each(function() {

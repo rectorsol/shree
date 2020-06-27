@@ -23,7 +23,7 @@
         <!-- ============================================================== -->
         <!-- Logo -->
         <!-- ============================================================== -->
-        <a class="navbar-brand" href="<?php echo base_url('admin/dashboard')?>">
+        <a class="navbar-brand" href="<?php echo base_url('admin/dashboard') ?>">
           <!-- Logo icon -->
           <b class="logo-icon p-l-10">
             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
@@ -53,8 +53,7 @@
         <!-- ============================================================== -->
         <!-- Toggle which is visible on mobile only -->
         <!-- ============================================================== -->
-        <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-          aria-label="Toggle navigation"><i class="ti-more"></i></a>
+        <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i class="ti-more"></i></a>
       </div>
       <!-- ============================================================== -->
       <!-- End Logo -->
@@ -114,8 +113,7 @@
           <!-- User profile and search -->
           <!-- ============================================================== -->
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="<?php echo base_url('optimum/admin') ?>/assets/images/users/1.jpg"
-                alt="user" class="rounded-circle" width="31"></a>
+            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="<?php echo base_url('optimum/admin') ?>/assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
             <div class="dropdown-menu dropdown-menu-right user-dd animated">
               <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
               <a class="dropdown-item" href="javascript:void(0)"><i class="ti-wallet m-r-5 m-l-5"></i> My Balance</a>
@@ -147,8 +145,7 @@
       <!-- Sidebar navigation-->
       <nav class="sidebar-nav">
         <ul id="sidebarnav" class="p-t-30">
-          <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo base_url('admin/dashboard'); ?>" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span
-                class="hide-menu">Dashbord</span></a></li>
+          <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo base_url('admin/dashboard'); ?>" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashbord</span></a></li>
           <li class="sidebar-item hideElement "> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-receipt"></i><span class="hide-menu">Master </span></a>
             <ul aria-expanded="false" class="collapse  first-level">
               <li class="sidebar-item"><a href="<?php echo base_url('admin/branch_detail'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Branch Detail </span></a></li>
@@ -163,25 +160,19 @@
               <li class="sidebar-item"><a href="<?php echo base_url('admin/ERC'); ?>" class="sidebar-link"><i class="fa-meetup"></i><span class="hide-menu"> ERC </span></a></li>
               <li class="sidebar-item"><a href="<?php echo base_url('admin/SRC'); ?>" class="sidebar-link"><i class="fa fa-podcast"></i><span class="hide-menu"> SRC </span></a></li>
               <li class="sidebar-item"><a href="<?php echo base_url('admin/EMB'); ?>" class="sidebar-link"><i class="fa fa-podcast"></i><span class="hide-menu"> EMBJWR </span></a></li>
-             <li class="sidebar-item"><a href="<?php echo base_url('admin/Cause'); ?>" class="sidebar-link"> <i class="fab fa-uniregistry"></i><span class="hide-menu"> Cause</span></a></li>
-  
+              <li class="sidebar-item"><a href="<?php echo base_url('admin/Cause'); ?>" class="sidebar-link"> <i class="fab fa-uniregistry"></i><span class="hide-menu"> Cause</span></a></li>
+
               <li class="sidebar-item"><a href="<?php echo base_url('admin/session_year'); ?>" class="sidebar-link"> <i class="fas fa-calendar"></i><span class="hide-menu"> Session</span></a></li>
               <li class="sidebar-item"><a href="<?php echo base_url('admin/Order_type'); ?>" class="sidebar-link"> <i class="fab fa-first-order"></i><span class="hide-menu"> Order Type</span></a></li>
               <li class="sidebar-item"><a href="<?php echo base_url('admin/Data_category'); ?>" class="sidebar-link"> <i class="fas fa-certificate"></i><span class="hide-menu"> Data Category</span></a></li>
               <li class="sidebar-item"><a href="<?php echo base_url('admin/Unit'); ?>" class="sidebar-link"> <i class="fab fa-uniregistry"></i><span class="hide-menu"> Unit</span></a></li>
             </ul>
           </li>
-          <li class="sidebar-item "> <a class="sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Order</span></a>
-            <ul aria-expanded="false" class="collapse  first-level">
-              <li class="sidebar-item"><a href="<?php echo base_url('admin/Orders/dashboard'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Dashboard </span></a></li>
-              <li class="sidebar-item"><a href="<?php echo base_url('admin/Orders/order_flow'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> ORDER FLOW </span></a></li>
-              <li class="sidebar-item"><a href="<?php echo base_url('admin/Orders/'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Show Order </span></a></li>
-              <li class="sidebar-item"><a href="<?php echo base_url('admin/Orders/addOrders'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Add Order </span></a></li>
-            </ul>
-          </li>
+         
+          <li class="sidebar-item hideElement"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo base_url('admin/Orders/dashboard'); ?>" aria-expanded="false"><i class="mdi mdi-cart"></i><span class="hide-menu">Order</span></a></li>
           <li class="sidebar-item "> <a class="sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">FRC</span></a>
             <ul aria-expanded="false" class="collapse  first-level">
-            <li class="sidebar-item"><a href="<?php echo base_url('admin/FRC/showRecieve'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Add Recieve Challan </span></a></li>
+              <li class="sidebar-item"><a href="<?php echo base_url('admin/FRC/showRecieve'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Add Recieve Challan </span></a></li>
               <li class="sidebar-item"><a href="<?php echo base_url('admin/FRC/showRecieveList'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Recieve Challan List </span></a></li>
               <li class="sidebar-item"><a href="<?php echo base_url('admin/FRC'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Add Return Challan </span></a></li>
               <li class="sidebar-item"><a href="<?php echo base_url('admin/FRC/showReturnList'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Return Challan List </span></a></li>
@@ -193,28 +184,27 @@
               <li class="sidebar-item"><a href="<?php echo base_url('admin/FRC/show_stock'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Stock of plain fabric </span></a></li>
             </ul>
           </li>
-            <li class="sidebar-item "> <a class="sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dye Transaction</span></a>
+          <li class="sidebar-item "> <a class="sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dye Transaction</span></a>
             <ul aria-expanded="false" class="collapse  first-level">
-            <li class="sidebar-item"><a href="<?php echo base_url('admin/Dye_transaction'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Add Issue Transaction </span></a></li>
+              <li class="sidebar-item"><a href="<?php echo base_url('admin/Dye_transaction'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Add Issue Transaction </span></a></li>
               <li class="sidebar-item"><a href="<?php echo base_url('admin/Dye_transaction/showReturnList'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Issue Transaction List </span></a></li>
               <li class="sidebar-item"><a href="<?php echo base_url('admin/Dye_transaction/showRecieve'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Add Recieve Transaction </span></a></li>
               <li class="sidebar-item"><a href="<?php echo base_url('admin/Dye_transaction/showRecieveList'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Recieve Transaction List </span></a></li>
-              
+
             </ul>
           </li>
           <li class="sidebar-item "> <a class="sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Transaction</span></a>
             <ul aria-expanded="false" class="collapse  first-level">
-            <li class="sidebar-item"><a href="<?php echo base_url('admin/transaction'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Add Challan Transaction </span></a></li>
+              <li class="sidebar-item"><a href="<?php echo base_url('admin/transaction'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Add Challan Transaction </span></a></li>
               <li class="sidebar-item"><a href="<?php echo base_url('admin/transaction/showRecieveList'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Challan Transaction List </span></a></li>
               <li class="sidebar-item"><a href="<?php echo base_url('admin/transaction/showRecieve'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Add Bill Transaction </span></a></li>
               <li class="sidebar-item"><a href="<?php echo base_url('admin/transaction/showRecieveList'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Bill Transaction List </span></a></li>
-              
+
             </ul>
           </li>
           <li class="sidebar-item hideElement"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo base_url('admin/FDA'); ?>" aria-expanded="false"><i class="mdi mdi-lumx"></i><span class="hide-menu">Fabric design
                 asign</span></a></li>
-          <li class="sidebar-item hideElement"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo base_url('admin/Setting'); ?>" aria-expanded="false"><i class="mdi mdi-settings"></i><span
-                class="hide-menu">Setting</span></a></li>
+          <li class="sidebar-item hideElement"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo base_url('admin/Setting'); ?>" aria-expanded="false"><i class="mdi mdi-settings"></i><span class="hide-menu">Setting</span></a></li>
 
         </ul>
       </nav>

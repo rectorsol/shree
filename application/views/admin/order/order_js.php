@@ -1,9 +1,11 @@
 <script src="<?php echo base_url('jexcelmaster/') ?>asset/js/jquery.3.1.1.js"></script>
 <script type="text/javascript">
   $(document).ready(function() {
-    // $('#fresh_form').hide();
+
+
+    $('#fresh_form').hide();
     $('#order_form').hide();
-    // $('#prm_form').hide();
+    $('#submit_button').hide();
     var count = 0;
     var counter = 0;
     var stype = 0;
@@ -17,7 +19,7 @@
       $('#session1').val(session);
       $('#session').val(session);
       stype = $('#selectType').val();
-      var des = '<input type="text" class="form-control design_barcode" value="">';
+      var des = '<input type="text" class="form-control design_barcode" name="design_barcode[]" value="">';
       var ord = '<input type="text" name="old_barcode[]" class="form-control order_barcode" value="">';
       if (order_type == "" || category == "" || session == "") {
         alert("Please select some value");
@@ -25,7 +27,7 @@
         $('#order_form').show();
         $.ajax({
           type: "get",
-          url: "<?php echo base_url('admin/orders/getOrder_id') ?>",
+          url: "<?php echo base_url('admin/orders/getOrder_id/') ?>" + category,
 
           success: function(data) {
             data = JSON.parse(data);
@@ -33,7 +35,14 @@
             counter = Number(data['count']);
             console.log('counter=' + counter);
             $('#order_number').val(data['orderno']);
-            var obc = 'O' + data['count'];
+            if (counter == "") {
+              counter = 1;
+              var obc = 'O' + counter;
+            } else {
+              counter += 1;
+              var obc = 'O' + counter;
+            }
+
             $('#obc0').val(obc);
           }
         });
@@ -52,6 +61,16 @@
 
 
     });
+    $(document).on('change', '#select_cust', function(e) {
+      var cust = $(this).val();
+      if (cust != "") {
+        $('#fresh_form').show();
+      } else {
+        $('#fresh_form').hide();
+      }
+    });
+
+
     $(document).on('change', '#type', function(e) {
       var type = $(this).val();
       var id = $(this).parent().parent().attr("id");
@@ -73,6 +92,8 @@
         $('#stitch' + id + '').val("");
         $('#dye' + id + '').val("");
         $('#matching' + id + '').val("");
+        $('#dye' + id + '').attr("readonly", true);
+        $('#matching' + id + '').attr("readonly", true);
         $('#hsn' + id + '').val("");
         $('#unit' + id + '').val("");
         $('#tdfab' + id + '').html(fab);
@@ -81,6 +102,8 @@
         $('#designCode' + id + '').val("");
         $('#stitch' + id + '').val("");
         $('#dye' + id + '').val("");
+        $('#dye' + id + '').attr("readonly", false);
+        $('#matching' + id + '').attr("readonly", false);
         $('#matching' + id + '').val("");
         $('#hsn' + id + '').val("");
         $('#unit' + id + '').val("");
@@ -180,6 +203,11 @@
             $('#fabric' + button_id + '').val(fabric);
             $('#image' + button_id + '').val(data[0]['designPic']);
             $("#preview").attr('src', '<?php echo base_url('upload/') ?>' + data[0]['designPic']);
+            if (fabric != "") {
+              $('#submit_button').show();
+            } else {
+              $('#submit_button').hide();
+            }
             var csrf_name = $("#get_csrf_hash").attr('name');
             var csrf_val = $("#get_csrf_hash").val();
             $.ajax({
@@ -243,7 +271,11 @@
             $("#preview").attr('src', '<?php echo base_url('upload/') ?>' + data[0]['image']);
             $('#hsn' + button_id + '').val(data[0]['hsn']);
             $('#unit' + button_id + '').val(data[0]['unit']);
-
+            if (fabric != "") {
+              $('#submit_button').show();
+            } else {
+              $('#submit_button').hide();
+            }
           } else {
             $(".msg").html("<h6 class='text-danger'><b>Design Not Found </b></h6>");
             $('#designName' + button_id + '').val("");
@@ -267,71 +299,9 @@
     });
 
     $('#add_more').on('click', function() {
-      var des = '<input type="text" class="form-control design_barcode" value="">';
-      var ord = '<input type="text" name="old_barcode[]" class="form-control order_barcode" value="">';
-      count = count + 1;
-      counter = counter + 1;
-      var element = '<tr id=' + count + '>'
-      element += '<td><input type="text" class="form-control" readonly value=' + (count + 1) + '></td>'
-      element += '<td> <select name="type[]" class="form-control  " id="type">'
-      element += '                    <option>Select Type</option>'
-      element += '                    <option value="1" >Barcode </option>'
-      element += '                     <option value="2" > Manual </option>'
-      element += '               </select></td>'
-      element += '<td> <input type="text" class="form-control" name="serial_number[]" value="" ></td>'
-      element += '<td id=tdbarcode' + count + '></td>'
-      element += ' <td id=tdfab' + count + '><input type="text" class="form-control fabric_name" readonly  name="fabric_name[]" value="" id=fabric' + count + '></td>'
-      element += '<td><input type="text" class="form-control" name="hsn[]" value="" readonly id=hsn' + count + '></td>'
-
-      element += '<td id=tddesign' + count + '><input type="text" name="design_name[]" class="form-control" value="" readonly id=designName' + count + '></td>'
-      element += '<td> <input type="text" name="design_code[]" class="form-control" value="" readonly id=designCode' + count + '></td>'
-      element += '<td><input type="text" class="form-control" name="stitch[]" value="" readonly id=stitch' + count + '></td>'
-      element += '<td>  <input type="text" class="form-control" name="dye[]" value="" readonly id=dye' + count + '></td>'
-      element += '<td><input type="text" class="form-control" name="matching[]" value="" readonly id=matching' + count + '></td>'
-      element += '<td><input type="text" class="form-control" name="quantity[]" value=""></td>'
-      element += '<td><input type="text" name="unit[]" class="form-control unit" value="" readonly id=unit' + count + '></td>'
-      element += '<td><input type="text" name="image[]" class="form-control unit" value="" readonly id=image' + count + '></td>'
-      element += '<td>  <input type="text" class="form-control" name="priority[]"  value="30"></td>'
-      element += '<td> <input type="text" class="form-control" name="order_barcode[]" readonly value=O' + counter + ' id=obc' + count + '></td>'
-      element += '<td><input type="text" class="form-control" name="remark[]" value=""></td>'
-      element += '<td> <button type="button" name="remove"  class="btn btn-danger btn-xs remove">-</button></td>'
-      element += '</tr>';
-      $('#fresh_data').append(element);
-      if (stype == 1) {
-        $('#tdbarcode' + count + '').html(des);
-        $('#barcode_head').html('Design Barcode');
-      } else if (stype == 2) {
-        $('#tdbarcode' + count + '').html(ord);
-        $('#barcode_head').html('Order Barcode');
-      } else {
-        $('#tdbarcode' + count + '').html(des);
-        $('#barcode_head').html('Design Barcode');
-      }
+      addmore();
     });
 
-    // $('#add_more_prm').on('click', function() {
-    //   count = count + 1;
-    //   var element = '<tr id=' + count + '>'
-    //   element += '<td><input type="text" class="form-control" readonly value=' + (count + 1) + '></td>'
-    //   element += '<td> <input type="text" class="form-control" name="serial_number[]" value="" required></td>'
-    //   element += '<td> <input type="text" name="old_barcode[]" class="form-control" value=""></td>'
-    //   element += '<td> <input type="text" class="form-control fabric_name" readonly  name="fabric_name[]" value="" id=fabric' + count + '></td>'
-    //   element += '<td><input type="text" class="form-control" name="hsn[]" value="" id=hsnp' + count + ' readonly></td>'
-    //   element += '<td><input type="text" name="design_name[]" class="form-control" value="" id=designNamep' + count + ' readonly></td>'
-    //   element += '<td> <input type="text" name="design_code[]" class="form-control" value="" id=designCodep' + count + ' readonly></td>'
-    //   element += '<td><input type="text" class="form-control" name="stitch[]" value="" id=stitchp' + count + ' readonly></td>'
-    //   element += '<td>  <input type="text" class="form-control" name="dye[]" value="" id=dyep' + count + ' readonly></td>'
-    //   element += '<td><input type="text" class="form-control" name="matching[]" value="" id=matchingp' + count + ' readonly></td>'
-    //   element += '<td><input type="text" class="form-control" name="quantity[]" value=""></td>'
-    //   element += '<td><input type="text" name="unit[]" class="form-control unit" value="" id=unitp' + count + ' readonly></td>'
-    //   element += '<td><input type="text" name="image[]" class="form-control unit" value="" id=imagep' + count + ' readonly></td>'
-    //   element += '<td>  <input type="text" class="form-control" name="priority[]"  value="30" required></td>'
-    //   element += '<td> <input type="text" class="form-control" name="order_barcode[]" value="" id=obc' + count + '></td>'
-    //   element += '<td><input type="text" class="form-control" name="remark[]" value="" required></td>'
-    //   element += '<td> <button type="button" name="remove"  class="btn btn-danger btn-xs remove">-</button></td>'
-    //   element += '</tr>';
-    //   $('#prm_data').append(element);
-    // });
 
     $(document).on('click', '.remove', function() {
       $(this).parent().parent().remove();
@@ -424,9 +394,52 @@
       });
     });
 
+    function addmore() {
+      var des = '<input type="text" class="form-control design_barcode" name="design_barcode[]" value="">';
+      var ord = '<input type="text" name="old_barcode[]" class="form-control order_barcode" value="">';
+      count = count + 1;
+      counter = counter + 1;
+      var element = '<tr id=' + count + '>'
+      element += '<td><input type="text" class="form-control" readonly value=' + (count + 1) + '></td>'
+      element += '<td> <select name="type[]" class="form-control  " id=type' + count + '>'
+      element += '                    <option value="1" >Barcode </option>'
+      element += '                     <option value="2" > Manual </option>'
+      element += '               </select></td>'
+      element += '<td> <input type="text" class="form-control" name="serial_number[]" value="" ></td>'
+      element += '<td id=tdbarcode' + count + '></td>'
+      element += ' <td id=tdfab' + count + '><input type="text" class="form-control fabric_name" readonly  name="fabric_name[]" value="" id=fabric' + count + '></td>'
+      element += '<td><input type="text" class="form-control" name="hsn[]" value="" readonly id=hsn' + count + '></td>'
+
+      element += '<td id=tddesign' + count + '><input type="text" name="design_name[]" class="form-control" value="" readonly id=designName' + count + '></td>'
+      element += '<td> <input type="text" name="design_code[]" class="form-control" value="" readonly id=designCode' + count + '></td>'
+      element += '<td><input type="text" class="form-control" name="stitch[]" value="" readonly id=stitch' + count + '></td>'
+      element += '<td>  <input type="text" class="form-control" name="dye[]" value="" readonly id=dye' + count + '></td>'
+      element += '<td><input type="text" class="form-control" name="matching[]" value="" readonly id=matching' + count + '></td>'
+      element += '<td><input type="text" class="form-control" name="quantity[]" value=""></td>'
+      element += '<td><input type="text" name="unit[]" class="form-control unit" value="" readonly id=unit' + count + '></td>'
+      element += '<td><input type="text" name="image[]" class="form-control unit" value="" readonly id=image' + count + '></td>'
+      element += '<td>  <input type="text" class="form-control" name="priority[]"  value="30"></td>'
+      element += '<td> <input type="text" class="form-control" name="order_barcode[]" readonly value=O' + counter + ' id=obc' + count + '></td>'
+      element += '<td><input type="text" class="form-control" name="remark[]" value=""></td>'
+      element += '<td> <button type="button" name="remove"  class="btn btn-danger btn-xs remove">-</button></td>'
+      element += '</tr>';
+      $('#fresh_data').append(element);
+      $('#type' + count + '').focus();
+      if (stype == 1) {
+        $('#tdbarcode' + count + '').html(des);
+        $('#barcode_head').html('Design Barcode');
+      } else if (stype == 2) {
+        $('#tdbarcode' + count + '').html(ord);
+        $('#barcode_head').html('Order Barcode');
+      } else {
+        $('#tdbarcode' + count + '').html(des);
+        $('#barcode_head').html('Design Barcode');
+      }
+    }
     $("body").keypress(function(e) {
       if (e.which == 13) {
-        return false;
+        event.preventDefault();
+        addmore();
       }
     });
   });

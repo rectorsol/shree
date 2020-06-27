@@ -36,7 +36,7 @@
                       <td><?php echo $row['fabric_name']; ?></td>
                       <td><?php echo $row['fabric_type']; ?></td>
                       <td><?php echo $row['designName']; ?></td>
-                      <td><?php echo $row['designCode']; ?></td>
+                      <td><?php echo $row['desCode']; ?></td>
                       <td><?php echo $row['stitch']; ?></td>
                       <td><?php echo my_date_show_time($row['asign_date']); ?></td>
                       <td><a class="text-danger text-center tip" onclick="delete_detail(<?php echo $row['id']; ?>)" data-original-title="Delete">

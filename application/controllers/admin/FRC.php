@@ -129,7 +129,7 @@
 				 } elseif ($_POST['type'] == 'barcode1') {
 			$data['frc_data'] = $data['data'];
 			$data['main_content'] = $this->load->view('admin/FRC/stock/print_multiple2', $data, TRUE);
-		}
+				}
 
 				 else{
 					$data['main_content'] =''; 
@@ -138,7 +138,7 @@
 					
 				$this->load->view('admin/print/index', $data);
 			
-		}
+	}
 		public function viewRecieve($id){
 	        $data = array();
 			$data['name']='View List';
