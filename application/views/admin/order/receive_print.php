@@ -33,71 +33,77 @@
   }
 </style>
 
-<table border="1" height="5in" width="6in" style="padding:10px 10px 10px 20px;">
-  <?php foreach ($data[0] as $value) : ?>
+<table height="6in" width="6in">
+  <?php foreach ($data as $value) : ?>
     <tr>
       <td>
         <table>
           <tr>
-            <td rowspan="4" width="120px">
+            <td rowspan="3" width="120px">
               <div>
-                <img class="barCodeImage" id="barcode1<?php echo $value['order_barcode']; ?>" />
+                <img class="barCodeImage" id="barcode1<?php echo $value[0]['order_barcode']; ?>" />
                 <script>
-                  JsBarcode("#barcode1<?php echo $value['order_barcode']; ?>", "<?php echo $value['order_barcode']; ?>");
+                  JsBarcode("#barcode1<?php echo $value[0]['order_barcode']; ?>", "<?php echo $value[0]['order_barcode']; ?>");
                 </script>
               </div>
             </td>
             <td width="90px">SIZE</td>
-            <td width="200px">:- <?php echo $value['quantity']; ?> UNIT <?php echo $value['unit']; ?></td>
+            <td width="200px">:- <?php echo $value[0]['quantity']; ?> <?php echo $value[0]['unit']; ?></td>
             <td width="140px">KARIGAR :-</td>
           </tr>
           <tr>
             <td width="90px">FABRIC</td>
-            <td width="200px">:- <?php echo $value['fabric_name']; ?></td>
+            <td width="200px">:- <?php echo $value[0]['fabric_name']; ?></td>
             <td collspan="2" width="140px">……………………………</td>
           </tr>
           <tr>
             <td width="90px">OD NO</td>
-            <td width="200px">:- <?php echo $value['order_number']; ?></td>
+            <td width="200px">:- <?php echo $value[0]['order_number']; ?></td>
           </tr>
           <tr>
-            <td width="90px">DESIGN NAME</td>
-            <td width="200px">:-<?php echo $value['design_name']; ?></td>
+            <td width="90px">BARCODE : <?php echo $value[0]['order_barcode']; ?> </td>
+            <td width="90px">DESIGN </td>
+            <td width="200px">:-<?php echo $value[0]['design_name']; ?></td>
             <td>CUTTING :-</td>
           </tr>
           <tr>
-            <td rowspan="3">
+            <td rowspan="2">
               <div>
-                <img class="barCodeImage" id="barcode1<?php echo $value['order_barcode']; ?>" />
+                <img class="barCodeImage" id="barcode1<?php echo $value[0]['order_barcode']; ?>" />
                 <script>
-                  JsBarcode("#barcode1<?php echo $value['order_barcode']; ?>", "<?php echo $value['order_barcode']; ?>");
+                  JsBarcode("#barcode1<?php echo $value[0]['order_barcode']; ?>", "<?php echo $value[0]['order_barcode']; ?>");
                 </script>
               </div>
             </td>
-            <td width="90px">DESIGN CODE</td>
-            <td width="200px">:- <?php echo $value['design_code']; ?></td>
+            <td width="90px">CODE</td>
+            <td width="200px">:- <?php echo $value[0]['design_code']; ?></td>
             <td collspan="2">……………………………</td>
           </tr>
           <tr>
             <td width="90px">STITCH</td>
-            <td width="200px">:- <?php echo $value['stitch']; ?></td>
+            <td width="200px">:- <?php echo $value[0]['stitch']; ?></td>
           </tr>
           <tr>
+            <td width="90px">BARCODE : <?php echo $value[0]['order_barcode']; ?> </td>
             <td width="90px">DYE</td>
-            <td width="200px">:- <?php echo $value['dye']; ?></td>
+            <td width="200px">:- <?php echo $value[0]['dye']; ?></td>
             <td>CHECKING :-</td>
           </tr>
           <tr>
             <td width="120px">CUST.NAME</td>
-            <td width="240px" colspan="2">:- <?php echo $value['customer']; ?></td>
+            <td width="240px" colspan="2">:- <?php echo $value[0]['customer']; ?></td>
             <td colspan="2"></td>
           </tr>
           <tr>
             <td width="120px">MATCHING</td>
-            <td width="240px" colspan="2">:- <?php echo $value['matching']; ?></td>
+            <td width="240px" colspan="2">:- <?php echo $value[0]['matching']; ?></td>
           </tr>
         </table>
       </td>
+    </tr>
+    <tr>
+      <td width="120px"> </td>
+
     </tr>
   <?php endforeach; ?>
 </table>

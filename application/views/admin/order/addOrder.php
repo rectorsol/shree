@@ -97,7 +97,7 @@
                 <tbody id="fresh_data">
                   <tr id="0">
                     <td><input type="text" class="form-control" readonly value="1"></td>
-                    <td> <select name="type[]" class="form-control  " id='type0'>
+                    <td> <select name="type[]" class="form-control type " id='type0'>
 
                         <option value="1">Barcode </option>
                         <option value="2"> Manual </option>

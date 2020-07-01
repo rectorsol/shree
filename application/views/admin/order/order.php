@@ -51,6 +51,9 @@
                   <a href="<?php echo base_url('admin/orders/get_details/') . serve_url($orders_value['order_id']) ?> ">
                     <i class="fas fa-eye"></i>
                   </a>
+                  <a href="<?php echo base_url('admin/Orders/edit_order_product_details/') . $orders_value['order_id'] ?> ">
+                    <i class="fas fa-edit"></i>
+                  </a>
                 </td>
               </tr>
             <?php } ?>

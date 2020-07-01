@@ -198,11 +198,26 @@ public function get_design_name()
 		}
 
 		function edit_order_product_details($action, $id, $table){
-				$this->db->where('order_id', $id);
+		// echo "<pre>";
+		// print_r($action);
+		// exit;
+				$this->db->where('order_product_id', $id);
 				$this->db->update($table,$action);
+		// print_r($this->db->last_query());exit;
 				return true;
 		}
+	public function get_order_by_id2($order_id)
+	{
 
+		$this->db->select('order_product.*,customer_detail.name as customer,order_table.order_number');
+		$this->db->from('order_table');
+		$this->db->join('order_product ', 'order_table.order_id = order_product.order_id', 'inner');
+		$this->db->where('order_product.order_product_id', $order_id);
+		$this->db->join('customer_detail ', 'customer_detail.id = order_table.customer_name', 'inner');
+		$query = $this->db->get();
+		$query = $query->result_array();
+		return $query;
+	}
  public function get_design_code()
  {
    $this->db->select('distinct(designCode)');

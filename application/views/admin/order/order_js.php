@@ -71,7 +71,7 @@
     });
 
 
-    $(document).on('change', '#type', function(e) {
+    $(document).on('change', '.type', function(e) {
       var type = $(this).val();
       var id = $(this).parent().parent().attr("id");
       var fab = '<input type="text" class="form-control fabric_name" name="fabric_name[]" value="" id=fabric' + id + '>';
@@ -166,7 +166,7 @@
         success: function(data) {
           data = JSON.parse(data);
 
-          $('#designCode' + button_id + '').val(data[0]['designCode']);
+          $('#designCode' + button_id + '').val(data[0]['desCode']);
           $('#stitch' + button_id + '').val(data[0]['stitch']);
           $('#dye' + button_id + '').val(data[0]['dye']);
           $('#matching' + button_id + '').val(data[0]['matching']);
@@ -401,7 +401,7 @@
       counter = counter + 1;
       var element = '<tr id=' + count + '>'
       element += '<td><input type="text" class="form-control" readonly value=' + (count + 1) + '></td>'
-      element += '<td> <select name="type[]" class="form-control  " id=type' + count + '>'
+      element += '<td> <select name="type[]" class="form-control  type" id=type' + count + '>'
       element += '                    <option value="1" >Barcode </option>'
       element += '                     <option value="2" > Manual </option>'
       element += '               </select></td>'

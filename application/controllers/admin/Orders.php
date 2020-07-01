@@ -96,7 +96,7 @@ class Orders extends CI_Controller
               'quantity' => $_POST['quantity'][$i],
               'priority' => $_POST['priority'][$i],
               'order_barcode' => $pbc,
-              'design_barcode' => $_POST['design_barcode'][$i],
+             
               'design_name' => $_POST['design_name'][$i],
               'design_code' => $_POST['design_code'][$i],
               'remark' => $_POST['remark'][$i],
@@ -283,7 +283,7 @@ class Orders extends CI_Controller
     //print_r($_POST['ids']);exit;
     foreach ($ids as $value) {
       if ($value != "") {
-        $data['data'][] = $this->Orders_model->get_order($value);
+        $data['data'][] = $this->Orders_model->get_order_by_id2($value);
       }
     }
     //echo '<pre>';	print_r($data['data']);exit;
@@ -291,51 +291,61 @@ class Orders extends CI_Controller
     $data['main_content'] = $this->load->view('admin/order/receive_print', $data, TRUE);
     $this->load->view('admin/print/index', $data);
   }
-
+ 
   public function edit_order_product_details($order_id)
   {
+    $order_id = sanitize_url($order_id);
     $data = array();
+    $data['febName'] = $this->common_model->febric_name();
     $data['name'] = 'Order List';
-    $data['order_data'] = $this->Orders_model->get_order_product($order_id);
+    $data['order_data'] = $this->Orders_model->get_order($order_id);
     //  echo"<pre>"; print_r($data['order_data']);exit;
     $data['main_content'] = $this->load->view('admin/order/edit_order_details', $data, TRUE);
     $this->load->view('admin/index', $data);
   }
 
 
-  public function edit_order_product($order_id)
+  public function edit_order_product()
   {
     if ($_POST) {
       $data = $this->input->post();
       $data = $this->security->xss_clean($data);
-      $result = $this->Orders_model->edit_order_product_details($data, $order_id, 'order_product');
-      if ($result) {
+      // echo"<pre>"; print_r($data);exit;
+      for ($i = 0; $i < count($data['serial_number']); $i++) {
+       
+          $data1 = array(
+
+           
+            'series_number' => $data['serial_number'][$i],
+            
+            'unit' => $data['unit'][$i],
+            'quantity' => $data['quantity'][$i],
+            'priority' => $data['priority'][$i],
+           
+            'design_barcode' => $data['design_barcode'][$i],
+            'design_name' => $data['design_name'][$i],
+            'design_code' => $data['design_code'][$i],
+            'remark' => $data['remark'][$i],
+            'fabric_name' => $data['fabric_name'][$i],
+            'hsn' => $data['hsn'][$i],
+            'stitch' => $data['stitch'][$i],
+            'dye' => $data['dye'][$i],
+            'matching' => $data['matching'][$i]
+          );
+          $this->Orders_model->edit_order_product_details($data1, $data['pro_id'][$i], 'order_product');
+        }
+     
+    
+     
         $this->session->set_flashdata(array('error' => 0, 'msg' => 'ORDER PRODUCT UPDATE DONE'));
-      } else {
-        $this->session->set_flashdata(array('error' => 1, 'msg' => 'ORDER PRODUCT UPDATE FAILD'));
-      }
+     
       redirect($_SERVER['HTTP_REFERER']);
     }
   }
 
-  public function add_prm()
-  {
-
-    $order_id = $this->Orders_model->insert($data, 'order_product');
-    //  redirect(base_url('admin/Orders/addOrders'));
-  }
+  
 
 
-
-  //  public function design_print($id){
-  //  $data['data'] = $this->Orders_model->get_single_value($id,'order_tb');
-  //
-  //  $data['bar']=$ojbect = $this->barcode->getBarCode('$data->designCode');
-  //  $data['bar']=$ojbect->getBarcodeHTML(2, 30, 'black');
-  //     // echo print_r($data['bar']);exit;
-  //  $data['pdf'] = new Pdf(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-  //  $this->load->view('admin/order/print', $data);
-  // }
   public function cancel_status()
   {
     if ($_POST) {

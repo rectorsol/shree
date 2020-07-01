@@ -43,7 +43,7 @@
                                         <th>Image</th>
                                         <th>Priority</th>
 
-                                        <th>Action</th>
+                                       
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -73,16 +73,7 @@
                                             <td><?php echo $value['unit'] ?></td>
                                             <td><?php echo $value['image'] ?></td>
                                             <td><?php echo $value['priority'] ?></td>
-                                            <td>
-
-                                                <a href="<?php echo base_url('admin/Orders/edit_order_product_details/') . $value['order_id'] ?> ">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                <a class="text-danger text-center tip" href="javascript:void(0)" onclick="delete_detail(<?php echo $value['order_id']; ?>)" data-original-title="Delete">
-                                                    <i class="mdi mdi-delete red"></i>
-                                                </a>
-
-                                            </td>
+                                            
                                         </tr>
 
                                     <?php $id = $id + 1;
