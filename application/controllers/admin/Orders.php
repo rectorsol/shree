@@ -342,8 +342,44 @@ class Orders extends CI_Controller
       redirect($_SERVER['HTTP_REFERER']);
     }
   }
-
   
+  public function assignPbc()
+  {
+    if ($_POST) {
+      $data = $this->input->post();
+      $data = $this->security->xss_clean($data);
+        //echo "<pre>"; print_r($_POST);exit;
+      try {
+       
+        $id = $data['id'];
+        
+        $pbc=  $this->Orders_model->getPBC_deatils($id);
+        // echo "<pre>";
+        // print_r($pbc);
+        // exit;
+        if($pbc!==''){
+
+       
+        if($pbc[0]['fabricName']==$data['fabric']){
+          $data1['quantity']= $pbc[0]['quantity'];
+          $data1['pbc'] = $data[0]['id'];
+          $this->Orders_model->edit_order_product_details($data1, $data['order_product_id'], 'order_product');
+          $this->Orders_model->edit_by_node('order_product_id', $data['order_product_id'], 'order_product', $data1);
+          $this->Orders_model->edit_by_node('fsr_id', $pbc[0]['fsr_id'], 'fabric_stock_received', array('isStock',0));
+          echo '1';  
+        }else{
+         echo '0';
+          }
+        }else{
+          echo '2';
+        }
+      }catch (\Exception $e) {
+        $error = $e->getMessage();
+        echo $error;
+      }
+    }
+    
+  } 
 
 
   public function cancel_status()

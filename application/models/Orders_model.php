@@ -218,6 +218,15 @@ public function get_design_name()
 		$query = $query->result_array();
 		return $query;
 	}
+	public function getPBC_deatils($id)
+	{
+		$this->db->select('fsr_id,current_stock,fabricName');
+		$this->db->from("fabric_stock_view");
+		$this->db->where("parent_barcode", $id);
+		
+		$rec = $this->db->get();
+		return $rec->result_array();
+	}
  public function get_design_code()
  {
    $this->db->select('distinct(designCode)');

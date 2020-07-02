@@ -35,11 +35,16 @@
 
 <table height="6in" width="6in">
   <?php foreach ($data as $value) : ?>
+
     <tr>
       <td>
         <table>
           <tr>
-            <td rowspan="3" width="120px">
+            <td colspan="3">&nbsp;&nbsp;&nbsp; </td>
+
+          </tr>
+          <tr>
+            <td rowspan="2" width="120px">
               <div>
                 <img class="barCodeImage" id="barcode1<?php echo $value[0]['order_barcode']; ?>" />
                 <script>
@@ -57,14 +62,17 @@
             <td collspan="2" width="140px">……………………………</td>
           </tr>
           <tr>
+            <td>OBC:<?php echo $value[0]['order_barcode']; ?> </td>
             <td width="90px">OD NO</td>
             <td width="200px">:- <?php echo $value[0]['order_number']; ?></td>
+            <td width="140px">……………………………</td>
           </tr>
           <tr>
-            <td width="90px">BARCODE : <?php echo $value[0]['order_barcode']; ?> </td>
+            <td> </td>
             <td width="90px">DESIGN </td>
             <td width="200px">:-<?php echo $value[0]['design_name']; ?></td>
-            <td>CUTTING :-</td>
+            <td width="140px">……………………………</td>
+            <td> </td>
           </tr>
           <tr>
             <td rowspan="2">
@@ -78,32 +86,33 @@
             <td width="90px">CODE</td>
             <td width="200px">:- <?php echo $value[0]['design_code']; ?></td>
             <td collspan="2">……………………………</td>
+
           </tr>
           <tr>
             <td width="90px">STITCH</td>
             <td width="200px">:- <?php echo $value[0]['stitch']; ?></td>
+            <td>……………………………</td>
           </tr>
           <tr>
-            <td width="90px">BARCODE : <?php echo $value[0]['order_barcode']; ?> </td>
+            <td width="90px"><?php echo $value[0]['order_barcode']; ?> </td>
             <td width="90px">DYE</td>
             <td width="200px">:- <?php echo $value[0]['dye']; ?></td>
-            <td>CHECKING :-</td>
+            <td>……………………………</td>
           </tr>
           <tr>
             <td width="120px">CUST.NAME</td>
             <td width="240px" colspan="2">:- <?php echo $value[0]['customer']; ?></td>
-            <td colspan="2"></td>
+
           </tr>
           <tr>
             <td width="120px">MATCHING</td>
             <td width="240px" colspan="2">:- <?php echo $value[0]['matching']; ?></td>
           </tr>
+         
         </table>
       </td>
     </tr>
-    <tr>
-      <td width="120px"> </td>
 
-    </tr>
+
   <?php endforeach; ?>
 </table>

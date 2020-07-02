@@ -149,6 +149,7 @@
     });
     $(document).on('change', '.design_name', function(e) {
       var id = $(this).val();
+      var val = $(this, 'selected').text();
       console.log(id);
       var button_id = $(this).parent().parent().attr("id");
       console.log(button_id);
@@ -165,7 +166,9 @@
 
         success: function(data) {
           data = JSON.parse(data);
+          var des = '<input type="text" name="design_name[]" class="form-control" value=' + val + ' id=designName' + id + '>';
 
+          $('#tddesign' + button_id + '').html(des);
           $('#designCode' + button_id + '').val(data[0]['desCode']);
           $('#stitch' + button_id + '').val(data[0]['stitch']);
           $('#dye' + button_id + '').val(data[0]['dye']);
@@ -239,7 +242,7 @@
         }
       });
     });
-
+    
     $(document).on('blur', '.order_barcode', function(e) {
       var order = $(this).val();
       console.log(order);

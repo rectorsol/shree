@@ -127,8 +127,8 @@
 
               <p>
                 <table class="table table-bordered data-table text-center table-responsive">
-                  <thead class="">
-                    <tr class="odd" role="row">
+                  <thead >
+                    <tr >
                       <th><input type="checkbox" id="master"></th>
 
                       <th>Series Number</th>
@@ -173,11 +173,12 @@
               </p>
             </div>
             <div id="get_cancel" class="tab-pane fade p-20" role="tabpanel">
-              <h3>CANCEL ORDER</h3><hr>
+              <h3>CANCEL ORDER</h3>
+              <hr>
               <p>
                 <table class="table table-bordered data-table text-center table-responsive">
-                  <thead class="">
-                    <tr class="odd" role="row">
+                  <thead >
+                    <tr >
 
                       <th>Series Number</th>
                       <th>Order Barcode</th>
@@ -222,19 +223,21 @@
               </p>
             </div>
             <div id="get_complete" class="tab-pane fade p-20" role="tabpanel">
-              <h3>Program in P.G List</h3><hr>
+              <h3>Program in P.G List</h3>
+              <hr>
               <div class="row ">
 
                 <div class="col-md-2 "><button class="btn btn-danger cancel_all2" href="#Cancel" data-toggle="modal" data-original-title="Edit"><i class="mdi mdi-delete "></i> Cancel</button> </div>
                 <div class="col-md-2 "><button class="btn btn-info print_all"><i class="fa fa-print "></i> Print </button> </div>
 
               </div>
-<hr>
+              <hr>
               <p>
                 <table class="table table-bordered data-table text-center table-responsive">
-                  <thead class="">
-                    <tr class="odd" role="row">
+                  <thead >
+                    <tr >
                       <th><input type="checkbox" id="master2"></th>
+                      <th>P_BARCODE</th>
                       <th>Series Number</th>
                       <th>Order Barcode</th>
                       <th>Fabric Name</th>
@@ -245,19 +248,21 @@
                       <th>Dye</th>
                       <th>Matching</th>
                       <th>Remark</th>
-                      <th>Quntity</th>
+                      <th>Quantity</th>
                       <th>Unit</th>
                       <th>Priority</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php foreach ($get_complete as $value) : ?>
-                      <tr class="gradeU" id="tr_<?php echo $value['order_product_id'] ?>">
+                      <tr class="gradeU" id="<?php echo $value['order_product_id'] ?>">
                         <td><input type="checkbox" class="sub_chk2" data-id="<?php echo $value['order_product_id'] ?>">
+                        </td>
+                        <td><input type="text" class="form-control pbc" name='pbc' value='<?php echo $value['pbc'] ?>'>
                         </td>
                         <td><?php echo $value['series_number']; ?></td>
                         <td><?php echo $value['order_barcode']; ?></td>
-                        <td><?php echo $value['fabric_name']; ?></td>
+                        <td id="tdfab<?php echo $value['order_product_id'] ?>"><?php echo $value['fabric_name']; ?></td>
                         <td><?php echo $value['hsn']; ?></td>
                         <td><?php echo $value['design_name']; ?></td>
                         <td><?php echo $value['design_code']; ?></td>
@@ -443,6 +448,42 @@
         });
       }
     }
+  });
+  
+  $(document).on('blur', '.pbc', function(e) {
+    var pbc = $(this).val();
+    pbc = pbc.toUpperCase();
+    $(this).val(pbc);
+    var button_id = $(this).parent().parent().attr("id");
+    console.log(button_id);
+    var fabric = $('#tdfab' + button_id + '').html();
+    var csrf_name = $("#get_csrf_hash").attr('name');
+    var csrf_val = $("#get_csrf_hash").val();
+    $.ajax({
+      type: "POST",
+      url: "<?php echo base_url('admin/orders/assignPbc') ?>",
+      data: {
+
+        'id': pbc,
+        'fabric': fabric,
+        'order_product_id': button_id,
+        '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'
+      },
+
+      success: function(data) {
+        if (data == 0) {
+          toastr.error('Failed!', "fabric did not match");
+        } else if (data == 1) {
+          toastr.success('Success!', "Assigned successfully");
+        } else if (data == 2) {
+          toastr.error('Failed!', "PBC Not Found");
+        } else {
+          toastr.error('Failed!', data);
+        }
+
+
+      }
+    });
   });
   $('#master2').on('click', function(e) {
     console.log("master2");
