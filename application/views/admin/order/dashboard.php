@@ -127,8 +127,8 @@
 
               <p>
                 <table class="table table-bordered data-table text-center table-responsive">
-                  <thead >
-                    <tr >
+                  <thead>
+                    <tr>
                       <th><input type="checkbox" id="master"></th>
 
                       <th>Series Number</th>
@@ -177,8 +177,8 @@
               <hr>
               <p>
                 <table class="table table-bordered data-table text-center table-responsive">
-                  <thead >
-                    <tr >
+                  <thead>
+                    <tr>
 
                       <th>Series Number</th>
                       <th>Order Barcode</th>
@@ -234,8 +234,8 @@
               <hr>
               <p>
                 <table class="table table-bordered data-table text-center table-responsive">
-                  <thead >
-                    <tr >
+                  <thead>
+                    <tr>
                       <th><input type="checkbox" id="master2"></th>
                       <th>P_BARCODE</th>
                       <th>Series Number</th>
@@ -449,41 +449,50 @@
       }
     }
   });
-  
+
   $(document).on('blur', '.pbc', function(e) {
     var pbc = $(this).val();
-    pbc = pbc.toUpperCase();
-    $(this).val(pbc);
-    var button_id = $(this).parent().parent().attr("id");
-    console.log(button_id);
-    var fabric = $('#tdfab' + button_id + '').html();
-    var csrf_name = $("#get_csrf_hash").attr('name');
-    var csrf_val = $("#get_csrf_hash").val();
-    $.ajax({
-      type: "POST",
-      url: "<?php echo base_url('admin/orders/assignPbc') ?>",
-      data: {
+    if (pbc != '') {
+      WRN_PROFILE_DELETE = 'Are you sure you want to assign ' + pbc+' ? ';
+      var check = confirm(WRN_PROFILE_DELETE);
+      if (check == true) {
+        pbc = pbc.toUpperCase();
+        $(this).val(pbc);
+        var button_id = $(this).parent().parent().attr("id");
+        console.log(button_id);
+        var fabric = $('#tdfab' + button_id + '').html();
+        var csrf_name = $("#get_csrf_hash").attr('name');
+        var csrf_val = $("#get_csrf_hash").val();
+        $.ajax({
+          type: "POST",
+          url: "<?php echo base_url('admin/orders/assignPbc') ?>",
+          data: {
 
-        'id': pbc,
-        'fabric': fabric,
-        'order_product_id': button_id,
-        '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'
-      },
+            'id': pbc,
+            'fabric': fabric,
+            'order_product_id': button_id,
+            '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'
+          },
 
-      success: function(data) {
-        if (data == 0) {
-          toastr.error('Failed!', "fabric did not match");
-        } else if (data == 1) {
-          toastr.success('Success!', "Assigned successfully");
-        } else if (data == 2) {
-          toastr.error('Failed!', "PBC Not Found");
-        } else {
-          toastr.error('Failed!', data);
-        }
+          success: function(data) {
+            if (data == 0) {
+              toastr.error('Failed!', "fabric did not match");
+            } else if (data == 1) {
+              toastr.success('Success!', "Assigned successfully");
+            } else if (data == 2) {
+              toastr.error('Failed!', "PBC Not Found");
+            } else {
+              toastr.error('Failed!', data);
+            }
 
 
+          }
+        });
       }
-    });
+    } else {
+      toastr.info('Info!', 'Please enter some value');
+    }
+
   });
   $('#master2').on('click', function(e) {
     console.log("master2");

@@ -196,7 +196,7 @@
           <li class="sidebar-item "> <a class="sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Transaction</span></a>
             <ul aria-expanded="false" class="collapse  first-level">
               <li class="sidebar-item"><a href="<?php echo base_url('admin/transaction'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Add Challan Transaction </span></a></li>
-              <li class="sidebar-item"><a href="<?php echo base_url('admin/transaction/showRecieveList'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Challan Transaction List </span></a></li>
+              <li class="sidebar-item"><a href="<?php echo base_url('admin/transaction/showReturnList'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Challan Transaction List </span></a></li>
               <li class="sidebar-item"><a href="<?php echo base_url('admin/transaction/showRecieve'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Add Bill Transaction </span></a></li>
               <li class="sidebar-item"><a href="<?php echo base_url('admin/transaction/showRecieveList'); ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> Bill Transaction List </span></a></li>
 

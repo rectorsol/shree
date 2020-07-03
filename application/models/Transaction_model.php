@@ -45,16 +45,49 @@ public function get_godown($id)
 public function get($type)
  {
    $this->db->select("*");
-   $this->db->from('fabric_challan');
-   $this->db->where("challan_type", $type);
-  $this->db->join('branch_detail','branch_detail.id=fabric_challan.challan_from','inner');
- $this->db->join('unit','unit.id=fabric_challan.unit','inner');
+   $this->db->from('transaction');
+   $this->db->where("transaction_type", $type);
+ 
    $query = $this->db->get();
    $query = $query->result_array();
    return $query;
    
  }
+  public function get_by_id($id)
+  {
+    $this->db->select("*");
+    $this->db->from('transaction_meta');
 
+    $this->db->where("transaction_id", $id);
+    $this->db->join('order_view', 'order_view.order_barcode=transaction_meta.order_barcode', 'inner');
+
+   
+    $query = $this->db->get(); //echo"<pre>"; print_r($query);exit;
+    $query = $query->result_array();
+    return $query;
+  }
+  public function get_trans_by_id($id)
+  {
+    $this->db->select("*");
+    $this->db->from('transaction_meta');
+
+    $this->db->where("trans_meta_id", $id);
+    $this->db->join('order_view', 'order_view.order_barcode=transaction_meta.order_barcode', 'inner');
+
+
+    $query = $this->db->get(); //echo"<pre>"; print_r($query);exit;
+    $query = $query->result_array();
+    return $query;
+  }
+  public function getId()
+  {
+    $this->db->select('Max(counter) as count');
+    $this->db->from("transaction");
+  
+    $rec = $this->db->get();
+    //  print_r($rec);exit;
+    return $rec->result_array();
+  }
  public function edit($id,$data)
  {
    // print_r($data);

@@ -40,7 +40,7 @@
 		public function showRecieveList(){
 	        $data = array();
 			$data['name']='FRC List';
-			$type='recieve';
+			$type='bill';
             $data['frc_data']=$this->Transaction_model->get($type);
 		      $data['main_content'] = $this->load->view('admin/transaction/bill/list_bill', $data, TRUE);
   	      $this->load->view('admin/index', $data);
@@ -48,20 +48,47 @@
 		public function showReturnList(){
 	        $data = array();
 			$data['name']='Return List';
-			$type='return';
+			$type= 'challan';
             $data['frc_data']=$this->Transaction_model->get($type);
 		      $data['main_content'] = $this->load->view('admin/transaction/challan/list_challan', $data, TRUE);
   	      $this->load->view('admin/index', $data);
     	}
+	public function viewChallan($id)
+	{
+		$data = array();
+		$data['name'] = 'View List';
 		
-          public function delete($id)
+		$data['frc_data'] = $this->Transaction_model->get_by_id($id);
+		
+		//echo "<pre>"; print_r($data['pbc']);exit;
+		$data['main_content'] = $this->load->view('admin/transaction/challan/view', $data, TRUE);
+		$this->load->view('admin/index', $data);
+	}
+	public function return_print_multiple()
+	{
+
+		$ids =  $this->security->xss_clean($_POST['ids']);
+		//print_r($_POST['ids']);exit;
+		foreach ($ids as $value) {
+			if ($value != "") {
+				$data['data'][] = $this->Transaction_model->get_trans_by_id($value);
+			}
+		}
+		//echo '<pre>';	print_r($data['data']);exit;
+
+		$data['main_content'] = $this->load->view('admin/transaction/challan/multi_list_print', $data, TRUE);
+		$this->load->view('admin/print/index', $data);
+	}
+	
+	public function delete()
         {
             
            $ids = $this->input->post('ids');
 
 		 $userid= explode(",", $ids);
 		 foreach ($userid as $value) {
-		  $this->db->delete( 'fabric_challan',array('id' => $value));
+		  $this->db->delete('transaction',array('transaction_id' => $value));
+			$this->db->delete('transaction_meta', array('transaction_id' => $value));
 		}
         }
   		
@@ -76,6 +103,14 @@
 					$total_qty =$total_qty +  $data['qty'][$i];
 					$total_val =$total_val + $data['total'][$i];
 				}
+			$id = $this->Transaction_model->getId();
+			if (!$id) {
+				$challan = "OUT1";
+			} else {
+				$cc = $id[0]['count'];
+				$cc = $cc + 1;
+				$challan = "OUT" . (string) $cc;
+			}
 				$data1 =[
 					'challan_from' =>$data['fromGodown'],
 					'challan_to'  => $data['toGodown'],
@@ -87,7 +122,7 @@
 					'total_amount' => $total_val,
 					'fabric_type' => $data['fabType'][0],
 					'unit' => $data['unit'][0],
-					'challan_type' => 'recieve'
+					'challan_type' => 'bill'
 				];
 				$id =	$this->Frc_model->insert($data1, 'fabric_challan');
 				for ($i=0; $i < $count; $i++) { 
@@ -116,7 +151,14 @@
 				$data = $this->security->xss_clean($_POST);
 				// echo "<pre>"; print_r($data);exit;
 				$count =count($data['pbc']);
-				
+			$id = $this->Transaction_model->getId();
+			if (!$id) {
+				$challan = "OUT1";
+			} else {
+				$cc = $id[0]['count'];
+				$cc = $cc + 1;
+				$challan = "OUT" . (string) $cc;
+			}
 				$data1 =[
 					'from_godown' =>$data['FromGodown'],
 					'to_godown'  => $data['ToGodown'],
@@ -124,7 +166,9 @@
 					'toParty'  => $data['toParty'],
 					'created_at' => date('Y-m-d'),
 					'created_by' => $_SESSION['userID'],
-					
+				'challan_no' => $challan,
+				'counter' => $cc,
+				'pcs' => $count,
 					'jobworkType' => $data['workType'],
 					
 					'transaction_type' => 'challan'
@@ -134,21 +178,11 @@
 				for ($i=0; $i < $count; $i++) { 
 				$data2=[
 					'transaction_id' => $id,
-					'pbc' =>$data['pbc'][$i],
-					'order_barcode' =>$data['obc'][$i],
-					'order_no' =>$data['orderNo'][$i],
-					'design_name' => $data['design'][$i],
-					'design_code' =>$data['designCode'][$i],
-					'dye' => $data['dye'][$i],
-					'matching' =>$data['matching'][$i],
-					'fabric' => $data['fabric_name'][$i],
 					
-					'hsn' => $data['hsn'][$i],
-					'current_qty' => $data['quantity'][$i],
-					'unit' => $data['unit'][$i],
-					'image' => $data['image'][$i],
+					'order_barcode' =>$data['obc'][$i],
+					
 					'days_left ' => $data['days'][$i],
-					'remark' => $data['remark'][$i]
+					
 				]	;
 					$this->Transaction_model->insert($data2, 'transaction_meta');
 				}
@@ -158,14 +192,7 @@
 		
 	   
 		   
- public function getOBC()
-    {
-      $id= $this->security->xss_clean($_POST['id']);
-    $data = array();
-     $data['pbc']=$this->Transaction_model->getOBC_deatils($id);
-     echo json_encode($data['pbc']);
-
-    }
+ 
      public function get_godown()
     {
       $id= $this->security->xss_clean($_POST['party']);

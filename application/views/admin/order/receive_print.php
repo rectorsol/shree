@@ -17,6 +17,7 @@
 
   .PrintThis table table {
     width: 5.0in;
+    height: 1.80in;
   }
 
   .PrintThis table table td {
@@ -39,10 +40,7 @@
     <tr>
       <td>
         <table>
-          <tr>
-            <td colspan="3">&nbsp;&nbsp;&nbsp; </td>
 
-          </tr>
           <tr>
             <td rowspan="2" width="120px">
               <div>
@@ -99,16 +97,12 @@
             <td width="200px">:- <?php echo $value[0]['dye']; ?></td>
             <td>……………………………</td>
           </tr>
-          <tr>
-            <td width="120px">CUST.NAME</td>
-            <td width="240px" colspan="2">:- <?php echo $value[0]['customer']; ?></td>
-
-          </tr>
+          
           <tr>
             <td width="120px">MATCHING</td>
             <td width="240px" colspan="2">:- <?php echo $value[0]['matching']; ?></td>
           </tr>
-         
+
         </table>
       </td>
     </tr>
