@@ -230,7 +230,8 @@
               }
             });
           } else {
-            $(".msg").html("<h6 class='text-danger'><b>Design Not Found </b></h6>");
+            toastr.error('Failed!', "Design Not Found");
+
             $('#designName' + button_id + '').val("");
             $('#designCode' + button_id + '').val('');
             $('#stitch' + button_id + '').val('');
@@ -242,7 +243,7 @@
         }
       });
     });
-    
+
     $(document).on('blur', '.order_barcode', function(e) {
       var order = $(this).val();
       console.log(order);
@@ -280,7 +281,7 @@
               $('#submit_button').hide();
             }
           } else {
-            $(".msg").html("<h6 class='text-danger'><b>Design Not Found </b></h6>");
+            toastr.error('Failed!', "Design Not Found");
             $('#designName' + button_id + '').val("");
             $('#designCode' + button_id + '').val('');
             $('#stitch' + button_id + '').val('');
@@ -373,29 +374,7 @@
       $('#row' + button_id + '').remove();
     });
 
-    $('.order_number').on('blur', function() {
-      var order = $(this).val();
-      if (order == '') {
-        return;
-      }
-      $.ajax({
-        url: '<?php echo base_url('admin/orders/CheckOrder'); ?>',
-        type: 'post',
-        data: {
-          'order': order,
-          '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'
-        },
-        success: function(response) {
-          if (response == 'taken') {
-            $(".msg").html("<h6 class='text-danger'><b>Order already exists</b></h6>");
-            $('.order_number').css("border-bottom", "1px solid red");
-          } else {
-            $(".msg").html("");
-            $('.order_number').css("border-bottom", "1px solid green");
-          }
-        }
-      });
-    });
+
 
     function addmore() {
       var des = '<input type="text" class="form-control design_barcode" name="design_barcode[]" value="">';
@@ -408,7 +387,7 @@
       element += '                    <option value="1" >Barcode </option>'
       element += '                     <option value="2" > Manual </option>'
       element += '               </select></td>'
-      element += '<td> <input type="text" class="form-control" name="serial_number[]" value="" ></td>'
+      element += '<td> <input type="text" class="form-control" name="serial_number[]" value="" id=serial_number' + count + '></td>'
       element += '<td id=tdbarcode' + count + '></td>'
       element += ' <td id=tdfab' + count + '><input type="text" class="form-control fabric_name" readonly  name="fabric_name[]" value="" id=fabric' + count + '></td>'
       element += '<td><input type="text" class="form-control" name="hsn[]" value="" readonly id=hsn' + count + '></td>'
@@ -427,7 +406,7 @@
       element += '<td> <button type="button" name="remove"  class="btn btn-danger btn-xs remove">-</button></td>'
       element += '</tr>';
       $('#fresh_data').append(element);
-      $('#type' + count + '').focus();
+      $('#serial_number' + count + '').focus();
       if (stype == 1) {
         $('#tdbarcode' + count + '').html(des);
         $('#barcode_head').html('Design Barcode');

@@ -184,7 +184,10 @@
 					'days_left ' => $data['days'][$i],
 					
 				]	;
+
 					$this->Transaction_model->insert($data2, 'transaction_meta');
+				$this->Orders_model->update('order_barcode', $data['obc'][$i],  array('status' => 'OUT'), 'order_product');
+
 				}
 				
 			} redirect($_SERVER['HTTP_REFERER']);

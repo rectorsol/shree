@@ -80,27 +80,15 @@
         }
       });
     });
+    $("body").keypress(function(e) {
+      if (e.which == 13) {
+        event.preventDefault();
+        addmore();
+      }
+    });
     $('#add_more').on('click', function() {
+      addmore();
 
-      count = count + 1;
-      var element = '<tr id=' + count + '>'
-      element += '<td><input type="text" class="form-control pbc" name="pbc[]" value="" id=pbc' + count + ' readonly></td>'
-      element += '<td><input type="text" class="form-control obc" name="obc[]" value=""></td>'
-      element += '<td><input type="text" class="form-control " name="orderNo[]" value="" id=orderNo' + count + ' readonly></td>'
-      element += '<td><input type="text" name="fabric_name[]" class="form-control " id=fabric' + count + ' readonly></td>'
-      element += '<td><input type="text" class="form-control " name="hsn[]" value="" id=hsn' + count + ' readonly></td>'
-      element += '<td><input type="text" class="form-control " name="design[]" value="" id=design' + count + ' readonly></td>'
-      element += '<td><input type="text" class="form-control " name="designCode[]" value="" id=DesignCode' + count + ' readonly></td>'
-      element += '<td><input type="text" class="form-control " name="dye[]" value="" id=dye' + count + ' readonly></td>'
-      element += '<td><input type="text" class="form-control " name="matching[]" value="" id=matching' + count + ' readonly></td>'
-      element += '<td><input type="text" class="form-control" name="quantity[]" value="" id=qty' + count + ' readonly></td>'
-      element += '<td><input type="text" name="unit[]" class="form-control unit " id=unit' + count + ' readonly>'
-      element += '<td><input type="text" class="form-control" name="image[]" value="" id=image' + count + ' readonly></td>'
-      element += '<td><input type="text" class="form-control " name="days[]" value="" id=days' + count + ' readonly></td>'
-      element += '<td><input type="text" class="form-control" name="remark[]" value="" id=remark' + count + ' readonly></td>'
-      element += '<td> <button type="button" name="remove"  class="btn btn-danger btn-xs remove">-</button></td>'
-      element += '</tr>';
-      $('#fresh_data').append(element);
     });
 
 
@@ -251,5 +239,27 @@
         $("#workType").val('');
       }
     });
+
+    function addmore() {
+      count = count + 1;
+      var element = '<tr id=' + count + '>'
+      element += '<td><input type="text" class="form-control pbc" name="pbc[]" value="" id=pbc' + count + ' readonly></td>'
+      element += '<td><input type="text" class="form-control obc" name="obc[]" value=""></td>'
+      element += '<td><input type="text" class="form-control " name="orderNo[]" value="" id=orderNo' + count + ' readonly></td>'
+      element += '<td><input type="text" name="fabric_name[]" class="form-control " id=fabric' + count + ' readonly></td>'
+      element += '<td><input type="text" class="form-control " name="hsn[]" value="" id=hsn' + count + ' readonly></td>'
+      element += '<td><input type="text" class="form-control " name="design[]" value="" id=design' + count + ' readonly></td>'
+      element += '<td><input type="text" class="form-control " name="designCode[]" value="" id=DesignCode' + count + ' readonly></td>'
+      element += '<td><input type="text" class="form-control " name="dye[]" value="" id=dye' + count + ' readonly></td>'
+      element += '<td><input type="text" class="form-control " name="matching[]" value="" id=matching' + count + ' readonly></td>'
+      element += '<td><input type="text" class="form-control" name="quantity[]" value="" id=qty' + count + ' readonly></td>'
+      element += '<td><input type="text" name="unit[]" class="form-control unit " id=unit' + count + ' readonly>'
+      element += '<td><input type="text" class="form-control" name="image[]" value="" id=image' + count + ' readonly></td>'
+      element += '<td><input type="text" class="form-control " name="days[]" value="" id=days' + count + ' readonly></td>'
+      element += '<td><input type="text" class="form-control" name="remark[]" value="" id=remark' + count + ' readonly></td>'
+      element += '<td> <button type="button" name="remove"  class="btn btn-danger btn-xs remove">-</button></td>'
+      element += '</tr>';
+      $('#fresh_data').append(element);
+    }
   });
 </script>

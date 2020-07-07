@@ -130,7 +130,9 @@
                   <thead>
                     <tr>
                       <th><input type="checkbox" id="master"></th>
-
+                      <th>ORDER DATE</th>
+                      <th>ORDER NUMBER</th>
+                      <th>CUSTOMER NUMBER</th>
                       <th>Series Number</th>
                       <th>Order Barcode</th>
                       <th>Fabric Name</th>
@@ -151,7 +153,9 @@
                       <tr class="gradeU" id="tr_<?php echo $value['order_product_id'] ?>">
                         <td><input type="checkbox" class="sub_chk" data-id="<?php echo $value['order_product_id'] ?>">
                         </td>
-
+                        <td><?php echo my_date_show($value['order_date']); ?></td>
+                        <td><?php echo $value['order_number']; ?></td>
+                        <td><?php echo $value['customer_name']; ?></td>
                         <td><?php echo $value['series_number'] ?></td>
                         <td><?php echo $value['order_barcode']; ?></td>
                         <td><?php echo $value['fabric_name']; ?></td>
@@ -179,7 +183,9 @@
                 <table class="table table-bordered data-table text-center table-responsive">
                   <thead>
                     <tr>
-
+                      <th>ORDER DATE</th>
+                      <th>ORDER NUMBER</th>
+                      <th>CUSTOMER NUMBER</th>
                       <th>Series Number</th>
                       <th>Order Barcode</th>
                       <th>Fabric Name</th>
@@ -200,7 +206,9 @@
                   <tbody>
                     <?php foreach ($get_cancel as $value) : ?>
                       <tr class="gradeU" id="tr_<?php echo $value['order_product_id'] ?>">
-
+                        <td><?php echo my_date_show($value['order_date']); ?></td>
+                        <td><?php echo $value['order_number']; ?></td>
+                        <td><?php echo $value['customer_name']; ?></td>
                         <td><?php echo $value['series_number'] ?></td>
                         <td><?php echo $value['order_barcode']; ?></td>
                         <td><?php echo $value['fabric_name']; ?></td>
@@ -238,6 +246,9 @@
                     <tr>
                       <th><input type="checkbox" id="master2"></th>
                       <th>P_BARCODE</th>
+                      <th>ORDER DATE</th>
+                      <th>ORDER NUMBER</th>
+                      <th>CUSTOMER NUMBER</th>
                       <th>Series Number</th>
                       <th>Order Barcode</th>
                       <th>Fabric Name</th>
@@ -260,6 +271,9 @@
                         </td>
                         <td><input type="text" class="form-control pbc" name='pbc' value='<?php echo $value['pbc'] ?>'>
                         </td>
+                        <td><?php echo my_date_show($value['order_date']); ?></td>
+                        <td><?php echo $value['order_number']; ?></td>
+                        <td><?php echo $value['customer_name']; ?></td>
                         <td><?php echo $value['series_number']; ?></td>
                         <td><?php echo $value['order_barcode']; ?></td>
                         <td id="tdfab<?php echo $value['order_product_id'] ?>"><?php echo $value['fabric_name']; ?></td>
@@ -450,10 +464,10 @@
     }
   });
 
-  $(document).on('blur', '.pbc', function(e) {
+  $(document).on('change', '.pbc', function(e) {
     var pbc = $(this).val();
     if (pbc != '') {
-      WRN_PROFILE_DELETE = 'Are you sure you want to assign ' + pbc+' ? ';
+      WRN_PROFILE_DELETE = 'Are you sure you want to assign ' + pbc + ' ? ';
       var check = confirm(WRN_PROFILE_DELETE);
       if (check == true) {
         pbc = pbc.toUpperCase();

@@ -102,7 +102,7 @@
                         <option value="1">Barcode </option>
                         <option value="2"> Manual </option>
                       </select></td>
-                    <td><input type="text" class="form-control" name="serial_number[]" value=""></td>
+                    <td><input type="text" class="form-control" name="serial_number[]" value="" id='serial_number0'></td>
                     <td id='tdbarcode0'></td>
                     <td id='tdfab0'><input type="text" class="form-control fabric_name " name="fabric_name[]" readonly value="" id='fabric0'>
                     </td>

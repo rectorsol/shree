@@ -51,7 +51,7 @@
 				}else{
 			$data['type']='recieve';
 			$data['to']=date('Y-m-d');
-			$data['from']=date('Y-m-01');
+			$data['from']=date('Y-04-01');
 			$data['caption'] = 'Challan Receive List';
 				}
 			$data['frc_data']=$this->Frc_model->get($data);
@@ -74,7 +74,7 @@
 				}else{
 			$data['type']='return';
 			$data['to']=date('Y-m-d');
-			$data['from']=date('Y-m-01');
+			$data['from']=date('Y-04-01');
 			$data['caption'] = 'Challan Return List';
 				}
 			$data['frc_data']=$this->Frc_model->get($data);
@@ -191,7 +191,7 @@
 					
 					$data['type']='stock';
 					$data['to']=date('Y-m-d');
-					$data['from']=date('Y-m-01');
+					$data['from']=date('Y-04-01');
 						}
 					
 					$data['frc_data']=$this->Frc_model->get_stock($data);
@@ -216,7 +216,7 @@
 				}else{
 			$data['caption'] = 'TC List';
 			$data['to']=date('Y-m-d');
-			$data['from']=date('Y-m-01');
+			$data['from']=date('Y-04-01');
 				}
 			
 			$data['frc_data']=$this->Frc_model->get($data);
@@ -685,7 +685,7 @@
 				}else{
 			$data['caption'] = 'Show PBC';
 			$data['to']=date('Y-m-d');
-			$data['from']=date('Y-m-01');
+			$data['from']=date('Y-04-01');
 				}
 			$data['frc_data']=$this->Frc_model->select_PBC($data);
 			$data['summary'] = $this->Frc_model->PBC_summary($data);

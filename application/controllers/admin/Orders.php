@@ -165,7 +165,12 @@ class Orders extends CI_Controller
     $id = $this->security->xss_clean($_POST['id']);
     $data = array();
     $data['febName'] = $this->Orders_model->getOrderDetails($id);
-    echo json_encode($data['febName']);
+    if($data['febName']){
+      echo json_encode($data['febName']);
+    }else{
+      echo json_encode(0);
+    }
+    
   }
 
   public function getFabricDetails()
@@ -350,6 +355,13 @@ class Orders extends CI_Controller
       $data = $this->security->xss_clean($data);
         //echo "<pre>"; print_r($_POST);exit;
       try {
+       $obc= $this->Orders_model->get_order_by_id2($data['order_product_id']);
+       
+       if(isset($obc[0]['pbc']) && $obc[0]['pbc']!=""){
+          $this->Orders_model->edit_by_node('parent_barcode', $obc[0]['pbc'],  array('isStock'=> 1),'fabric_stock_received');
+
+       }
+
        
         $id = $data['id'];
         
@@ -357,22 +369,23 @@ class Orders extends CI_Controller
         // echo "<pre>";
         // print_r($pbc);
         // exit;
-        if($pbc!==''){
+        if(isset($pbc[0])){
 
-       
-        if($pbc[0]['fabricName']==$data['fabric']){
-          $data1['quantity']= $pbc[0]['quantity'];
-          $data1['pbc'] = $data[0]['id'];
-          $this->Orders_model->edit_order_product_details($data1, $data['order_product_id'], 'order_product');
-          $this->Orders_model->edit_by_node('order_product_id', $data['order_product_id'], 'order_product', $data1);
-          $this->Orders_model->edit_by_node('fsr_id', $pbc[0]['fsr_id'], 'fabric_stock_received', array('isStock',0));
-          echo '1';  
+
+          if ($pbc[0]['fabricName'] == $data['fabric']) {
+            $data1['quantity'] = $pbc[0]['current_stock'];
+            $data1['pbc'] = $data['id'];
+            $this->Orders_model->edit_order_product_details($data1, $data['order_product_id'], 'order_product');
+            $this->Orders_model->edit_by_node('order_product_id', $data['order_product_id'], $data1, 'order_product');
+            $this->Orders_model->edit_by_node('fsr_id', $pbc[0]['fsr_id'],  array('isStock' => 0), 'fabric_stock_received');
+            echo '1'; 
         }else{
          echo '0';
           }
         }else{
           echo '2';
         }
+      
       }catch (\Exception $e) {
         $error = $e->getMessage();
         echo $error;

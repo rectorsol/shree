@@ -90,7 +90,7 @@
                   <tr id="0">
 
                     <td><input type="text" class="form-control pbc" name="pbc[]" value="" id='pbc0' readonly></td>
-                    <td><input type="text" class="form-control obc" name="obc[]" value=""></td>
+                    <td><input type="text" class="form-control obc" name="obc[]" value="" id='obc0'></td>
                     <td><input type="text" class="form-control " name="orderNo[]" value="" id='orderNo0' readonly></td>
                     <td><input type="text" name="fabric_name[]" class="form-control fabric_name " id='fabric0' readonly></td>
                     <td><input type="text" class="form-control " name="hsn[]" value="" id='hsn0' readonly></td>

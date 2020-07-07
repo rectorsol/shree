@@ -16,34 +16,13 @@
 
     $('#add_more').on('click', function() {
 
-      count = count + 1;
-      var element = '<tr id=' + count + '>'
-      element += '<td><input type="text" class="form-control pbc" name="pbc[]" value="" id=pbc' + count + ' readonly></td>'
-      element += '<td><input type="text" class="form-control obc" name="obc[]" value=""></td>'
-      element += '<td><input type="text" class="form-control " name="orderNo[]" value="" id=orderNo' + count + '></td>'
-      element += '<td><input type="text" name="fabric_name[]" class="form-control " id=fabric' + count + ' readonly></td>'
-      element += '<td><input type="text" class="form-control " name="hsn[]" value="" id=hsn' + count + ' readonly></td>'
-      element += '<td><input type="text" class="form-control " name="design[]" value="" id=design' + count + ' readonly></td>'
-      element += '<td><input type="text" class="form-control " name="designCode[]" value="" id=DesignCode' + count + ' readonly></td>'
-      element += '<td><input type="text" class="form-control " name="dye[]" value="" id=dye' + count + ' readonly></td>'
-      element += '<td><input type="text" class="form-control " name="matching[]" value="" id=matching' + count + ' readonly></td>'
-      element += '<td><input type="text" class="form-control" name="quantity[]" value="" id=qty' + count + ' readonly></td>'
-      element += '<td><input type="text" name="unit[]" class="form-control unit " id=unit' + count + ' readonly>'
-      element += '<td><input type="text" class="form-control" name="job[]" value="" id=job' + count + ' readonly></td>'
-      element += '<td><input type="text" class="form-control " name="rate[]" value="" id=rate' + count + ' readonly></td>'
-      element += '<td><input type="text" class="form-control" name="value[]" value="" id=value' + count + ' readonly></td>'
-      element += '<td><input type="text" class="form-control" name="image[]" value="" id=image' + count + ' readonly></td>'
-      element += '<td><input type="text" class="form-control " name="days[]" value="" id=days' + count + ' readonly></td>'
-      element += '<td><input type="text" class="form-control" name="remark[]" value="" id=remark' + count + ' readonly></td>'
-      element += '<td> <button type="button" name="remove"  class="btn btn-danger btn-xs remove">-</button></td>'
-      element += '</tr>';
-      $('#fresh_data').append(element);
+      addmore();
     });
 
 
     $(document).on('click', '.remove', function() {
       $(this).parent().parent().remove();
-      count = count - 1;
+    
     });
 
     $('.delete_all').on('click', function(e) {
@@ -84,45 +63,13 @@
       }
     });
 
-    $(document).on('click', '.btn_remove', function() {
-      var button_id = $(this).attr("id");
-      $('#row' + button_id + '').remove();
-    });
+    
 
-    $(document).on('change', "input[name='prate[]']", function() {
-      var id = $(this).parent().parent().attr("id");
-      console.log("id=" + id);
-      var q = Number($('#qty' + id + '').val());
-      console.log("q=" + q);
-      var rate = Number($(this).val());
-      var val = rate * q;
-      console.log("val=" + val);
-      $('#value' + id + '').val(val);
-      qty = get_total_value()
-      $('#th_total').html(qty)
-      console.log("th_total=" + qty);
-
-    });
+    
 
 
 
-    $(document).on('change', "input[name='qty[]']", function() {
-
-
-      qty = get_total_quntity()
-      $('#th_qty').html(qty)
-      console.log("quantity=" + qty);
-
-    });
-
-    function get_total_quntity() {
-      var current = 0;
-      $("input[name='qty[]']").each(function() {
-        current += Number($(this).val());
-        console.log("Current=" + current);
-      });
-      return Number(current);
-    }
+   
     $(document).on('blur', '.obc', function(e) {
       var order = $(this).val();
       console.log(order);
@@ -140,8 +87,12 @@
         },
 
         success: function(data) {
+
           data = JSON.parse(data);
-          if (data != "") {
+
+
+
+          if (data != 0) {
             // One day Time in ms (milliseconds) 
             var one_day = 1000 * 60 * 60 * 24
             var present_date = new Date();
@@ -154,7 +105,7 @@
 
             // To remove the decimals from the (Result) resulting days value 
             var Final_Result = Result.toFixed(0);
-            Final_Result = 30- Final_Result;
+            Final_Result = 30 - Final_Result;
             fabric = data[0]['fabric_name'];
             $(".msg").html("");
             $('#days' + button_id + '').val(Final_Result);
@@ -177,7 +128,7 @@
               $('#submit_button').hide();
             }
           } else {
-            $(".msg").html("<h6 class='text-danger'><b>Design Not Found </b></h6>");
+            toastr.error('Failed!', "OBC not Found");
             $('#designName' + button_id + '').val("");
             $('#designCode' + button_id + '').val('');
             $('#stitch' + button_id + '').val('');
@@ -190,14 +141,7 @@
       });
     });
 
-    function get_total_value() {
-      var current = 0;
-      $("input[name='total[]']").each(function() {
-        current += Number($(this).val());
-        console.log("Current=" + current);
-      });
-      return Number(current);
-    }
+   
     $(document).on('change', "#FromParty", function() {
       var party = $(this).val();
 
@@ -256,5 +200,37 @@
         $("#workType").val('');
       }
     });
+    $("body").keypress(function(e) {
+      if (e.which == 13) {
+        event.preventDefault();
+        addmore();
+      }
+    });
+
+    function addmore() {
+      count = count + 1;
+      var element = '<tr id=' + count + '>'
+      element += '<td><input type="text" class="form-control pbc" name="pbc[]" value="" id=pbc' + count + ' readonly></td>'
+      element += '<td><input type="text" class="form-control obc" name="obc[]" value="" id=obc' + count + '></td>'
+      element += '<td><input type="text" class="form-control " name="orderNo[]" value="" id=orderNo' + count + '></td>'
+      element += '<td><input type="text" name="fabric_name[]" class="form-control " id=fabric' + count + ' readonly></td>'
+      element += '<td><input type="text" class="form-control " name="hsn[]" value="" id=hsn' + count + ' readonly></td>'
+      element += '<td><input type="text" class="form-control " name="design[]" value="" id=design' + count + ' readonly></td>'
+      element += '<td><input type="text" class="form-control " name="designCode[]" value="" id=DesignCode' + count + ' readonly></td>'
+      element += '<td><input type="text" class="form-control " name="dye[]" value="" id=dye' + count + ' readonly></td>'
+      element += '<td><input type="text" class="form-control " name="matching[]" value="" id=matching' + count + ' readonly></td>'
+      element += '<td><input type="text" class="form-control" name="quantity[]" value="" id=qty' + count + ' readonly></td>'
+      element += '<td><input type="text" name="unit[]" class="form-control unit " id=unit' + count + ' readonly>'
+      element += '<td><input type="text" class="form-control" name="job[]" value="" id=job' + count + ' readonly></td>'
+      element += '<td><input type="text" class="form-control " name="rate[]" value="" id=rate' + count + ' readonly></td>'
+      element += '<td><input type="text" class="form-control" name="value[]" value="" id=value' + count + ' readonly></td>'
+      element += '<td><input type="text" class="form-control" name="image[]" value="" id=image' + count + ' readonly></td>'
+      element += '<td><input type="text" class="form-control " name="days[]" value="" id=days' + count + ' readonly></td>'
+      element += '<td><input type="text" class="form-control" name="remark[]" value="" id=remark' + count + ' readonly></td>'
+      element += '<td> <button type="button" name="remove"  class="btn btn-danger btn-xs remove">-</button></td>'
+      element += '</tr>';
+      $('#fresh_data').append(element);
+      $('#obc' + count + '').focus();
+    }
   });
 </script>
