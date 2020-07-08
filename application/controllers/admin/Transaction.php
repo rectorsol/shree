@@ -11,11 +11,19 @@
         $this->load->model('Common_model');
         $this->load->model('Job_work_party_model');
         $this->load->model('Transaction_model');
-        
+		$this->load->model('Sub_department_model');
     	}
 
+	public function index()
+	{
+		$data = array();
+		$data['page_name'] = 'GODOWN DASHBORD';
 
-    	public function index(){
+		$data['sub_dept_data'] = $this->Sub_department_model->get();
+		$data['main_content'] = $this->load->view('admin/Transaction/index', $data, TRUE);
+		$this->load->view('admin/index', $data);
+	}
+    	public function showChallan(){
 	        $data = array();
 	        $data['name']='Fabric Return Chalan';
 			$data['febName']=$this->Common_model->febric_name();
@@ -38,21 +46,37 @@
     	}  
 		
 		public function showRecieveList(){
-	        $data = array();
+		if ($_POST) {
+			$data = $this->security->xss_clean($_POST);
+		}
 			$data['name']='FRC List';
-			$type='bill';
-            $data['frc_data']=$this->Transaction_model->get($type);
-		      $data['main_content'] = $this->load->view('admin/transaction/bill/list_bill', $data, TRUE);
+			
+            $data['frc_data']=$this->Transaction_model->get('to_godown',$data['godown']);
+		      $data['main_content'] = $this->load->view('admin/transaction/list_in', $data, TRUE);
   	      $this->load->view('admin/index', $data);
 		}
 		public function showReturnList(){
-	        $data = array();
+		if ($_POST) {
+			$data = $this->security->xss_clean($_POST);
+		}
 			$data['name']='Return List';
-			$type= 'challan';
-            $data['frc_data']=$this->Transaction_model->get($type);
-		      $data['main_content'] = $this->load->view('admin/transaction/challan/list_challan', $data, TRUE);
+			
+            $data['frc_data']=$this->Transaction_model->get('from_godown',$data['godown']);
+		      $data['main_content'] = $this->load->view('admin/transaction/list_out', $data, TRUE);
   	      $this->load->view('admin/index', $data);
-    	}
+		}
+	public function showStock()
+	{
+		if ($_POST) {
+			$data = $this->security->xss_clean($_POST);
+		}
+
+		$data['name'] = 'Return List';
+
+		$data['frc_data'] = $this->Transaction_model->get_stock($data['godown']);
+		$data['main_content'] = $this->load->view('admin/transaction/stock', $data, TRUE);
+		$this->load->view('admin/index', $data);
+	}
 	public function viewChallan($id)
 	{
 		$data = array();
@@ -92,7 +116,7 @@
 		}
         }
   		
-		public function addRecieve(){
+		public function addBill(){
 			if($_POST){
 				$data = $this->security->xss_clean($_POST);
 				// echo "<pre>"; print_r($data);exit;
@@ -186,7 +210,7 @@
 				]	;
 
 					$this->Transaction_model->insert($data2, 'transaction_meta');
-				$this->Orders_model->update('order_barcode', $data['obc'][$i],  array('status' => 'OUT'), 'order_product');
+				$this->Transaction_model->update(array('status' => 'OUT'),'order_barcode', $data['obc'][$i],  'order_product');
 
 				}
 				
@@ -199,79 +223,15 @@
      public function get_godown()
     {
       $id= $this->security->xss_clean($_POST['party']);
-    $data = array();
+    	$data = array();
      $data['godown']=$this->Transaction_model->get_godown($id);
      echo json_encode($data['godown']);
 
     }
+		
+		
+
 		public function filter()
-        {
-            $data=array();
-            if ($_POST) {
-              $data['cat']=$this->input->post('searchByCat');
-			  $data['Value']=$this->input->post('searchValue');
-			  $data['type']=$this->input->post('type');
-                $output = "";
-
-				$data=$this->Frc_model->search($data);
-				
-                foreach ($data as $value) {
-                    
-                    $output .= "<tr id='tr_".$value['fc_id']."'>";
-                    $output .="<td><input type='checkbox' class='sub_chk' data-id=".$value['fc_id']."></td>";
-						 $output .="<td>".$value['challan_date']."</td>
-
-                                          <td>".$value['sort_name']."</td>
-                                         <td>". $value['challan_no']."</td>
-                                           <td>". $value['fabric_type']."</td>
-                                          
-                                          <td>".$value['total_quantity']."</td>
-                                          <td>".$value['unitName']."</td>
-                                          <td>". $value['total_amount']."</td>";
-                    
-                    $output .= "<td><a href='#".$value['fc_id']."' class='text-center tip' data-toggle='modal' data-original-title='Edit'><i class='fas fa-edit blue'></i></a>
-                    
-                    </td>";
-                   $output .= "</tr>";
-                            }
-              echo json_encode($output);
-            }
-        }
-public function date_filter()
-        {
-            $data=array();
-            if ($_POST) {
-             
-			  $data['from']=$this->input->post('date_from');
-			  $data['to']=$this->input->post('date_to');
-			  $data['type']=$this->input->post('type');
-                $output = "";
-
-				$data=$this->Frc_model->search_by_date($data);
-				
-                foreach ($data as $value) {
-                    
-                    $output .= "<tr id='tr_".$value['fc_id']."'>";
-                    $output .="<td><input type='checkbox' class='sub_chk' data-id=".$value['fc_id']."></td>";
-						 $output .="<td>".$value['challan_date']."</td>
-
-                                          <td>".$value['sort_name']."</td>
-                                         <td>". $value['challan_no']."</td>
-                                           <td>". $value['fabric_type']."</td>
-                                          
-                                          <td>".$value['total_quantity']."</td>
-                                          <td>".$value['unitName']."</td>
-                                          <td>". $value['total_amount']."</td>";
-                    
-                    $output .= "<td><a href='#".$value['fc_id']."' class='text-center tip' data-toggle='modal' data-original-title='Edit'><i class='fas fa-edit blue'></i></a>
-                    
-                    </td>";
-                   $output .= "</tr>";
-                            }
-              echo json_encode($output);
-            }
-        }
-		public function filter1()
 							{
 						$data1=array();
 						$this->security->xss_clean($_POST);

@@ -366,9 +366,7 @@ class Orders extends CI_Controller
         $id = $data['id'];
         
         $pbc=  $this->Orders_model->getPBC_deatils($id);
-        // echo "<pre>";
-        // print_r($pbc);
-        // exit;
+       
         if(isset($pbc[0])){
 
 

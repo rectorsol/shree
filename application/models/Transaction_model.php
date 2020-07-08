@@ -42,12 +42,12 @@ public function get_godown($id)
    $query = $query->result_array();
    return $query;
  }
-public function get($type)
+public function get($col,$godown)
  {
    $this->db->select("*");
    $this->db->from('transaction');
-   $this->db->where("transaction_type", $type);
- 
+
+    $this->db->where($col, $godown);
    $query = $this->db->get();
    $query = $query->result_array();
    return $query;

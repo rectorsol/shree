@@ -69,7 +69,14 @@
         $('#fresh_form').hide();
       }
     });
-
+    $(document).on('change', '#serial_number0', function(e) {
+      var cust = $(this).val();
+      if (cust != "") {
+        $('#submit_button').show();
+      } else {
+        $('#submit_button').hide();
+      }
+    });
 
     $(document).on('change', '.type', function(e) {
       var type = $(this).val();
@@ -166,9 +173,7 @@
 
         success: function(data) {
           data = JSON.parse(data);
-          var des = '<input type="text" name="design_name[]" class="form-control" value=' + val + ' id=designName' + id + '>';
 
-          $('#tddesign' + button_id + '').html(des);
           $('#designCode' + button_id + '').val(data[0]['desCode']);
           $('#stitch' + button_id + '').val(data[0]['stitch']);
           $('#dye' + button_id + '').val(data[0]['dye']);
@@ -206,11 +211,7 @@
             $('#fabric' + button_id + '').val(fabric);
             $('#image' + button_id + '').val(data[0]['designPic']);
             $("#preview").attr('src', '<?php echo base_url('upload/') ?>' + data[0]['designPic']);
-            if (fabric != "") {
-              $('#submit_button').show();
-            } else {
-              $('#submit_button').hide();
-            }
+           
             var csrf_name = $("#get_csrf_hash").attr('name');
             var csrf_val = $("#get_csrf_hash").val();
             $.ajax({
@@ -275,11 +276,7 @@
             $("#preview").attr('src', '<?php echo base_url('upload/') ?>' + data[0]['image']);
             $('#hsn' + button_id + '').val(data[0]['hsn']);
             $('#unit' + button_id + '').val(data[0]['unit']);
-            if (fabric != "") {
-              $('#submit_button').show();
-            } else {
-              $('#submit_button').hide();
-            }
+
           } else {
             toastr.error('Failed!', "Design Not Found");
             $('#designName' + button_id + '').val("");

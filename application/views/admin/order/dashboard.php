@@ -126,13 +126,13 @@
               </div>
 
               <p>
-                <table class="table table-bordered data-table text-center table-responsive">
+                <table class="table table-bordered data-table text-center ">
                   <thead>
                     <tr>
                       <th><input type="checkbox" id="master"></th>
                       <th>ORDER DATE</th>
                       <th>ORDER NUMBER</th>
-                      <th>CUSTOMER NUMBER</th>
+                      <th>CUSTOMER NAME</th>
                       <th>Series Number</th>
                       <th>Order Barcode</th>
                       <th>Fabric Name</th>
@@ -149,8 +149,9 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php foreach ($get_pending as $value) : ?>
-                      <tr class="gradeU" id="tr_<?php echo $value['order_product_id'] ?>">
+                    <?php $i = 0;
+                    foreach ($get_pending as $value) : ?>
+                      <tr class="gradeU" id="<?php echo $i ?>">
                         <td><input type="checkbox" class="sub_chk" data-id="<?php echo $value['order_product_id'] ?>">
                         </td>
                         <td><?php echo my_date_show($value['order_date']); ?></td>
@@ -171,7 +172,8 @@
                         <td><?php echo $value['priority'] ?></td>
                       </tr>
 
-                    <?php endforeach; ?>
+                    <?php $i += 1;
+                    endforeach; ?>
                   </tbody>
                 </table>
               </p>
@@ -180,12 +182,12 @@
               <h3>CANCEL ORDER</h3>
               <hr>
               <p>
-                <table class="table table-bordered data-table text-center table-responsive">
+                <table class="table table-bordered data-table text-center ">
                   <thead>
                     <tr>
                       <th>ORDER DATE</th>
                       <th>ORDER NUMBER</th>
-                      <th>CUSTOMER NUMBER</th>
+                      <th>CUSTOMER NAME</th>
                       <th>Series Number</th>
                       <th>Order Barcode</th>
                       <th>Fabric Name</th>
@@ -204,8 +206,9 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php foreach ($get_cancel as $value) : ?>
-                      <tr class="gradeU" id="tr_<?php echo $value['order_product_id'] ?>">
+                    <?php $i = 0;
+                    foreach ($get_cancel as $value) : ?>
+                      <tr class="gradeU" id="<?php echo $i ?>">
                         <td><?php echo my_date_show($value['order_date']); ?></td>
                         <td><?php echo $value['order_number']; ?></td>
                         <td><?php echo $value['customer_name']; ?></td>
@@ -225,7 +228,8 @@
                         <td><?php echo $value['date'] ?></td>
                         <td><?php echo $value['priority'] ?></td>
                       </tr>
-                    <?php endforeach; ?>
+                    <?php $i += 1;
+                    endforeach; ?>
                   </tbody>
                 </table>
               </p>
@@ -241,14 +245,14 @@
               </div>
               <hr>
               <p>
-                <table class="table table-bordered data-table text-center table-responsive">
+                <table class="table table-bordered data-table text-center ">
                   <thead>
                     <tr>
                       <th><input type="checkbox" id="master2"></th>
                       <th>P_BARCODE</th>
                       <th>ORDER DATE</th>
                       <th>ORDER NUMBER</th>
-                      <th>CUSTOMER NUMBER</th>
+                      <th>CUSTOMER NAME</th>
                       <th>Series Number</th>
                       <th>Order Barcode</th>
                       <th>Fabric Name</th>
@@ -265,18 +269,19 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php foreach ($get_complete as $value) : ?>
-                      <tr class="gradeU" id="<?php echo $value['order_product_id'] ?>">
+                    <?php $i = 0;
+                    foreach ($get_complete as $value) : ?>
+                      <tr class="gradeU" id="<?php echo $i ?>">
                         <td><input type="checkbox" class="sub_chk2" data-id="<?php echo $value['order_product_id'] ?>">
                         </td>
-                        <td><input type="text" class="form-control pbc" name='pbc' value='<?php echo $value['pbc'] ?>'>
+                        <td><input type="text" class="form-control pbc" name='pbc' value='<?php echo $value['pbc'] ?> ' id="pbc<?php echo $i ?>">
                         </td>
                         <td><?php echo my_date_show($value['order_date']); ?></td>
                         <td><?php echo $value['order_number']; ?></td>
                         <td><?php echo $value['customer_name']; ?></td>
                         <td><?php echo $value['series_number']; ?></td>
                         <td><?php echo $value['order_barcode']; ?></td>
-                        <td id="tdfab<?php echo $value['order_product_id'] ?>"><?php echo $value['fabric_name']; ?></td>
+                        <td id="tdfab<?php echo $i ?>"><?php echo $value['fabric_name']; ?></td>
                         <td><?php echo $value['hsn']; ?></td>
                         <td><?php echo $value['design_name']; ?></td>
                         <td><?php echo $value['design_code']; ?></td>
@@ -288,7 +293,8 @@
                         <td><?php echo $value['unit']; ?></td>
                         <td><?php echo $value['priority']; ?></td>
                       </tr>
-                    <?php endforeach; ?>
+                    <?php $i += 1;
+                    endforeach; ?>
                   </tbody>
                 </table>
               </p>
@@ -472,7 +478,8 @@
       if (check == true) {
         pbc = pbc.toUpperCase();
         $(this).val(pbc);
-        var button_id = $(this).parent().parent().attr("id");
+        var button_id = $(this).parent().parent().attr('id');
+        var id = $(this).parent().parent().find('.sub_chk2').attr('data-id');
         console.log(button_id);
         var fabric = $('#tdfab' + button_id + '').html();
         var csrf_name = $("#get_csrf_hash").attr('name');
@@ -484,7 +491,7 @@
 
             'id': pbc,
             'fabric': fabric,
-            'order_product_id': button_id,
+            'order_product_id': id,
             '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'
           },
 
@@ -493,6 +500,8 @@
               toastr.error('Failed!', "fabric did not match");
             } else if (data == 1) {
               toastr.success('Success!', "Assigned successfully");
+              button_id = Number(button_id) +1;
+              $('#pbc' + button_id + '').focus();
             } else if (data == 2) {
               toastr.error('Failed!', "PBC Not Found");
             } else {

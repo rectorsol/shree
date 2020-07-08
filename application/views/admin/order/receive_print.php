@@ -60,13 +60,13 @@
             <td collspan="2" width="140px">……………………………</td>
           </tr>
           <tr>
-            <td>OBC:<?php echo $value[0]['order_barcode']; ?> </td>
+            <td style="text-align:center" rowspan="2">OBC:<?php echo $value[0]['order_barcode']; ?> </td>
             <td width="90px">OD NO</td>
             <td width="200px">:- <?php echo $value[0]['order_number']; ?></td>
             <td width="140px">……………………………</td>
           </tr>
           <tr>
-            <td> </td>
+
             <td width="90px">DESIGN </td>
             <td width="200px">:-<?php echo $value[0]['design_name']; ?></td>
             <td width="140px">……………………………</td>
@@ -75,9 +75,9 @@
           <tr>
             <td rowspan="2">
               <div>
-                <img class="barCodeImage" id="barcode1<?php echo $value[0]['order_barcode']; ?>" />
+                <img class="barCodeImage" id="barcode1<?php echo $value[0]['pbc']; ?>" />
                 <script>
-                  JsBarcode("#barcode1<?php echo $value[0]['order_barcode']; ?>", "<?php echo $value[0]['order_barcode']; ?>");
+                  JsBarcode("#barcode1<?php echo $value[0]['pbc']; ?>", "<?php echo $value[0]['pbc']; ?>");
                 </script>
               </div>
             </td>
@@ -92,12 +92,12 @@
             <td>……………………………</td>
           </tr>
           <tr>
-            <td width="90px"><?php echo $value[0]['order_barcode']; ?> </td>
+            <td width="90px" style="text-align:center"><?php echo $value[0]['pbc']; ?> </td>
             <td width="90px">DYE</td>
             <td width="200px">:- <?php echo $value[0]['dye']; ?></td>
             <td>……………………………</td>
           </tr>
-          
+
           <tr>
             <td width="120px">MATCHING</td>
             <td width="240px" colspan="2">:- <?php echo $value[0]['matching']; ?></td>

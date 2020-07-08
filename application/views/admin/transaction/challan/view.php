@@ -21,7 +21,7 @@
                         <div class="widget-content nopadding">
 
 
-                            <table class=" table-bordered data-table text-center table-responsive" id="frc">
+                            <table class=" table-bordered data-table text-center " id="frc">
                                 <!-- <caption style='caption-side : top' class=" text-info ">
                                     <div class="row well container">
                                         <div class="col-4">
