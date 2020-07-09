@@ -159,7 +159,7 @@
 
                     <th>Status</th>
                     <th>View </th>
-                    <th>Edit </th>
+                   
 
                   </tr>
                 </thead>
@@ -184,11 +184,7 @@
                         <a href="<?php echo base_url('admin/Transaction/viewChallan/') . $value['transaction_id'] ?> ">
                           <i class="fas fa-eye"></i>
                         </a>
-                      <td>
-                        <a href="<?php echo base_url('admin/Transaction/edit_challan/') . $value['transaction_id'] ?> ">
-                          <i class="fas fa-edit"></i>
-                        </a>
-                      </td>
+                     
 
                     </tr>
 

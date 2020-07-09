@@ -17,25 +17,29 @@
 	public function home($godown)
 	{
 		$data = array();
-		$data['page_name'] = 'GODOWN DASHBORD';
+		$godown_name = $this->Transaction_model->get_godown_by_id($godown);
+		$data['page_name'] = $godown_name.' GODOWN DASHBORD';
 
 		$data['godown'] = $godown;
-		$data['main_content'] = $this->load->view('admin/Transaction/index', $data, TRUE);
+		$data['main_content'] = $this->load->view('admin/transaction/index', $data, TRUE);
 		$this->load->view('admin/index', $data);
 	}
-    	public function showChallan($godown){
-	        $data = array();
-	        $data['name']='Fabric Return Chalan';
+		
+	public function showChallan($godown){
+			$data = array();
 			$data['godown'] = $this->Transaction_model->get_godown_by_id($godown);
+	        $data['page_name']= $data['godown'].' GODOWN DASHBORD';
+			
 			$data['job'] = $this->Transaction_model->get_jobwork_by_id($data['godown']);
 			$data['branch_data']=$this->Job_work_party_model->get();
 	        //echo print_r($data['fabric_data']);exit;
-		      $data['main_content'] = $this->load->view('admin/transaction/challan/add', $data, TRUE);
-  	      $this->load->view('admin/index', $data);
-    	}
+		    $data['main_content'] = $this->load->view('admin/transaction/challan/add', $data, TRUE);
+  	      	$this->load->view('admin/index', $data);
+		}
+		
 		  public function showRecieve($godown){
 	        $data = array();
-			$data['name']='Add Dye Recieve Transaction';
+			$data['page_name']= ' GODOWN DASHBORD';
 		
 			$data['branch_data']=$this->Job_work_party_model->get();
             
@@ -44,41 +48,81 @@
     	}  
 		
 		public function showRecieveList($godown){
-		
-			$data['name']='FRC List';
-			$data['godown'] = $this->Transaction_model->get_godown_by_id($godown);
+		$data['godown'] = $this->Transaction_model->get_godown_by_id($godown);
+			$data['page_name']= $data['godown'].' GODOWN DASHBORD';
+			
             $data['frc_data']=$this->Transaction_model->get('to_godown', $data['godown']);
 		      $data['main_content'] = $this->load->view('admin/transaction/list_in', $data, TRUE);
   	      $this->load->view('admin/index', $data);
 		}
-		public function showReturnList($godown){
 		
-			$data['name']='Return List';
-			$data['godown'] = $this->Transaction_model->get_godown_by_id($godown);
+		public function showReturnList($godown){
+		$data['godown'] = $this->Transaction_model->get_godown_by_id($godown);
+			$data['page_name']= $data['godown'].' GODOWN DASHBORD';
+			
             $data['frc_data']=$this->Transaction_model->get('from_godown', $data['godown']);
 		      $data['main_content'] = $this->load->view('admin/transaction/list_out', $data, TRUE);
   	      $this->load->view('admin/index', $data);
 		}
-	public function showStock($godown)
+	
+		public function showStock($godown)
 	{
-		
-		$data['name'] = 'Return List';
 		$data['godown'] = $this->Transaction_model->get_godown_by_id($godown);
+		$data['page_name'] = $data['godown'].' GODOWN DASHBORD';
+		
 		$data['frc_data'] = $this->Transaction_model->get_stock($data['godown']);
 		$data['main_content'] = $this->load->view('admin/transaction/stock', $data, TRUE);
 		$this->load->view('admin/index', $data);
 	}
+	
 	public function viewChallan($id)
 	{
 		$data = array();
-		$data['name'] = 'View List';
+		$data['trans_data'] = $this->Transaction_model->get_trans_by_id($id);
+		$data['page_name'] = $data['trans_data'][0]['to_godown'].' GODOWN DASHBORD';
 		
-		$data['frc_data'] = $this->Transaction_model->get_by_id($id);
+		$data['frc_data'] = $this->Transaction_model->get_by_id($id, '"transaction_id"');
 		
-		//echo "<pre>"; print_r($data['pbc']);exit;
+		//echo "<pre>"; print_r($data['frc_data']);exit;
 		$data['main_content'] = $this->load->view('admin/transaction/challan/view', $data, TRUE);
 		$this->load->view('admin/index', $data);
 	}
+	public function recieve()
+	{
+		$id = $this->security->xss_clean($_POST['trans_id']);
+		$data['status']='old';
+		$this->Transaction_model->update($data,'transaction_id', $id, "transaction");
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+	public function recieve_obc()
+	{
+		$obc = $this->security->xss_clean($_POST['obc']);
+		$trans_id= $this->security->xss_clean($_POST['trans_id']);
+		
+		try{
+
+		$status = $this->Transaction_model->check_obc_by_trans_id($obc, $trans_id);
+	 //echo "<pre>"; print_r($status);exit;
+		if($status){
+					
+			$data['stat'] = 'recieved';
+		$st=	$this->Transaction_model->update($data, 'trans_meta_id', $status->trans_meta_id, "transaction_meta");
+			if($st){
+				echo "1";
+			}else{
+				echo "2";
+			}
+		}else{
+			echo "0";
+		}
+		} catch (\Exception $e) {
+			$error = $e->getMessage();
+			echo $error;
+		}
+		
+	}
+	
+	
 	public function return_print_multiple()
 	{
 
@@ -86,7 +130,7 @@
 		//print_r($_POST['ids']);exit;
 		foreach ($ids as $value) {
 			if ($value != "") {
-				$data['data'][] = $this->Transaction_model->get_trans_by_id($value);
+				$data['data'][] = $this->Transaction_model->get_by_id($value, 'trans_meta_id');
 			}
 		}
 		//echo '<pre>';	print_r($data['data']);exit;

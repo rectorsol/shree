@@ -5,7 +5,7 @@
         <form method="post" action="<?php echo base_url('admin/Transaction/addChallan/').$godown ?>">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title"><i class="fa fa-plus"></i>Challan Transaction</h5>
+              <h5 class="modal-title"><i class="fa fa-plus"></i> Challan Transaction</h5>
             </div>
             <div class="modal-body">
               <div class="row">

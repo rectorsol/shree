@@ -16,8 +16,9 @@ class Transaction_model extends CI_Model {
     }
     function update($action, $id,$column, $table){
         $this->db->where($id,$column);
-        $this->db->update($table,$action);
-        return;
+    return  $this->db->update($table,$action);
+        
+        
     }
 
  public function add($data)
@@ -42,6 +43,18 @@ public function get_godown($id)
     return $query->result_array();
    
  }
+  public function check_obc_by_trans_id($obc, $trans_id)
+  {
+    
+    $this->db->select('trans_meta_id');
+    $this->db->from('transaction_meta');
+    $this->db->where('order_barcode', $obc);
+    $this->db->where('transaction_id', $trans_id);
+    $query = $this->db->get();
+    
+    return $query->row();
+  }
+  
 public function get($col,$godown)
  {
    $this->db->select("*");
@@ -81,7 +94,7 @@ public function get($col,$godown)
     $query = $this->db->get();
     return $query->row()->name;
   }
-  public function get_by_id($id)
+  public function get_by_id($id,$table)
   {
     $this->db->select("*");
     $this->db->from('transaction_meta');
@@ -97,10 +110,9 @@ public function get($col,$godown)
   public function get_trans_by_id($id)
   {
     $this->db->select("*");
-    $this->db->from('transaction_meta');
+    $this->db->from('transaction');
 
-    $this->db->where("trans_meta_id", $id);
-    $this->db->join('order_view', 'order_view.order_barcode=transaction_meta.order_barcode', 'inner');
+    $this->db->where("transaction_id", $id);
 
 
     $query = $this->db->get(); //echo"<pre>"; print_r($query);exit;
