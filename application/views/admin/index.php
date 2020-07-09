@@ -168,7 +168,13 @@
               <li class="sidebar-item"><a href="<?php echo base_url('admin/Unit'); ?>" class="sidebar-link"> <i class="fab fa-uniregistry"></i><span class="hide-menu"> Unit</span></a></li>
             </ul>
           </li>
-
+          <li class="sidebar-item hideElement "> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-receipt"></i><span class="hide-menu">Godown </span></a>
+            <ul aria-expanded="false" class="collapse  first-level">
+              <?php foreach ($godown as $row) { ?>
+                <li class="sidebar-item"><a href="<?php echo base_url('admin/transaction/home/') . $row->id; ?>" class="sidebar-link"><i class="fas fa-code-branch"></i><span class="hide-menu"> <?php echo  $row->subDeptName; ?> </span></a></li>
+              <?php } ?>
+            </ul>
+          </li>
           <li class="sidebar-item hideElement"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo base_url('admin/Orders/dashboard'); ?>" aria-expanded="false"><i class="mdi mdi-cart"></i><span class="hide-menu">Order</span></a></li>
           <li class="sidebar-item "> <a class="sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false"><i class="mdi mdi-store"></i><span class="hide-menu">FRC</span></a>
             <ul aria-expanded="false" class="collapse  first-level">
@@ -196,7 +202,7 @@
 
           <li class="sidebar-item hideElement"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo base_url('admin/FDA'); ?>" aria-expanded="false"><i class="mdi mdi-forward"></i><span class="hide-menu">Fabric Design
                 Assign</span></a></li>
-          <li class="sidebar-item hideElement"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo base_url('admin/Transaction'); ?>" aria-expanded="false"><i class="mdi mdi-file-send"></i><span class="hide-menu">Transaction </span></a></li>
+
           <li class="sidebar-item hideElement"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?php echo base_url('admin/Setting'); ?>" aria-expanded="false"><i class="mdi mdi-settings"></i><span class="hide-menu">Setting</span></a></li>
 
         </ul>

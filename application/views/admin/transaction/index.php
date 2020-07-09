@@ -12,7 +12,7 @@
                                         <h1 class="font-light text-white">
                                             <i class="mdi mdi-cart-plus"></i>
                                         </h1>
-                                        <a href="<?php echo base_url('admin/Transaction/showChallan'); ?>">
+                                        <a href="<?php echo base_url('admin/Transaction/showChallan/') . $godown; ?>">
                                             <h4 class="font-light text-white"> <i class="mdi mdi-cart"></i></h4>
                                             <h5 class="text-white">CHALLAN TRANSACTION</h5>
                                         </a>
@@ -25,7 +25,7 @@
                                         <h1 class="font-light text-white">
                                             <i class="mdi mdi-cart-plus"></i>
                                         </h1>
-                                        <a href="<?php echo base_url('admin/transaction/showRecieve'); ?>">
+                                        <a href="<?php echo base_url('admin/transaction/showRecieve/') . $godown; ?>">
                                             <h4 class="font-light text-white"><i class="mdi mdi-cart"></i></h4>
                                             <h5 class="text-white">BILL TRANSACTION</h5>
                                         </a>
@@ -39,7 +39,7 @@
                                             <i class="mdi mdi-download"></i>
                                         </h1>
 
-                                        <a href="#list_in" data-toggle="modal">
+                                        <a href="<?php echo base_url('admin/transaction/showRecieveList/').$godown; ?>" >
                                             <h4 class=" font-light text-white"><i class="mdi mdi-cart"></i></h4>
                                             <h5 class="text-white">MATERIAL IN</h5>
                                         </a>
@@ -52,7 +52,7 @@
                                         <h1 class="font-light text-white">
                                             <i class="mdi mdi-upload"></i>
                                         </h1>
-                                        <a href="#list_out" data-toggle="modal">
+                                        <a href="<?php echo base_url('admin/transaction/showReturnList/') . $godown; ?>" >
                                             <h4 class=" font-light text-white"><i class="mdi mdi-cart"></i></h4>
                                             <h5 class="text-white">MATERIAL OUT</h5>
                                         </a>
@@ -65,7 +65,7 @@
                                         <h1 class="font-light text-white">
                                             <i class="mdi mdi-folder-star"></i>
                                         </h1>
-                                        <a href="#stock" data-toggle="modal">
+                                        <a href="<?php echo base_url('admin/transaction/showStock/') . $godown; ?>" >
                                             <h4 class=" font-light text-white"><i class="mdi mdi-store"></i></h4>
                                             <h5 class="text-white">STOCK OF GODOWN</h5>
                                         </a>
@@ -110,108 +110,6 @@
 
 
                 </div>
-            </div>
-        </div>
-    </div>
-    <div id="list_in" class="modal hide">
-        <div class="modal-dialog" role="document ">
-            <div class="modal-content">
-                <form action="<?php echo base_url('admin/Transaction/showRecieveList/'); ?>" method="POST">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Select GODOWN</h5>
-                        <button data-dismiss="modal" class="close" type="button">×</button>
-
-                    </div>
-                    <div class="modal-body">
-                        <div class="widget-content nopadding">
-                            <div class="form-group row">
-                                <label class="control-label col-sm-3">GODOWN</label>
-                                <div class="col-sm-9">
-                                    <select name="godown" id="" class="form-control">
-                                        <option value="">Select GODOWN</option>
-                                        <?php foreach ($sub_dept_data as $row) { ?>
-                                            <option value="<?php echo $row->subDeptName ?>"><?php echo $row->subDeptName ?></option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="hidden" id="get_csrf_hash" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
-                        <input type="submit" value="Submit" class="btn btn-primary">
-                        <a data-dismiss="modal" class="btn btn-danger" href="#">Close</a>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div id="list_out" class="modal hide">
-        <div class="modal-dialog" role="document ">
-            <div class="modal-content">
-                <form action="<?php echo base_url('admin/Transaction/showReturnList/'); ?>" method="POST">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Select GODOWN</h5>
-                        <button data-dismiss="modal" class="close" type="button">×</button>
-
-                    </div>
-                    <div class="modal-body">
-                        <div class="widget-content nopadding">
-                            <div class="form-group row">
-                                <label class="control-label col-sm-3">GODOWN</label>
-                                <div class="col-sm-9">
-                                    <select name="godown" id="" class="form-control">
-                                        <option value="">Select GODOWN</option>
-                                        <?php foreach ($sub_dept_data as $row) { ?>
-                                            <option value="<?php echo $row->subDeptName ?>"><?php echo $row->subDeptName ?></option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="hidden" id="get_csrf_hash" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
-                        <input type="submit" value="Submit" class="btn btn-primary">
-                        <a data-dismiss="modal" class="btn btn-danger" href="#">Close</a>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div id="stock" class="modal hide">
-        <div class="modal-dialog" role="document ">
-            <div class="modal-content">
-                <form action="<?php echo base_url('admin/Transaction/showStock/'); ?>" method="POST">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Select GODOWN</h5>
-                        <button data-dismiss="modal" class="close btn btn" type="button">×</button>
-
-                    </div>
-                    <div class="modal-body">
-                        <div class="widget-content nopadding">
-                            <div class="form-group row">
-                                <label class="control-label col-sm-3">GODOWN</label>
-                                <div class="col-sm-9">
-                                    <select name="godown" id="" class="form-control">
-                                        <option value="">Select GODOWN</option>
-                                        <?php foreach ($sub_dept_data as $row) { ?>
-                                            <option value="<?php echo $row->subDeptName ?>"><?php echo $row->subDeptName ?></option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="hidden" id="get_csrf_hash" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
-                        <input type="submit" value="Submit" class="btn btn-primary">
-                        <a data-dismiss="modal" class="btn btn-danger" href="#">Close</a>
-                    </div>
-                </form>
             </div>
         </div>
     </div>

@@ -157,7 +157,6 @@
                             <table class="table table-bordered data-table text-center table-responsive" id="frc">
                                 <thead class="">
                                     <tr class="odd" role="row">
-                                        <th><input type="checkbox" class="sub_chk" id="master"></th>
 
                                         <th>OBC</th>
                                         <th>ORDER NO</th>
@@ -169,8 +168,8 @@
                                         <th>UNIT</th>
                                         <th>IMAGE</th>
                                         <th>DAYS REM.</th>
-                                        <th>OBC LAST TRANS. DATE</th>
-                                        <th>REMARK</th>
+
+
 
                                     </tr>
                                 </thead>
@@ -178,31 +177,33 @@
                                     <?php
                                     $c = 1;
                                     foreach ($frc_data as $value) { ?>
-                                        <tr class="gradeU" id="tr_<?php echo $value['fc_id'] ?>">
+                                        <tr class="gradeU" id="tr_<?php echo $c ?>">
 
-                                            <td><input type="checkbox" class="sub_chk" data-id="<?php echo $value['fc_id'] ?>"></td>
                                             <td><?php echo $value['order_barcode']; ?></td>
 
-                                            <td><?php echo $value['order_no']; ?></td>
-                                            <td><?php echo $value['fabric']; ?></td>
-                                            <td><?php echo $value['design']; ?></td>
+                                            <td><?php echo $value['order_number']; ?></td>
+                                            <td><?php echo $value['fabric_name']; ?></td>
+                                            <td><?php echo $value['design_name']; ?></td>
 
                                             <td><?php echo $value['dye'] ?></td>
                                             <td><?php echo $value['matching'] ?></td>
                                             <td><?php echo $value['quantity'] ?></td>
                                             <td><?php echo $value['unit'] ?></td>
-                                            <td><?php echo $value['days'] ?></td>
-                                            <td><?php echo $value['date'] ?></td>
-                                            <td><?php echo $value['remark'] ?></td>
-                                            <td>
+                                            <td><?php echo $value['image'] ?></td>
 
-                                                <a href="<?php echo base_url('admin/Orders/edit_order_product_details/') . $value['fc_id'] ?> ">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
+                                            <td><?php
+                                                $date1 = date('Y-m-d');
+                                                $date2 = $value['order_date'];
+                                        $diff = strtotime($date1) - strtotime($date2);
 
-                                                </a>
+                                       
+                                                $diff= 30
+                                                - ceil(abs($diff / 86400));
+                                                echo $diff;
+                                                ?></td>
 
-                                            </td>
+
+
                                         </tr>
 
                                     <?php $c = $c + 1;

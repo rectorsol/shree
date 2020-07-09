@@ -157,17 +157,17 @@
                     <th>Party name</th>
                     <th>Challan no</th>
 
-
+                    <th>Status</th>
                     <th>View </th>
                     <th>Edit </th>
-                    
+
                   </tr>
                 </thead>
                 <tbody>
                   <?php
                   $id = 1;
                   foreach ($frc_data as $value) { ?>
-                    <tr class="gradeU" id="tr_<?php echo $value['transaction_id'] ?>">
+                    <tr class="gradeU" id="tr_<?php echo $id ?>">
 
                       <td><input type="checkbox" class="sub_chk" data-id="<?php echo $value['transaction_id'] ?>"></td>
                       <td><?php echo $value['created_at']; ?></td>
@@ -175,6 +175,8 @@
 
                       <td><?php echo $value['from_godown']; ?></td>
                       <td><?php echo $value['challan_no']; ?></td>
+                      <td>
+                        <span class="badge badge-pill badge-danger"><?php echo $value['status']; ?></span></td>
 
 
 
@@ -187,7 +189,7 @@
                           <i class="fas fa-edit"></i>
                         </a>
                       </td>
-                     
+
                     </tr>
 
                   <?php $id = $id + 1;
@@ -205,6 +207,5 @@
 
 
 <script>
- 
-</script>
 
+</script>

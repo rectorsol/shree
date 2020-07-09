@@ -2,7 +2,7 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-body">
-        <form method="post" action="<?php echo base_url('admin/Transaction/addChallan') ?>">
+        <form method="post" action="<?php echo base_url('admin/Transaction/addChallan/').$godown ?>">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title"><i class="fa fa-plus"></i>Challan Transaction</h5>
@@ -17,16 +17,12 @@
                       <td>
                         <div class="col-md-12">
                           <label>Job Work Party Name</label>
-                          <select name="FromParty" class="form-control" id='FromParty'>
-                            <option>Select </option>
-                            <?php foreach ($branch_data as $value) : ?>
-                              <option value="<?php echo $value->id; ?>"> <?php echo $value->name; ?></option>
-                            <?php endforeach; ?>
-                          </select>
+                          <input type="text" name="FromParty" class="form-control" value='<?php echo $job; ?>' readonly>
+
                         </div>
                       </td>
                       <td><label>From Godown</label>
-                        <input type="text" class="form-control " name="FromGodown" id='FromGodown' value="" readonly>
+                        <input type="text" class="form-control " name="FromGodown" value="<?php echo $godown; ?>" readonly>
                       </td>
                     </tr>
                     <tr>

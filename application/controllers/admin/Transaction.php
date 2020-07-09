@@ -14,65 +14,56 @@
 		$this->load->model('Sub_department_model');
     	}
 
-	public function index()
+	public function home($godown)
 	{
 		$data = array();
 		$data['page_name'] = 'GODOWN DASHBORD';
 
-		$data['sub_dept_data'] = $this->Sub_department_model->get();
+		$data['godown'] = $godown;
 		$data['main_content'] = $this->load->view('admin/Transaction/index', $data, TRUE);
 		$this->load->view('admin/index', $data);
 	}
-    	public function showChallan(){
+    	public function showChallan($godown){
 	        $data = array();
 	        $data['name']='Fabric Return Chalan';
-			$data['febName']=$this->Common_model->febric_name();
-			$data['unit']=$this->Transaction_model->select('unit');
-			$data['pbc']=$this->Transaction_model->GetPBC();
+			$data['godown'] = $this->Transaction_model->get_godown_by_id($godown);
+			$data['job'] = $this->Transaction_model->get_jobwork_by_id($data['godown']);
 			$data['branch_data']=$this->Job_work_party_model->get();
 	        //echo print_r($data['fabric_data']);exit;
 		      $data['main_content'] = $this->load->view('admin/transaction/challan/add', $data, TRUE);
   	      $this->load->view('admin/index', $data);
     	}
-		  public function showRecieve(){
+		  public function showRecieve($godown){
 	        $data = array();
 			$data['name']='Add Dye Recieve Transaction';
-			$data['febName']=$this->Common_model->febric_name();
-			$data['unit']=$this->Transaction_model->select('unit');
+		
 			$data['branch_data']=$this->Job_work_party_model->get();
             
 		      $data['main_content'] = $this->load->view('admin/transaction/bill/add', $data, TRUE);
   	      $this->load->view('admin/index', $data);
     	}  
 		
-		public function showRecieveList(){
-		if ($_POST) {
-			$data = $this->security->xss_clean($_POST);
-		}
+		public function showRecieveList($godown){
+		
 			$data['name']='FRC List';
-			
-            $data['frc_data']=$this->Transaction_model->get('to_godown',$data['godown']);
+			$data['godown'] = $this->Transaction_model->get_godown_by_id($godown);
+            $data['frc_data']=$this->Transaction_model->get('to_godown', $data['godown']);
 		      $data['main_content'] = $this->load->view('admin/transaction/list_in', $data, TRUE);
   	      $this->load->view('admin/index', $data);
 		}
-		public function showReturnList(){
-		if ($_POST) {
-			$data = $this->security->xss_clean($_POST);
-		}
+		public function showReturnList($godown){
+		
 			$data['name']='Return List';
-			
-            $data['frc_data']=$this->Transaction_model->get('from_godown',$data['godown']);
+			$data['godown'] = $this->Transaction_model->get_godown_by_id($godown);
+            $data['frc_data']=$this->Transaction_model->get('from_godown', $data['godown']);
 		      $data['main_content'] = $this->load->view('admin/transaction/list_out', $data, TRUE);
   	      $this->load->view('admin/index', $data);
 		}
-	public function showStock()
+	public function showStock($godown)
 	{
-		if ($_POST) {
-			$data = $this->security->xss_clean($_POST);
-		}
-
+		
 		$data['name'] = 'Return List';
-
+		$data['godown'] = $this->Transaction_model->get_godown_by_id($godown);
 		$data['frc_data'] = $this->Transaction_model->get_stock($data['godown']);
 		$data['main_content'] = $this->load->view('admin/transaction/stock', $data, TRUE);
 		$this->load->view('admin/index', $data);
@@ -170,18 +161,19 @@
 			} redirect($_SERVER['HTTP_REFERER']);
 		}
 		
-		public function addChallan(){
+		public function addChallan($godown){
+		$godown= $this->Transaction_model->get_godown_by_id($godown);
 			if($_POST){
 				$data = $this->security->xss_clean($_POST);
 				// echo "<pre>"; print_r($data);exit;
 				$count =count($data['pbc']);
-			$id = $this->Transaction_model->getId();
+			$id = $this->Transaction_model->getId($godown);
 			if (!$id) {
-				$challan = "OUT1";
+				$challan = 'CH' . date('Ymd').'/1';
 			} else {
 				$cc = $id[0]['count'];
 				$cc = $cc + 1;
-				$challan = "OUT" . (string) $cc;
+				$challan = 'CH' . date('Ymd').'/'. (string) $cc;
 			}
 				$data1 =[
 					'from_godown' =>$data['FromGodown'],

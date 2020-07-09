@@ -39,8 +39,8 @@ public function get_godown($id)
    $this->db->from('job_work_party');
    $this->db->where('id',$id);
    $query = $this->db->get();
-   $query = $query->result_array();
-   return $query;
+    return $query->result_array();
+   
  }
 public function get($col,$godown)
  {
@@ -49,10 +49,38 @@ public function get($col,$godown)
 
     $this->db->where($col, $godown);
    $query = $this->db->get();
-   $query = $query->result_array();
-   return $query;
+    return $query->result_array();
+    
    
  }
+  public function get_stock( $godown)
+  {
+    $this->db->select("*");
+    $this->db->from('godown_stock_view');
+
+    $this->db->where('to_godown', $godown);
+    $query = $this->db->get();
+    return $query->result_array();
+  }
+  public function get_godown_by_id($godown)
+  {
+    $this->db->select("*");
+    $this->db->from('sub_department');
+
+    $this->db->where('id', $godown);
+    $query = $this->db->get();
+    return $query->row()->subDeptName;
+  
+  }
+  public function get_jobwork_by_id($godown)
+  {
+    $this->db->select("*");
+    $this->db->from('job_work_party');
+
+    $this->db->where('subDeptName', $godown);
+    $query = $this->db->get();
+    return $query->row()->name;
+  }
   public function get_by_id($id)
   {
     $this->db->select("*");
@@ -79,11 +107,11 @@ public function get($col,$godown)
     $query = $query->result_array();
     return $query;
   }
-  public function getId()
+  public function getId($id)
   {
     $this->db->select('Max(counter) as count');
     $this->db->from("transaction");
-  
+    $this->db->where("from_godown", $id);
     $rec = $this->db->get();
     //  print_r($rec);exit;
     return $rec->result_array();

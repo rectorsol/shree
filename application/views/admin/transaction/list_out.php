@@ -167,7 +167,7 @@
                   <?php
                   $id = 1;
                   foreach ($frc_data as $value) { ?>
-                    <tr class="gradeU" id="tr_<?php echo $value['transaction_id'] ?>">
+                    <tr class="gradeU" id="tr_<?php echo $id ?>">
 
                       <td><input type="checkbox" class="sub_chk" data-id="<?php echo $value['transaction_id'] ?>"></td>
                       <td><?php echo $value['created_at']; ?></td>
