@@ -66,12 +66,15 @@ public function get($col,$godown)
     
    
  }
-  public function get_stock( $godown)
+  public function get_stock($data)
   {
-    $this->db->select("*");
+    $this->db->select("godown_stock_view.*,fabric.fabricCode");
     $this->db->from('godown_stock_view');
-
-    $this->db->where('to_godown', $godown);
+    $this->db->join('fabric', 'fabric.fabricName=godown_stock_view.fabric_name', 'inner');
+    if(isset($data['id'])){
+      $this->db->where('trans_meta_id', $data['id']);
+    }
+    $this->db->where('to_godown', $data['godown']);
     $query = $this->db->get();
     return $query->result_array();
   }

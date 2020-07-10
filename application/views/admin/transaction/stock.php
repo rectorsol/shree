@@ -127,8 +127,7 @@
                     <div class="widget-box">
                         <div class="widget-content nopadding">
                             <div class="row well">
-                                <div class="col-6"> <a type="button" class="btn btn-info pull-left delete_all  btn-danger" style="color:#fff;"><i class="mdi mdi-delete red"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;<a type="button" class="btn btn-info pull-left print_all btn-success" style="color:#fff;"><i class="fa fa-print"></i></a>
+                                <div class="col-6"> <a type="button" class="btn btn-info pull-left print_all btn-success" style="color:#fff;"><i class="fa fa-print"></i></a>
                                 </div>
                                 <div class="col-6">
 
@@ -137,31 +136,35 @@
                                         <div class="form-row ">
                                             <div class="col-5">
                                                 <label>Date From</label>
-                                                <input type="date" name="date_from" class="form-control" value="<?php echo date('Y-m-d') ?>">
+                                                <input type="date" name="date_from" class="form-control form-control-sm" value="<?php echo date('Y-m-d') ?>">
                                             </div>
                                             <div class="col-5">
                                                 <label>Date To</label>
-                                                <input type="date" name="date_to" class="form-control" value="<?php echo date('Y-m-d') ?>">
+                                                <input type="date" name="date_to" class="form-control form-control-sm" value="<?php echo date('Y-m-d') ?>">
                                             </div>
                                             <div class="col-2">
                                                 <label>Search</label>
                                                 <input type="hidden" name="type" value="recieve">
                                                 <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" />
-                                                <button type="submit" class="btn btn-info"> <i class="fas fa-search"></i> Search</button>
+                                                <button type="submit" class="btn btn-info btn-xs"> <i class="fas fa-search"></i> Search</button>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                             <hr>
-                            <table class="table table-bordered data-table text-center table-responsive" id="frc">
+                            <table class=" table-bordered data-table text-center " id="frc">
                                 <thead class="">
                                     <tr class="odd" role="row">
-
+                                        <th><input type="checkbox" class="sub_chk" id="master"></th>
+                                        <th>PBC</th>
                                         <th>OBC</th>
                                         <th>ORDER NO</th>
-                                        <th>Fabric </th>
+                                        <th>FABRIC CODE</th>
+                                        <th>Fabric NAME</th>
+                                        <th>HSN</th>
                                         <th>DESIGN NAME</th>
+                                        <th>DESIGN CODE</th>
                                         <th>DYE</th>
                                         <th>MATCHING</th>
                                         <th>QUANTITY</th>
@@ -178,13 +181,17 @@
                                     $c = 1;
                                     foreach ($frc_data as $value) { ?>
                                         <tr class="gradeU" id="tr_<?php echo $c ?>">
+                                            <td><input type="checkbox" class="sub_chk" data-id="<?php echo $value['trans_meta_id'] ?>"></td>
 
+                                            <td><?php echo $value['pbc']; ?></td>
                                             <td><?php echo $value['order_barcode']; ?></td>
 
                                             <td><?php echo $value['order_number']; ?></td>
+                                            <td><?php echo $value['fabricCode']; ?></td>
                                             <td><?php echo $value['fabric_name']; ?></td>
+                                            <td><?php echo $value['hsn']; ?></td>
                                             <td><?php echo $value['design_name']; ?></td>
-
+                                            <td><?php echo $value['design_code']; ?></td>
                                             <td><?php echo $value['dye'] ?></td>
                                             <td><?php echo $value['matching'] ?></td>
                                             <td><?php echo $value['quantity'] ?></td>
@@ -194,11 +201,11 @@
                                             <td><?php
                                                 $date1 = date('Y-m-d');
                                                 $date2 = $value['order_date'];
-                                        $diff = strtotime($date1) - strtotime($date2);
+                                                $diff = strtotime($date1) - strtotime($date2);
 
-                                       
-                                                $diff= 30
-                                                - ceil(abs($diff / 86400));
+
+                                                $diff = 30
+                                                    - ceil(abs($diff / 86400));
                                                 echo $diff;
                                                 ?></td>
 
@@ -253,14 +260,17 @@
                 });
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url() ?>admin/PrintThis/Recieve_Challan_multiprint",
+                    url: "<?= base_url() ?>admin/Transaction/return_print_multiple",
                     cache: false,
                     data: {
                         'ids': data,
-                        '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'
+                        'godown': '<?php echo $godown ?>', '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'
                     },
                     success: function(response) {
-                        $("body").html(response);
+                        var w = window.open('about:blank');
+                        w.document.open();
+                        w.document.write(response);
+                        w.document.close();
                     }
                 });
                 //for client side

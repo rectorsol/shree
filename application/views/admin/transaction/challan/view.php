@@ -12,9 +12,8 @@
                 <hr>
                 <div class="row ">
 
-                   
+
                     <div class="col-md-4 "><input type="text" id="obc" class="form-control" placeholder="OBC Recieve"> </div>
-                    <div class="col-md-2 "><input type="button" id="search" class="btn btn-success" value='Search'> </div>
                 </div>
                 <hr>
                 <div class="row">
@@ -75,11 +74,11 @@
                         <div class="widget-content nopadding">
 
 
-                            <table class=" table-bordered data-table text-center ">
+                            <table class=" table-bordered  text-center " id="list">
 
                                 <thead class="bg-dark text-white">
-                                    <tr class="odd" role="row">
-                                        <th><input type="checkbox" class="sub_chk" id="master"></th>
+                                    <tr>
+                                        <th>#</th>
                                         <th>PBC</th>
                                         <th>OBC</th>
                                         <th>Order No</th>
@@ -96,81 +95,21 @@
                                         <th>Remark</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <?php
-                                    $c = 1;
-                                    $total_qty = 0.00;
-                                    $total_val = 0.00;
-                                    $rec = 1;
-                                    foreach ($frc_data as $value) {
-                                        $total_qty += $value['quantity'];
-                                        if ($value['stat'] == 'recieved') {
-                                            $rec += 1;
-                                        }
-                                    ?>
-                                        <tr class="<?php if ($value['stat'] == 'pending') {
-                                                        echo "bg-secondary text-white";
-                                                    } ?>">
 
-                                            <td><input type="checkbox" class="sub_chk" data-id="<?php echo $value['trans_meta_id'] ?>"></td>
-                                            <td><?php echo $value['pbc']; ?></td>
-
-                                            <td><?php echo $value['order_barcode']; ?></td>
-                                            <td><?php echo $value['order_number']; ?></td>
-
-                                            <td><?php echo $value['fabric_name']; ?></td>
-                                            <td><?php echo $value['hsn']; ?></td>
-                                            <td><?php echo $value['design_name']; ?></td>
-
-                                            <td><?php echo $value['design_code'] ?></td>
-
-
-                                            <td><?php echo $value['dye'] ?></td>
-                                            <td><?php echo $value['matching']; ?></td>
-                                            <td><?php echo $value['quantity']; ?></td>
-                                            <td><?php echo $value['unit']; ?></td>
-                                            <td><?php echo $value['image']; ?></td>
-                                            <td><?php echo $value['days_left']; ?></td>
-                                            <td><?php echo $value['remark']; ?></td>
-                                        </tr>
-
-                                    <?php $c = $c + 1;
-                                    } ?>
-
-
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th> </th>
-                                        <th></th>
-                                        <th></th>
-                                        <th> </th>
-                                        <th> </th>
-                                        <th> </th>
-                                        <th>total</th>
-                                        <th><?php echo $total_qty; ?></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th> </th>
-                                        <th></th>
-                                    </tr>
-                                </tfoot>
                             </table>
                         </div>
                     </div>
-                </div><hr>
-                <?php if($c==$rec) {?>
-                <div >
+                </div>
+                <hr>
+
+                <div id="Recieve">
                     <form action="<?php echo base_url('admin/Transaction/recieve/')  ?>" method="post">
                         <input type="hidden" name="trans_id" value="<?php echo $trans_data[0]['transaction_id']; ?>">
                         <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" />
                         <button type="submit" name="submit" class="btn btn-success btn-md">Recieve</button>
                     </form>
                 </div>
-                <?php }?>
+
             </div>
         </div>
 
@@ -179,80 +118,82 @@
 
 
 <script>
-    $(document).on('click', '#search', function(e) {
-        var obc = $('#obc').val();
+    $(document).ready(function() {
+        getlist();
+
+        var table;
+        $(document).on('change', '#obc', function(e) {
+            var obc = $('#obc').val();
+
+            var csrf_name = $("#get_csrf_hash").attr('name');
+            var csrf_val = $("#get_csrf_hash").val();
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url('admin/transaction/recieve_obc') ?>",
+                data: {
+                    'trans_id': '<?php echo $trans_data[0]['transaction_id']; ?>',
+                    'obc': obc,
+                    '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'
+                },
+
+                success: function(data) {
+                    if (data == 0) {
+                        toastr.error('Failed!', "OBC did not match");
+                    } else if (data == 1) {
+                        toastr.success('Success!', "Recieved successfully");
+
+                        table.ajax.reload();
+                    } else if (data == 2) {
+                        toastr.error('Failed!', "Something went wrong..Status not updated");
+                    } else {
+                        toastr.error('Failed!', data);
+                    }
 
 
-
-        var csrf_name = $("#get_csrf_hash").attr('name');
-        var csrf_val = $("#get_csrf_hash").val();
-        $.ajax({
-            type: "POST",
-            url: "<?php echo base_url('admin/transaction/recieve_obc') ?>",
-            data: {
-                'trans_id': '<?php echo $trans_data[0]['transaction_id']; ?>',
-                'obc': obc,
-                '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'
-            },
-
-            success: function(data) {
-                if (data == 0) {
-                    toastr.error('Failed!', "OBC did not match");
-                } else if (data == 1) {
-                    toastr.success('Success!', "Recieved successfully");
-
-                } else if (data == 2) {
-                    toastr.error('Failed!', "Something went wrong..Status not updated");
-                } else {
-                    toastr.error('Failed!', data);
                 }
-
-
-            }
+            });
         });
-    });
-    jQuery('.print_all').on('click', function(e) {
-        var allVals = [];
-        $(".sub_chk:checked").each(function() {
-            allVals.push($(this).attr('data-id'));
-        });
-        //alert(allVals.length); return false;
-        if (allVals.length <= 0) {
-            alert("Please select row.");
-        } else {
-            //$("#loading").show();
-            WRN_PROFILE_DELETE = "Are you sure you want to Print this rows?";
-            var check = confirm(WRN_PROFILE_DELETE);
-            if (check == true) {
-                //for server side
-                var join_selected_values = allVals.join(",");
-                // alert (join_selected_values);exit;
-                var ids = join_selected_values.split(",");
-                var data = [];
-                $.each(ids, function(index, value) {
-                    if (value != "") {
-                        data[index] = value;
-                    }
-                });
-                $.ajax({
-                    type: "POST",
-                    url: "<?= base_url() ?>admin/Transaction/return_print_multiple",
-                    cache: false,
-                    data: {
-                        'ids': data,
 
-                        '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'
+        function getlist() {
+            table = $('#list').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "order": [],
+                "ajax": {
+                    url: "<?php echo base_url('admin/transaction/getChallan/') . $id ?>",
+                    type: "GET",
+                    "dataSrc": function(json) {
+                        if (json.recieved && json.recieved == true) {
+                            $('#Recieve').show();
+                        } else {
+                            $('#Recieve').hide();
+                        }
+                        // You can also modify `json.data` if required
+                        return json.data;
                     },
-                    success: function(response) {
-                        var w = window.open('about:blank');
-                        w.document.open();
-                        w.document.write(response);
-                        w.document.close();
-                    }
-                });
-                //for client side
+                },
 
-            }
+
+                "createdRow": function(row, data, dataIndex) {
+                    if (data[15] == `pending`) {
+                        $(row).addClass('bg-secondary text-white');
+                    }
+                },
+                "columnDefs": [{
+                        "targets": [15],
+                        "visible": false,
+                        "searchable": false
+                    },
+
+                ],
+
+                scrollY: 500,
+                scrollX: false,
+                scrollCollapse: true,
+                paging: false
+
+            });
         }
+
     });
 </script>
