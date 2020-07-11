@@ -1,3 +1,13 @@
+<script src="<?php echo base_url('optimum/barcode/dist/JsBarcode.all.js'); ?>"></script>
+<script>
+    function textToBase64Barcode(text) {
+        var canvas = document.createElement("canvas");
+        JsBarcode(canvas, text, {
+            format: "CODE39"
+        });
+        return canvas.toDataURL("image/png");
+    }
+</script>
 <div class="container-fluid">
     <!-- ============================================================== -->
     <!-- Start Page Content -->
@@ -10,190 +20,130 @@
                 <h4 class="card-title">Challan Receive Detail</h4>
 
                 <hr>
-                <div class="row ">
-
-
-                    <div class="col-md-4 "><input type="text" id="obc" class="form-control" placeholder="OBC Recieve"> </div>
-                </div>
+                <a type="button" class="btn btn-info pull-left print_all btn-success" style="color:#fff;"><i class="fa fa-print"></i></a>
                 <hr>
-                <div class="row">
-                    <div class="col-md-8">
-
-                        <table class="table-box">
-                            <tr>
-                                <td><label>From</label></td>
-                                <td>
-                                    <div class="col-md-12">
-                                        <label>Job Work Party Name</label>
-                                        <input type="text" name="FromParty" class="form-control" value='<?php echo $trans_data[0]['fromParty']; ?>' readonly>
-
-                                    </div>
-                                </td>
-                                <td><label>From Godown</label>
-                                    <input type="text" class="form-control " name="FromGodown" value="<?php echo $trans_data[0]['from_godown']; ?>" readonly>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label>To</label>
-                                </td>
-                                <td>
-                                    <div class="col-md-12">
-                                        <label>Job Work Party Name</label>
-                                        <select name="toParty" class="form-control" id="toParty" readonly>
-                                            <option>Select </option>
-
-                                        </select>
-                                    </div>
-                                </td>
-                                <td><label>To Godown</label><input type="text" class="form-control " value="<?php echo $trans_data[0]['to_godown']; ?>" readonly></td>
-
-                            </tr>
-                            <tr>
-                                <td><label>Job Work type</label></td>
-                                <td>
-                                    <div class="col-md-12"><input type="text" class="form-control " value="<?php echo $trans_data[0]['jobworkType']; ?>" readonly></div>
-                                </td>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td><label>Challan No</label></td>
-                                            <td><input type="text" class="form-control " name="challan" value="<?php echo $trans_data[0]['challan_no']; ?>" readonly></td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-
-                        </table>
-                    </div>
-                    <div class="col-md-4 "><img src="" alt=""> </div>
-                </div>
-                <hr>
-
                 <div class="widget-box">
                     <div class="widget-content nopadding">
                         <div class="widget-content nopadding">
-
-
-                            <table class=" table-bordered  text-center " id="list">
+                            <table class=" table-bordered data-table text-center " id="list">
 
                                 <thead class="bg-dark text-white">
                                     <tr>
-                                        <th>#</th>
-                                        <th>PBC</th>
+                                        <th><input type="checkbox" class="sub_chk" id="master"></th>
+                                        <th>Barcode</th>
                                         <th>OBC</th>
                                         <th>Order No</th>
+                                        <th>Fabric Code</th>
                                         <th>Fabric</th>
                                         <th>Hsn</th>
+                                        <th>DBC</th>
                                         <th>Design Name </th>
                                         <th>Design Code</th>
-                                        <th>Dye </th>
-                                        <th>Matching</th>
+
                                         <th>Current Qty</th>
                                         <th>Unit</th>
-                                        <th>Image</th>
-                                        <th>Days Rem</th>
-                                        <th>Remark</th>
+                                        <th>Image barcode</th>
+
                                     </tr>
                                 </thead>
+                                <tbody><?php
+                                        $id = 1;
+                                        foreach ($trans_data as $value) {
+                                            $barcode = 'SNS-' . $value['order_barcode'] . '-' . $value['fabricCode'] . '/' . $value['fabricCode'] . '/' . $value['design_code'];
+                                        ?>
 
+                                        <tr class="gradeU" id="tr_<?php echo $value['trans_meta_id'] ?>">
+
+                                            <td><input type="checkbox" class="sub_chk" data-id="<?php echo $value['trans_meta_id'] ?>"></td>
+                                            <td>
+                                                <div>
+                                                    <img class="barCodeImage" width="100%" id="barcode1<?php echo $value['trans_meta_id']; ?>" />
+                                                    <script>
+                                                        JsBarcode("#barcode1<?php echo $value['trans_meta_id']; ?>", "<?php echo $barcode; ?>");
+                                                    </script>
+                                                </div>
+                                            </td>
+                                            <td><?php echo $value['order_barcode']; ?></td>
+                                            <td><?php echo $value['order_number']; ?></td>
+                                            <td><?php echo $value['fabricCode']; ?></td>
+                                            <td><?php echo $value['fabric_name']; ?></td>
+                                            <td><?php echo $value['hsn']; ?></td>
+                                            <td><?php echo $value['design_barcode']; ?></td>
+                                            <td><?php echo $value['design_name']; ?></td>
+                                            <td><?php echo $value['design_code']; ?></td>
+                                            <td><?php echo $value['quantity']; ?></td>
+                                            <td><?php echo $value['unit']; ?></td>
+                                            <td>
+                                                <div>
+                                                    <img class="barCodeImage" width='100%' id="barcode2<?php echo $value['trans_meta_id']; ?>" />
+                                                    <script>
+                                                        JsBarcode("#barcode2<?php echo $value['trans_meta_id']; ?>", "<?php echo $value['finish_qty']; ?>");
+                                                    </script>
+                                                </div>
+                                            </td>
+
+
+                                        </tr>
+
+                                    <?php $id = $id + 1;
+                                        } ?></tbody>
                             </table>
+
                         </div>
                     </div>
                 </div>
                 <hr>
 
-                <div id="Recieve">
-                    <form action="<?php echo base_url('admin/Transaction/recieve/')  ?>" method="post">
-                        <input type="hidden" name="trans_id" value="<?php echo $trans_data[0]['transaction_id']; ?>">
-                        <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" />
-                        <button type="submit" name="submit" class="btn btn-success btn-md">Recieve</button>
-                    </form>
-                </div>
+
 
             </div>
         </div>
 
     </div>
 </div>
-
-
 <script>
-    $(document).ready(function() {
-        getlist();
-
-        var table;
-        $(document).on('change', '#obc', function(e) {
-            var obc = $('#obc').val();
-
-            var csrf_name = $("#get_csrf_hash").attr('name');
-            var csrf_val = $("#get_csrf_hash").val();
-            $.ajax({
-                type: "POST",
-                url: "<?php echo base_url('admin/transaction/recieve_obc') ?>",
-                data: {
-                    'trans_id': '<?php echo $trans_data[0]['transaction_id']; ?>',
-                    'obc': obc,
-                    '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'
-                },
-
-                success: function(data) {
-                    if (data == 0) {
-                        toastr.error('Failed!', "OBC did not match");
-                    } else if (data == 1) {
-                        toastr.success('Success!', "Recieved successfully");
-
-                        table.ajax.reload();
-                    } else if (data == 2) {
-                        toastr.error('Failed!', "Something went wrong..Status not updated");
-                    } else {
-                        toastr.error('Failed!', data);
-                    }
-
-
-                }
-            });
+    jQuery('.print_all').on('click', function(e) {
+        var allVals = [];
+        $(".sub_chk:checked").each(function() {
+            allVals.push($(this).attr('data-id'));
         });
-
-        function getlist() {
-            table = $('#list').DataTable({
-                "processing": true,
-                "serverSide": true,
-                "order": [],
-                "ajax": {
-                    url: "<?php echo base_url('admin/transaction/getChallan/') . $id ?>",
-                    type: "GET",
-                    "dataSrc": function(json) {
-                        if (json.recieved && json.recieved == true) {
-                            $('#Recieve').show();
-                        } else {
-                            $('#Recieve').hide();
-                        }
-                        // You can also modify `json.data` if required
-                        return json.data;
-                    },
-                },
-
-
-                "createdRow": function(row, data, dataIndex) {
-                    if (data[15] == `pending`) {
-                        $(row).addClass('bg-secondary text-white');
+        //alert(allVals.length); return false;
+        if (allVals.length <= 0) {
+            alert("Please select row.");
+        } else {
+            //$("#loading").show();
+            WRN_PROFILE_DELETE = "Are you sure you want to Print this rows?";
+            var check = confirm(WRN_PROFILE_DELETE);
+            if (check == true) {
+                //for server side
+                var join_selected_values = allVals.join(",");
+                // alert (join_selected_values);exit;
+                var ids = join_selected_values.split(",");
+                var data = [];
+                $.each(ids, function(index, value) {
+                    if (value != "") {
+                        data[index] = value;
                     }
-                },
-                "columnDefs": [{
-                        "targets": [15],
-                        "visible": false,
-                        "searchable": false
+                });
+                $.ajax({
+                    type: "POST",
+                    url: "<?= base_url() ?>admin/Transaction/print_packing_slip",
+                    cache: false,
+                    data: {
+                        'ids': data,
+
+                        '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'
                     },
+                    success: function(response) {
+                        var w = window.open('about:blank');
+                        w.document.open();
+                        w.document.write(response);
+                        w.document.close();
+                    }
+                });
+                //for client side
 
-                ],
-
-                scrollY: 500,
-                scrollX: false,
-                scrollCollapse: true,
-                paging: false
-
-            });
+            }
         }
-
     });
 </script>

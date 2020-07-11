@@ -55,11 +55,11 @@ public function get_godown($id)
     return $query->row();
   }
   
-public function get($col,$godown)
+public function get($col,$godown,$type)
  {
    $this->db->select("*");
    $this->db->from('transaction');
-
+    $this->db->where('transaction_type', $type);
     $this->db->where($col, $godown);
    $query = $this->db->get();
     return $query->result_array();
@@ -71,13 +71,32 @@ public function get($col,$godown)
     $this->db->select("godown_stock_view.*,fabric.fabricCode");
     $this->db->from('godown_stock_view');
     $this->db->join('fabric', 'fabric.fabricName=godown_stock_view.fabric_name', 'inner');
-    if(isset($data['id'])){
+    if (isset($data['id'])) {
       $this->db->where('trans_meta_id', $data['id']);
     }
     $this->db->where('to_godown', $data['godown']);
     $query = $this->db->get();
     return $query->result_array();
   }
+  public function get_dispatch($data)
+  {
+    $this->db->select("dispatch_view.*,fabric.fabricCode");
+    $this->db->from('dispatch_view');
+    $this->db->join('fabric', 'fabric.fabricName=dispatch_view.fabric_name', 'inner');
+    if (isset($data['id'])) {
+      $this->db->where('trans_meta_id', $data['id']);
+     
+    }else{
+      $this->db->where('transaction_id', $data);
+     
+    }
+
+    $query = $this->db->get();
+    return $query->result_array();
+    
+    
+  }
+  
   public function get_godown_by_id($godown)
   {
     $this->db->select("*");
@@ -122,13 +141,27 @@ public function get($col,$godown)
     $query = $query->result_array();
     return $query;
   }
-  public function getId($id)
+  public function getId($id,$type)
   {
     $this->db->select('Max(counter) as count');
     $this->db->from("transaction");
     $this->db->where("from_godown", $id);
+    $this->db->where("transaction_type", $type);
     $rec = $this->db->get();
     //  print_r($rec);exit;
+    return $rec->result_array();
+  }
+  public function getOrderDetails($data)
+  {
+    $this->db->select("godown_stock_view.*,fabric.fabricCode");
+    $this->db->from('godown_stock_view');
+    $this->db->join('fabric', 'fabric.fabricName=godown_stock_view.fabric_name', 'inner');
+   
+      $this->db->where('order_barcode', $data['obc']);
+    $this->db->where('stat', 'recieved');
+    $this->db->where('to_godown', $data['godown']);
+    $rec = $this->db->get();
+    //print_r($this->db->last_query());
     return $rec->result_array();
   }
  public function edit($id,$data)

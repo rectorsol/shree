@@ -173,20 +173,16 @@
                       <td><?php echo $value['created_at']; ?></td>
 
 
-                      <td><?php echo $value['from_godown']; ?></td>
+                      <td><?php echo $value['to_godown']; ?></td>
                       <td><?php echo $value['challan_no']; ?></td>
 
 
 
                       <td>
-                        <a href="<?php echo base_url('admin/Transaction/viewChallan/') . $value['transaction_id'] ?> ">
+                        <a href="<?php echo base_url('admin/Transaction/viewDispatch/') . $value['transaction_id'] ?> ">
                           <i class="fas fa-eye"></i>
                         </a>
-                      <td>
-                        <a href="<?php echo base_url('admin/Transaction/edit_challan/') . $value['transaction_id'] ?> ">
-                          <i class="fas fa-edit"></i>
-                        </a>
-                      </td>
+                     
                      
                     </tr>
 

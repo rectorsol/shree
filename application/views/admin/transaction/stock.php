@@ -161,8 +161,9 @@
                                         <th>OBC</th>
                                         <th>ORDER NO</th>
                                         <th>FABRIC CODE</th>
-                                        <th>Fabric NAME</th>
+                                        <th>FABRIC NAME</th>
                                         <th>HSN</th>
+                                        <th>DESIGN BARCODE</th>
                                         <th>DESIGN NAME</th>
                                         <th>DESIGN CODE</th>
                                         <th>DYE</th>
@@ -190,6 +191,7 @@
                                             <td><?php echo $value['fabricCode']; ?></td>
                                             <td><?php echo $value['fabric_name']; ?></td>
                                             <td><?php echo $value['hsn']; ?></td>
+                                            <td><?php echo $value['design_barcode']; ?></td>
                                             <td><?php echo $value['design_name']; ?></td>
                                             <td><?php echo $value['design_code']; ?></td>
                                             <td><?php echo $value['dye'] ?></td>
@@ -228,12 +230,7 @@
 
 
 <script>
-    function delete_detail(id) {
-        var del = confirm("Do you want to Delete");
-        if (del == true) {
-            window.location = "<?php echo base_url() ?>admin/Orders/deleteOrders/" + id;
-        }
-    }
+   
 
     jQuery('.print_all').on('click', function(e) {
         var allVals = [];
@@ -264,7 +261,8 @@
                     cache: false,
                     data: {
                         'ids': data,
-                        'godown': '<?php echo $godown ?>', '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'
+                        'godown': '<?php echo $godown ?>',
+                        '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'
                     },
                     success: function(response) {
                         var w = window.open('about:blank');

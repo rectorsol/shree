@@ -74,13 +74,13 @@
                             </div>
                             <div class="col-md-6 col-lg-3 col-xlg-3">
                                 <div class="card card-hover">
-                                    <div class="box bg-success text-center">
+                                    <div class="box bg-danger text-center">
                                         <h1 class="font-light text-white">
-                                            <i class="mdi mdi-cart-plus"></i>
+                                            <i class="mdi mdi-paper-cut-vertical"></i>
                                         </h1>
-                                        <a href="<?php echo base_url('admin/Transaction/showDispatch/') . $godown; ?>">
+                                        <a href="<?php echo base_url('admin/Transaction/showTC/') . $godown; ?>">
                                             <h4 class="font-light text-white"> <i class="mdi mdi-cart"></i></h4>
-                                            <h5 class="text-white">DISPATCH TRANSACTION</h5>
+                                            <h5 class="text-white">ADD TC </h5>
                                         </a>
                                     </div>
                                 </div>
@@ -89,10 +89,12 @@
                                 <div class="card card-hover">
                                     <div class="box bg-primary text-center">
                                         <h1 class="font-light text-white">
-                                            <i class="mdi mdi-border-outside"></i>
+                                            <i class="mdi mdi-truck"></i>
                                         </h1>
-                                        <h4 class="font-light text-white"></h4>
-                                        <h5 class="text-white">INPROCESS ORDERS</h5>
+                                        <a href="<?php echo base_url('admin/Transaction/showDispatch/') . $godown; ?>">
+                                            <h4 class="font-light text-white"> <i class="mdi mdi-cart"></i></h4>
+                                            <h5 class="text-white">DISPATCH </h5>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -100,10 +102,12 @@
                                 <div class="card card-hover">
                                     <div class="box bg-success text-center">
                                         <h1 class="font-light text-white">
-                                            <i class="mdi mdi-check"></i>
+                                            <i class="mdi mdi-package-variant"></i>
                                         </h1>
-                                        <h4 class="font-light text-white"></h4>
-                                        <h5 class="text-white">DONE ORDERS</h5>
+                                        <a href="<?php echo base_url('admin/Transaction/showDispatch_list/') . $godown; ?>">
+                                            <h4 class="font-light text-white"> <i class="mdi mdi-cart"></i></h4>
+                                            <h5 class="text-white">PACKING SLIP </h5>
+                                        </a>
                                     </div>
                                 </div>
                             </div>

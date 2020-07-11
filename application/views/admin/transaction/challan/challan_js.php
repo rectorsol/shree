@@ -15,6 +15,13 @@
     $(document).on('blur', '.obc', function(e) {
       var order = $(this).val();
       order = order.toUpperCase();
+      var godown = <?php echo $godown ?>;
+      if (godown == 17) {
+        var url = "<?php echo base_url('admin/orders/getOrderDetails') ?>";
+      } else {
+        var url = "<?php echo base_url('admin/transaction/getOrderDetails') ?>";
+      }
+
       $(this).val(order);
       console.log(order);
       var button_id = $(this).parent().parent().attr("id");
@@ -23,7 +30,7 @@
       var csrf_val = $("#get_csrf_hash").val();
       $.ajax({
         type: "POST",
-        url: "<?php echo base_url('admin/orders/getOrderDetails') ?>",
+        url: url,
         data: {
 
           'id': order,

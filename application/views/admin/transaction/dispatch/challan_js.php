@@ -23,16 +23,17 @@
       var csrf_val = $("#get_csrf_hash").val();
       $.ajax({
         type: "POST",
-        url: "<?php echo base_url('admin/orders/getOrderDetails') ?>",
+        url: "<?php echo base_url('admin/transaction/getOrderDetails') ?>",
         data: {
 
           'id': order,
+          'godown': <?php echo $id ?>,
           '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'
         },
 
         success: function(data) {
           data = JSON.parse(data);
-          if (data != "") {
+          if (data != 0) {
             // One day Time in ms (milliseconds) 
             var one_day = 1000 * 60 * 60 * 24
             var present_date = new Date();
@@ -68,7 +69,8 @@
               $('#submit_button').hide();
             }
           } else {
-            $(".msg").html("<h6 class='text-danger'><b>Design Not Found </b></h6>");
+            toastr.error('Failed!', "OBC Not Found");
+           
             $('#designName' + button_id + '').val("");
             $('#designCode' + button_id + '').val('');
             $('#stitch' + button_id + '').val('');

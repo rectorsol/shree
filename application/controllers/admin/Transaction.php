@@ -12,13 +12,14 @@
         $this->load->model('Job_work_party_model');
         $this->load->model('Transaction_model');
 		$this->load->model('Sub_department_model');
+		
     	}
 
 	public function home($godown)
 	{
 		$data = array();
 		$godown_name = $this->Transaction_model->get_godown_by_id($godown);
-		$data['page_name'] = $godown_name.' GODOWN DASHBORD';
+		$data['page_name'] = $godown_name.'  DASHBOARD';
 
 		$data['godown'] = $godown;
 		if($godown==17){
@@ -35,7 +36,7 @@
 	public function showChallan($godown){
 			$data = array();
 			$data['godown'] = $this->Transaction_model->get_godown_by_id($godown);
-	        $data['page_name']= $data['godown'].' GODOWN DASHBORD';
+	        $data['page_name']= $data['godown'].'  DASHBOARD';
 			
 			$data['job'] = $this->Transaction_model->get_jobwork_by_id($data['godown']);
 			$data['branch_data']=$this->Job_work_party_model->get();
@@ -47,8 +48,8 @@
 	{
 		$data = array();
 		$data['godown'] = $this->Transaction_model->get_godown_by_id($godown);
-		$data['page_name'] = $data['godown'] . ' GODOWN DASHBORD';
-
+		$data['page_name'] = $data['godown'] . '  DASHBOARD';
+		$data['id']= $godown;
 		$data['job'] = $this->Transaction_model->get_jobwork_by_id($data['godown']);
 		$data['branch_data'] = $this->Job_work_party_model->get();
 		//echo print_r($data['fabric_data']);exit;
@@ -58,7 +59,7 @@
 		
 		  public function showRecieve($godown){
 	        $data = array();
-			$data['page_name']= ' GODOWN DASHBORD';
+			$data['page_name']= '  DASHBOARD';
 		
 			$data['branch_data']=$this->Job_work_party_model->get();
             
@@ -68,16 +69,26 @@
 		
 		public function showRecieveList($godown){
 		$data['godown'] = $this->Transaction_model->get_godown_by_id($godown);
-			$data['page_name']= $data['godown'].' GODOWN DASHBORD';
+			$data['page_name']= $data['godown'].'  DASHBOARD';
 			
-            $data['frc_data']=$this->Transaction_model->get('to_godown', $data['godown']);
+            $data['frc_data']=$this->Transaction_model->get('to_godown', $data['godown'], 'challan');
 		      $data['main_content'] = $this->load->view('admin/transaction/list_in', $data, TRUE);
   	      $this->load->view('admin/index', $data);
 		}
-		
+
+	public function showDispatch_list($godown)
+	{
+		$data['godown'] = $this->Transaction_model->get_godown_by_id($godown);
+		$data['page_name'] = $data['godown'] . '  DASHBOARD';
+
+		$data['frc_data'] = $this->Transaction_model->get('from_godown', $data['godown'], 'dispatch');
+		$data['main_content'] = $this->load->view('admin/transaction/dispatch/list_dispatch', $data, TRUE);
+		$this->load->view('admin/index', $data);
+	}
+
 		public function showReturnList($godown){
 		$data['godown'] = $this->Transaction_model->get_godown_by_id($godown);
-			$data['page_name']= $data['godown'].' GODOWN DASHBORD';
+			$data['page_name']= $data['godown'].'  DASHBOARD';
 			
             $data['frc_data']=$this->Transaction_model->get('from_godown', $data['godown']);
 		      $data['main_content'] = $this->load->view('admin/transaction/list_out', $data, TRUE);
@@ -87,7 +98,7 @@
 		public function showStock($godown)
 	{
 		$data['godown'] = $this->Transaction_model->get_godown_by_id($godown);
-		$data['page_name'] = $data['godown'].' GODOWN DASHBORD';
+		$data['page_name'] = $data['godown'].'  DASHBOARD';
 		
 		$data['frc_data'] = $this->Transaction_model->get_stock($data);
 		$data['main_content'] = $this->load->view('admin/transaction/stock', $data, TRUE);
@@ -98,7 +109,7 @@
 	{
 		$data = array();
 		$data['trans_data'] = $this->Transaction_model->get_trans_by_id($id);
-		$data['page_name'] = $data['trans_data'][0]['to_godown'].' GODOWN DASHBORD';
+		$data['page_name'] = $data['trans_data'][0]['to_godown'].'  DASHBOARD';
 		
 		$data['id'] = $id;
 		
@@ -106,18 +117,19 @@
 		$data['main_content'] = $this->load->view('admin/transaction/challan/view', $data, TRUE);
 		$this->load->view('admin/index', $data);
 	}
-	public function viewDistach($id)
+	public function viewDispatch($id)
 	{
 		$data = array();
-		$data['trans_data'] = $this->Transaction_model->get_trans_by_id($id);
-		$data['page_name'] = $data['trans_data'][0]['to_godown'].' GODOWN DASHBORD';
-		
+		$data['trans_data'] = $this->Transaction_model->get_dispatch($id);
+		$data['page_name'] = $data['trans_data'][0]['from_godown'] . '  DASHBOARD';
+
 		$data['id'] = $id;
-		
-		//echo "<pre>"; print_r($data['frc_data']);exit;
+
 		$data['main_content'] = $this->load->view('admin/transaction/dispatch/view', $data, TRUE);
+	
 		$this->load->view('admin/index', $data);
 	}
+	
 
 	public function getChallan($id)
 	{
@@ -232,8 +244,29 @@
 		}
 		
 	}
+
 	
-	
+	public function print_packing_slip()
+	{
+
+		$ids =  $this->security->xss_clean($_POST['ids']);
+		
+
+		//print_r($_POST['ids']);exit;
+		foreach ($ids as $value) {
+			if ($value != "") {
+				
+				$data1['id'] = $value;
+				$r = $this->Transaction_model->get_dispatch($data1);
+				
+				$data['trans_data'][]= $r[0];
+			}
+		}
+		//echo '<pre>';	print_r($data['trans_data']);exit;
+
+		$data['main_content'] = $this->load->view('admin/transaction/dispatch/index', $data, TRUE);
+		$this->load->view('admin/print/index', $data);
+	}
 	public function return_print_multiple()
 	{
 
@@ -263,8 +296,8 @@
 		 foreach ($userid as $value) {
 		  $this->db->delete('transaction',array('transaction_id' => $value));
 			$this->db->delete('transaction_meta', array('transaction_id' => $value));
-		}
-        }
+			}
+     	}
   		
 		public function addBill(){
 			if($_POST){
@@ -404,7 +437,7 @@
 					'transaction_id' => $id,
 
 					'order_barcode' => $data['obc'][$i],
-
+					'stat' => 'out',
 					'days_left ' => $data['days'][$i],
 
 				];
@@ -415,8 +448,20 @@
 		}
 		redirect($_SERVER['HTTP_REFERER']);
 	}
-		   
- 
+
+	public function getOrderDetails()
+	{
+		$data['obc'] = $this->security->xss_clean($_POST['id']);
+		$godown = $this->security->xss_clean($_POST['godown']);
+		$data['godown'] = $this->Transaction_model->get_godown_by_id($godown);
+		$data['order'] = $this->Transaction_model->getOrderDetails($data);
+		if ($data['order']) {
+			echo json_encode($data['order']);
+		} else {
+			echo json_encode(0);
+		}
+	}
+	
      public function get_godown()
     {
       $id= $this->security->xss_clean($_POST['party']);
