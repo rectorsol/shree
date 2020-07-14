@@ -17,8 +17,8 @@ class Transaction_model extends CI_Model {
     function update($action, $id,$column, $table){
         $this->db->where($id,$column);
     return  $this->db->update($table,$action);
-        
-        
+
+
     }
 
  public function add($data)
@@ -41,31 +41,32 @@ public function get_godown($id)
    $this->db->where('id',$id);
    $query = $this->db->get();
     return $query->result_array();
-   
+
  }
   public function check_obc_by_trans_id($obc, $trans_id)
   {
-    
+
     $this->db->select('trans_meta_id');
     $this->db->from('transaction_meta');
     $this->db->where('order_barcode', $obc);
     $this->db->where('transaction_id', $trans_id);
     $query = $this->db->get();
-    
+
     return $query->row();
   }
-  
-public function get($col,$godown,$type)
- {
-   $this->db->select("*");
-   $this->db->from('transaction');
-    $this->db->where('transaction_type', $type);
-    $this->db->where($col, $godown);
-   $query = $this->db->get();
-    return $query->result_array();
-    
+
+  public function get($col,$godown,$type)
+   {
+      $this->db->select("*");
+      $this->db->from('transaction');
+      $this->db->where('transaction_type', $type);
+      $this->db->where($col, $godown);
+      $query = $this->db->get();
+      return $query->result_array();
+
+   }
+
    
- }
   public function get_stock($data)
   {
     $this->db->select("godown_stock_view.*,fabric.fabricCode");
@@ -85,18 +86,18 @@ public function get($col,$godown,$type)
     $this->db->join('fabric', 'fabric.fabricName=dispatch_view.fabric_name', 'inner');
     if (isset($data['id'])) {
       $this->db->where('trans_meta_id', $data['id']);
-     
+
     }else{
       $this->db->where('transaction_id', $data);
-     
+
     }
 
     $query = $this->db->get();
     return $query->result_array();
-    
-    
+
+
   }
-  
+
   public function get_godown_by_id($godown)
   {
     $this->db->select("*");
@@ -105,7 +106,7 @@ public function get($col,$godown,$type)
     $this->db->where('id', $godown);
     $query = $this->db->get();
     return $query->row()->subDeptName;
-  
+
   }
   public function get_jobwork_by_id($godown)
   {
@@ -123,8 +124,6 @@ public function get($col,$godown,$type)
 
     $this->db->where("transaction_id", $id);
     $this->db->join('order_view', 'order_view.order_barcode=transaction_meta.order_barcode', 'inner');
-
-   
     $query = $this->db->get(); //echo"<pre>"; print_r($query);exit;
     $query = $query->result_array();
     return $query;
@@ -156,7 +155,7 @@ public function get($col,$godown,$type)
     $this->db->select("godown_stock_view.*,fabric.fabricCode");
     $this->db->from('godown_stock_view');
     $this->db->join('fabric', 'fabric.fabricName=godown_stock_view.fabric_name', 'inner');
-   
+
       $this->db->where('order_barcode', $data['obc']);
     $this->db->where('stat', 'recieved');
     $this->db->where('to_godown', $data['godown']);
@@ -191,7 +190,7 @@ public function get($col,$godown,$type)
   //  print_r($this->db->last_query());
    return $rec->result_array();
    // print_r($searchValue);
-   
+
 
  }
  public function search_by_date($data)
@@ -201,7 +200,7 @@ public function get($col,$godown,$type)
    $this->db->where('fabric_challan.challan_date >=', $data['from']);
    $this->db->where('fabric_challan.challan_date <=', $data['to']);
     $this->db->where("challan_type", $data['type']);
-   
+
     $this->db->join('branch_detail','branch_detail.id=fabric_challan.challan_to','inner');
  $this->db->join('unit','unit.id=fabric_challan.unit','inner');
    $rec=$this->db->get();
@@ -209,7 +208,7 @@ public function get($col,$godown,$type)
   //  print_r($this->db->last_query());
    return $rec->result_array();
    // print_r($searchValue);
-   
+
 
  }
 
@@ -217,10 +216,10 @@ public function select($table)
  {
    $this->db->select('*');
    $this->db->from($table);
-   
+
    $rec=$this->db->get();
    return $rec->result_array();
- 
+
 
  }
 public function getOBC_deatils($id)
@@ -231,20 +230,20 @@ public function getOBC_deatils($id)
    $this->db->where("product_order_id",$id );
    $rec=$this->db->get();
    return $rec->result_array();
- 
 
- } 
+
+ }
  public function getPBC()
  {
    $this->db->select('parent_barcode');
    $this->db->from("fabric_stock_received");
-  
-   
+
+
    $rec=$this->db->get();
    return $rec->result_array();
- 
 
- } 
+
+ }
 
 }
 

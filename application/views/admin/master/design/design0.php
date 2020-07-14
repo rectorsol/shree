@@ -244,7 +244,7 @@
 
                 </div>
                 <hr>
-                <table class="desData table-striped  table-responsive  table-bordered  table-responsive" id="design">
+                <table class=" table-striped  table-responsive  table-bordered  table-responsive" id="design">
                   <caption style='caption-side : top' class=" text-info">
                     <h6 class="text-center"> <?php echo $caption; ?></h6>
                   </caption>
@@ -471,46 +471,9 @@
             $("#edit").modal();
           }
         });
+
+
+
       });
-
     </script>
-    <script>
-        $(document).ready(function() {
-            getlist();
-            var table;
-
-            function getlist() {
-                table = $('.desData').DataTable({
-                    "processing": true,
-                    "serverSide": true,
-                    "order": [],
-                    "ajax": {
-                        url: "<?php echo base_url('admin/design')?>",
-                        type: "GET",
-                        "dataSrc": function(json) {
-
-                            // You can also modify `json.data` if required
-                            return json.data;
-                        },
-                    },
-
-                    "columnDefs": [{
-                            "targets": [15],
-                            "visible": false,
-                            "searchable": false
-                        },
-
-                    ],
-
-                    scrollY: 500,
-                    scrollX: false,
-                    scrollCollapse: true,
-                    paging: false
-
-                });
-            }
-
-        });
-    </script>
-
     <?php include('design_js.php'); ?>

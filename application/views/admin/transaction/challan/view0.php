@@ -124,7 +124,6 @@
         var table;
         $(document).on('change', '#obc', function(e) {
             var obc = $('#obc').val();
-
             var csrf_name = $("#get_csrf_hash").attr('name');
             var csrf_val = $("#get_csrf_hash").val();
             $.ajax({
@@ -149,7 +148,6 @@
                         toastr.error('Failed!', data);
                     }
 
-
                 }
             });
         });
@@ -163,7 +161,6 @@
                     url: "<?php echo base_url('admin/transaction/getChallan/') . $id ?>",
                     type: "GET",
                     "dataSrc": function(json) {
-                    
                         if (json.recieved && json.recieved == true) {
                             $('#Recieve').show();
                         } else {

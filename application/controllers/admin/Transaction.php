@@ -6,22 +6,24 @@
 		public function __construct(){
         parent::__construct();
 		check_login_user();
-       
-	    
+
+
         $this->load->model('Common_model');
         $this->load->model('Job_work_party_model');
         $this->load->model('Transaction_model');
-		$this->load->model('Sub_department_model');
-		
+		    $this->load->model('Sub_department_model');
+
     	}
 
 	public function home($godown)
 	{
+
 		$data = array();
 		$godown_name = $this->Transaction_model->get_godown_by_id($godown);
 		$data['page_name'] = $godown_name.'  DASHBOARD';
 
 		$data['godown'] = $godown;
+
 		if($godown==17){
 			$data['main_content'] = $this->load->view('admin/transaction/index_plain', $data, TRUE);
 
@@ -32,12 +34,12 @@
 		}
 		$this->load->view('admin/index', $data);
 	}
-		
+
 	public function showChallan($godown){
 			$data = array();
 			$data['godown'] = $this->Transaction_model->get_godown_by_id($godown);
-	        $data['page_name']= $data['godown'].'  DASHBOARD';
-			
+	    $data['page_name']= $data['godown'].'  DASHBOARD';
+
 			$data['job'] = $this->Transaction_model->get_jobwork_by_id($data['godown']);
 			$data['branch_data']=$this->Job_work_party_model->get();
 	        //echo print_r($data['fabric_data']);exit;
@@ -56,22 +58,22 @@
 		$data['main_content'] = $this->load->view('admin/transaction/dispatch/add', $data, TRUE);
 		$this->load->view('admin/index', $data);
 	}
-		
+
 		  public function showRecieve($godown){
 	        $data = array();
 			$data['page_name']= '  DASHBOARD';
-		
+
 			$data['branch_data']=$this->Job_work_party_model->get();
-            
+
 		      $data['main_content'] = $this->load->view('admin/transaction/bill/add', $data, TRUE);
   	      $this->load->view('admin/index', $data);
-    	}  
-		
+    	}
+
 		public function showRecieveList($godown){
 		$data['godown'] = $this->Transaction_model->get_godown_by_id($godown);
 			$data['page_name']= $data['godown'].'  DASHBOARD';
-			
-            $data['frc_data']=$this->Transaction_model->get('to_godown', $data['godown'], 'challan');
+
+          $data['frc_data']=$this->Transaction_model->get('to_godown', $data['godown'], 'challan');
 		      $data['main_content'] = $this->load->view('admin/transaction/list_in', $data, TRUE);
   	      $this->load->view('admin/index', $data);
 		}
@@ -89,56 +91,52 @@
 		public function showReturnList($godown){
 		$data['godown'] = $this->Transaction_model->get_godown_by_id($godown);
 			$data['page_name']= $data['godown'].'  DASHBOARD';
-			
+
             $data['frc_data']=$this->Transaction_model->get('from_godown', $data['godown']);
 		      $data['main_content'] = $this->load->view('admin/transaction/list_out', $data, TRUE);
   	      $this->load->view('admin/index', $data);
 		}
-	
+
 		public function showStock($godown)
 	{
 		$data['godown'] = $this->Transaction_model->get_godown_by_id($godown);
 		$data['page_name'] = $data['godown'].'  DASHBOARD';
-		
+
 		$data['frc_data'] = $this->Transaction_model->get_stock($data);
 		$data['main_content'] = $this->load->view('admin/transaction/stock', $data, TRUE);
 		$this->load->view('admin/index', $data);
 	}
-	
+
 	public function viewChallan($id)
 	{
 		$data = array();
 		$data['trans_data'] = $this->Transaction_model->get_trans_by_id($id);
 		$data['page_name'] = $data['trans_data'][0]['to_godown'].'  DASHBOARD';
-		
+
 		$data['id'] = $id;
-		
+
 		//echo "<pre>"; print_r($data['frc_data']);exit;
 		$data['main_content'] = $this->load->view('admin/transaction/challan/view', $data, TRUE);
 		$this->load->view('admin/index', $data);
 	}
+
+
 	public function viewDispatch($id)
 	{
 		$data = array();
 		$data['trans_data'] = $this->Transaction_model->get_dispatch($id);
 		$data['page_name'] = $data['trans_data'][0]['from_godown'] . '  DASHBOARD';
-
 		$data['id'] = $id;
-
 		$data['main_content'] = $this->load->view('admin/transaction/dispatch/view', $data, TRUE);
-	
 		$this->load->view('admin/index', $data);
 	}
-	
+
 
 	public function getChallan($id)
 	{
 		$query = '';
-
 		$output = array();
-
 		$data = array();
-
 		if (!empty($_GET["search"]["value"])) {
 
 			$query .= 'SELECT * FROM transaction_meta WHERE transaction_id = "' . $id . '" AND';
@@ -151,7 +149,6 @@
 			$query .= 'OR design_code LIKE "%' . $_GET["search"]["value"] . '%" ';
 			$query .= 'OR unit LIKE "%' . $_GET["search"]["value"] . '%" ';
 		} else {
-
 			$query .= 'SELECT * FROM transaction_meta join order_view on order_view.order_barcode=transaction_meta.order_barcode WHERE transaction_id = "' . $id . '" ';
 		}
 
@@ -168,11 +165,10 @@
 		$sql = $this->db->query($query);
 		$result = $sql->result_array();
 		$filtered_rows = $sql->num_rows();
-	
-            $c=1;$i=1;                       
-         foreach ($result as $value) {
-			 if($value['stat']=='recieved'){
-				 $c+=1;
+    $c=1;$i=1;
+    foreach ($result as $value) {
+		if($value['stat']=='recieved'){
+	   $c+=1;
 			 }
 			 $i+=1;
 			$sub_array= array();
@@ -192,7 +188,7 @@
 			$sub_array[] = $value['days_left'];
 			$sub_array[] =  $value['remark'];
 			$sub_array[] =  $value['stat'];
-			$data[] = $sub_array;                    
+			$data[] = $sub_array;
 		 }
 		 if($c==$i){
 			 $recieved=true;
@@ -206,10 +202,10 @@
 			"recordsFiltered" => $filtered_rows,
 			"data" => $data
 		);
-
 		echo json_encode($output);
-
 	}
+
+
 	public function recieve()
 	{
 		$id = $this->security->xss_clean($_POST['trans_id']);
@@ -217,19 +213,17 @@
 		$this->Transaction_model->update($data,'transaction_id', $id, "transaction");
 		redirect($_SERVER['HTTP_REFERER']);
 	}
+
 	public function recieve_obc()
 	{
 		$obc = $this->security->xss_clean($_POST['obc']);
 		$trans_id= $this->security->xss_clean($_POST['trans_id']);
-		
 		try{
-
 		$status = $this->Transaction_model->check_obc_by_trans_id($obc, $trans_id);
 	 //echo "<pre>"; print_r($status);exit;
 		if($status){
-					
 			$data['stat'] = 'recieved';
-		$st=	$this->Transaction_model->update($data, 'trans_meta_id', $status->trans_meta_id, "transaction_meta");
+		  $st=	$this->Transaction_model->update($data, 'trans_meta_id', $status->trans_meta_id, "transaction_meta");
 			if($st){
 				echo "1";
 			}else{
@@ -242,37 +236,35 @@
 			$error = $e->getMessage();
 			echo $error;
 		}
-		
 	}
 
-	
+
 	public function print_packing_slip()
 	{
-
 		$ids =  $this->security->xss_clean($_POST['ids']);
-		
 
 		//print_r($_POST['ids']);exit;
 		foreach ($ids as $value) {
 			if ($value != "") {
-				
+
 				$data1['id'] = $value;
 				$r = $this->Transaction_model->get_dispatch($data1);
-				
+
 				$data['trans_data'][]= $r[0];
 			}
 		}
 		//echo '<pre>';	print_r($data['trans_data']);exit;
-
 		$data['main_content'] = $this->load->view('admin/transaction/dispatch/index', $data, TRUE);
 		$this->load->view('admin/print/index', $data);
 	}
+
+
 	public function return_print_multiple()
 	{
 
 		$ids =  $this->security->xss_clean($_POST['ids']);
 		$godown =  $this->security->xss_clean($_POST['godown']);
-		
+
 		//print_r($_POST['ids']);exit;
 		foreach ($ids as $value) {
 			if ($value != "") {
@@ -286,27 +278,25 @@
 		$data['main_content'] = $this->load->view('admin/transaction/challan/multi_list_print', $data, TRUE);
 		$this->load->view('admin/print/index', $data);
 	}
-	
-	public function delete()
-        {
-            
-           $ids = $this->input->post('ids');
 
-		 $userid= explode(",", $ids);
-		 foreach ($userid as $value) {
+	public function delete()
+    {
+     $ids = $this->input->post('ids');
+		  $userid= explode(",", $ids);
+		  foreach ($userid as $value) {
 		  $this->db->delete('transaction',array('transaction_id' => $value));
 			$this->db->delete('transaction_meta', array('transaction_id' => $value));
 			}
      	}
-  		
+
 		public function addBill(){
 			if($_POST){
 				$data = $this->security->xss_clean($_POST);
 				// echo "<pre>"; print_r($data);exit;
 				$count =count($data['pbc']);
-				$total_qty=0; 
+				$total_qty=0;
 				$total_val =0;
-				for ($i=0; $i < $count ; $i++) { 
+				for ($i=0; $i < $count ; $i++) {
 					$total_qty =$total_qty +  $data['qty'][$i];
 					$total_val =$total_val + $data['total'][$i];
 				}
@@ -332,7 +322,7 @@
 					'challan_type' => 'bill'
 				];
 				$id =	$this->Frc_model->insert($data1, 'fabric_challan');
-				for ($i=0; $i < $count; $i++) { 
+				for ($i=0; $i < $count; $i++) {
 				$data2=[
 					'fabric_challan_id' => $id,
 					'parent_barcode' =>$data['pbc'][$i],
@@ -349,10 +339,10 @@
 				]	;
 					$this->Transaction_model->insert($data2, 'fabric_stock_received');
 				}
-				
+
 			} redirect($_SERVER['HTTP_REFERER']);
 		}
-		
+
 		public function addChallan($godown){
 			$godown= $this->Transaction_model->get_godown_by_id($godown);
 			if($_POST){
@@ -378,26 +368,26 @@
 				'counter' => $cc,
 				'pcs' => $count,
 					'jobworkType' => $data['workType'],
-					
+
 					'transaction_type' => 'challan'
 
 				];
 				$id =	$this->Transaction_model->insert($data1, 'transaction');
-				for ($i=0; $i < $count; $i++) { 
+				for ($i=0; $i < $count; $i++) {
 				$data2=[
 					'transaction_id' => $id,
-					
+
 					'order_barcode' =>$data['obc'][$i],
-					
+
 					'days_left ' => $data['days'][$i],
-					
+
 				]	;
 
 					$this->Transaction_model->insert($data2, 'transaction_meta');
 				$this->Transaction_model->update(array('status' => 'OUT'),'order_barcode', $data['obc'][$i],  'order_product');
 
 				}
-				
+
 			} redirect($_SERVER['HTTP_REFERER']);
 		}
 
@@ -461,7 +451,7 @@
 			echo json_encode(0);
 		}
 	}
-	
+
      public function get_godown()
     {
       $id= $this->security->xss_clean($_POST['party']);
@@ -470,9 +460,7 @@
      echo json_encode($data['godown']);
 
     }
-		
-		
-
+ 
 		public function filter()
 							{
 						$data1=array();
@@ -494,8 +482,7 @@
 												$data1['Value']=$this->input->post('searchValue');
 												$caption=$caption.$data1['cat']." = ".$data1['Value']." ";
 											}
-										$data['frc_data']=$this->Transaction_model->search1($data1);
-
+										  $data['frc_data']=$this->Transaction_model->search1($data1);
 							}else{
 							if(isset($_POST['sort_name']) && $_POST['sort_name']!="" ){
 								$data1['cat'][]='sort_name';
@@ -505,13 +492,13 @@
 								}
 								if(isset($_POST['challan']) && $_POST['challan']!="" ){
 								  $data1['cat'][]='challan_no';
-										$fab=$this->input->post('challan');
+									$fab=$this->input->post('challan');
 									$data1['Value'][]=$fab;
 									$caption=$caption.'Challan No'." = ".$fab." ";
 									}
 									if(isset($_POST['unitName']) && $_POST['unitName']!="" ){
 										 $data1['cat'][]='unitName';
-											$fab=$this->input->post('unitName');
+										 $fab=$this->input->post('unitName');
 									   $data1['Value'][]=$fab;
 										$caption=$caption.'unitName'." = ".$fab." ";
 										}
@@ -551,12 +538,8 @@
 													 $data['main_content'] = $this->load->view('admin/FRC/stock/search');
 													 $this->load->view('admin/index', $data);
 												}
-
-
 									}
 							}
-
-
 	}
 
 
