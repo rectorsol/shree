@@ -32,7 +32,7 @@ class Pdf extends TCPDF
         $this->SetFont('times', 'B', 10,'', 'false');
         $date = "Date: ".my_date_show(current_datetime());
         // Title
-        $this->Cell(0, 12, $date, 0, false, 'C', 0, '', 0, false, 'S', 'S');
+        $this->Cell(0, 12, '', 0, false, 'C', 0, '', 0, false, 'S', 'S');
 
     }
 

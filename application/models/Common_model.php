@@ -354,7 +354,8 @@ class Common_model extends CI_Model {
 	{
 		$this->db->select('fabricType');
 		$this->db->where('fabricName', $fabricName);
-		$rec=$this->db->get('fabric');
+        $rec=$this->db->get('fabric');
+        // print_r($rec);exit;
 		return $rec->row();
 	}
 	public function user_name()

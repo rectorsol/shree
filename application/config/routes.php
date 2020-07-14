@@ -54,7 +54,7 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 
-
+$route['admin/design/(:num)'] = 'admin/design';
 $route['admin'] = 'admin/dashboard';
 // $route['associate_members'] = 'home/associate_members';
 // $route['governing_council_members'] = 'home/governing_council_members';

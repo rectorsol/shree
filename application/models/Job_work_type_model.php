@@ -17,7 +17,7 @@ class Job_work_type_model extends CI_Model {
 	{
     $sql = 'SELECT jobtypeconstant.id AS id, job_work_type.type type, jobtypeconstant.job job,  jobtypeconstant.rate rate, unit.unitSymbol unit FROM job_work_type
             JOIN jobtypeconstant ON job_work_type.id=jobtypeconstant.jobId
-            JOIN unit ON jobtypeconstant.unit = unit.id
+             left JOIN unit ON jobtypeconstant.unit = unit.id
             ORDER BY job_work_type.id DESC';
 
 		$rec=$this->db->query($sql);

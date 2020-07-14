@@ -22,7 +22,7 @@
           <option value="phone_no">Phone No.</option>
           <option value="gst">GST/URD</option>
           <option value="deptName">Department</option>
-          <option value="subDeptName">Warehouse</option>
+          <option value="subDeptName">Godown</option>
           <option value="address">Address</option>
         </select>
       </div>
@@ -53,7 +53,7 @@
                 <th>Phone Number</th>
                 <th>GST/URD</th>
                 <th>Department</th>
-                <th>Warehouse</th>
+                <th>Godown</th>
                <th>Work Type</th>
                 <th>Address</th>
                 <th>Action</th>

@@ -11,9 +11,9 @@
                 <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
                  <h5>ERC Design List</h5>
                 </div>
-                <span id='msg'></span>
+                 <h4 ><span id='msg'></span></h4>
                 <hr>
-                 <h4 style="color:red"><?php echo $this->session->flashdata('msg'); ?></h4>
+                
                 <!-- <div class="row well">
          	       &nbsp;&nbsp;<a type="button" class="btn btn-info pull-left delete_all  btn-danger" style="color:#fff;"><i class="mdi mdi-delete red"></i></a>&nbsp;
                 </div> -->

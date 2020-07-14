@@ -20,7 +20,7 @@
               <select id="searchByCat" name="searchByCat"  class="form-control">
                 <option value="">-- Select Category --</option>
                 <option value="deptName">Department</option>
-                <option value="subDeptName">Warehouse </option>
+                <option value="subDeptName">Godown </option>
               </select>
       </div>
           <div class="col-4">
@@ -35,7 +35,7 @@
         <div class="card-body">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-              <h5>Warehouse List</h5>
+              <h5>Godown List</h5>
           </div>
           <div class="row well">
              &nbsp;&nbsp;&nbsp;&nbsp;<a type="button" class="btn btn-info pull-left delete_all  btn-danger" style="color:#fff;"><i class="mdi mdi-delete red"></i></a>
@@ -47,7 +47,7 @@
               <th><input type="checkbox" class="sub_chk" id="master" ></th>
               <th>S/No</th>
               <th>Department</th>
-              <th>Warehouse</th>
+              <th>Godown</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -78,7 +78,7 @@
                  <div class="modal-content">
               <form class="form-horizontal" method="post" action="<?php echo base_url('admin/Sub_department/edit/').$value->id ?>" name="basic_validate" id="basic_validate" novalidate="novalidate">
                 <div class="modal-header">
-                <h5 class="modal-title">Edit Warehouse</h5>
+                <h5 class="modal-title">Edit Godown</h5>
                   <button data-dismiss="modal" class="close" type="button">×</button>
 
                 </div>
@@ -97,7 +97,7 @@
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label class="control-label col-sm-3">Warehouse</label>
+                      <label class="control-label col-sm-3">Godown</label>
                       <div class="col-sm-9">
                         <input type="text" class="form-control" name="subDeptName" value="<?php echo $value->subDeptName?>" id="required">
                       </div>
@@ -130,7 +130,7 @@
     <div class="modal-content">
   <form class="form-horizontal" method="post" action="<?php echo base_url('admin/Sub_department/addSubDept') ?>" name="basic_validate" id="basic_validate" novalidate="novalidate">
   <div class="modal-header">
-      <h5 class="modal-title">Add Warehouse</h5>
+      <h5 class="modal-title">Add Godown</h5>
     <button data-dismiss="modal" class="close" type="button">×</button>
 
   </div>
@@ -149,7 +149,7 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="control-label col-sm-3">Warehouse</label>
+        <label class="control-label col-sm-3">Godown</label>
         <div class="col-sm-9">
           <input type="text" class="form-control" name="subDeptName" value="" id="required" required="required">
         </div>

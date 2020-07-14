@@ -39,9 +39,9 @@ class FDA_model extends CI_Model {
  }
  public function get_fda_data($fabric_name)
  {
-   $this->db->select('fda_table.id AS id, fda_table.asign_date, fda_table.fabric_name AS fabric_name, fda_table.fabric_type, design.designName, design.designSeries, design.designCode');
+   $this->db->select('fda_table.id AS id, fda_table.asign_date, fda_table.fabric_name AS fabric_name, fda_table.fabric_type, design_view.designName, design_view.designSeries, design_view.desCode,design_view.stitch');
    $this->db->from('fda_table');
-   $this->db->join('design ','design.id = fda_table.design_id','inner');
+   $this->db->join('design_view ', 'design_view.id = fda_table.design_id','inner');
    $this->db->where('fabric_name', $fabric_name);
    $query = $this->db->get();
    $query = $query->result_array();
@@ -66,9 +66,11 @@ class FDA_model extends CI_Model {
     $sql = 'SELECT design.id, design.designName, erc.desCode, erc.rate, design.stitch, design.dye, design.designOn FROM design
             LEFT JOIN erc ON design.designName = erc.desName
             LEFT JOIN src ON src.fabName = design.fabricName AND src.fabCode = erc.desCode
-            WHERE design.designOn = "'.$fabricType.'" AND design.id NOT IN (SELECT design_id FROM fda_table WHERE fabric_name = "'.$fabric_name.'") ORDER BY design.id DESC';
+            WHERE  design.designSeries=0 AND design.id NOT IN (SELECT design_id FROM fda_table WHERE fabric_name = "'.$fabric_name.'") ORDER BY design.id DESC';
     $query = $this->db->query($sql);
+    
     $query = $query->result_array();
+    //print_r($this->db->last_query());
     return $query;
   }
  public function edit($id,$data)

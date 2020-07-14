@@ -102,7 +102,7 @@ $html = <<<EOD
         </tr>
         <tr>
           <td> &nbsp;&nbsp; DESIGN CODE :- </td>
-          <td class="main-text">$data->designCode</td>
+          <td class="main-text">$data->desCode</td>
         </tr>
         <tr>
           <td> &nbsp;&nbsp; FABRIC :- </td>
@@ -145,7 +145,7 @@ $html = <<<EOD
         </tr>
         <tr>
           <td> &nbsp;&nbsp; DESIGN CODE :- </td>
-          <td class="main-text"> $data->designCode</td>
+          <td class="main-text"> $data->desCode</td>
         </tr>
         <tr>
           <td> &nbsp;&nbsp; FABRIC :- </td>
@@ -191,7 +191,7 @@ $html = <<<EOD
         </tr>
         <tr>
           <td> &nbsp;&nbsp; DESIGN CODE :- </td>
-          <td class="main-text">$data->designCode</td>
+          <td class="main-text">$data->desCode</td>
         </tr>
         <tr>
           <td></td>

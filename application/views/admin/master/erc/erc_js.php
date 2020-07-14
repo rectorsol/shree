@@ -47,6 +47,7 @@ $(document).ready(function() {
                 type: "POST",
                 data:dat,
                 success: function(dataResult){
+                  $('#msg').html(dataResult);
                 }
               });
             }else{
@@ -60,7 +61,7 @@ $(document).ready(function() {
                 },
                 beforeSend: function() {
                   var temp = "<img src='<?php echo base_url("optimum/preloader.gif"); ?>' />";
-                  $('#overlay').show().html(temp).delay(200).fadeOut();
+                  $('#overlay').show().html(temp).delay(50).fadeOut();
                 },
                 success: function(dataResult){
                   if(dataResult == 1){
@@ -81,6 +82,7 @@ $(document).ready(function() {
                           type: "POST",
                           data:dat,
                           success: function(dataResult){
+                            $('#msg').html(dataResult);
                           }
                         });
                     }
@@ -95,7 +97,7 @@ $(document).ready(function() {
                           type: "POST",
                           data:dat,
                           success: function(dataResult){
-                          console.log(dataResult);
+                          $('#msg').html(dataResult);
                           }
                         });
                     }

@@ -17,7 +17,7 @@
         <div class="card">
 
           <div class="card-body">
-            <form class="form-horizontal" method="post" action="<?php echo base_url('admin/emb/add_emb') ?>" name="basic_validate" novalidate="novalidate">
+            <form class="form-horizontal" method="post" action="<?php echo base_url('admin/EMB/add_emb') ?>" name="basic_validate" novalidate="novalidate">
               <div class="modal-header">
                 <h5 class="modal-title">Add Detail</h5>
                 <button data-dismiss="modal" class="close" type="button">×</button>
@@ -156,7 +156,7 @@
                   <div id="<?php echo $value['id'];?>" class="modal hide">
                     <div class="modal-dialog" role="document ">
                       <div class="modal-content">
-                        <form class="form-horizontal" method="post" action="<?php echo base_url('admin/emb/update/').$value['id']; ?>" name="basic_validate" id="basic_validate" novalidate="novalidate">
+                        <form class="form-horizontal" method="post" action="<?php echo base_url('admin/EMB/update/').$value['id']; ?>" name="basic_validate" id="basic_validate" novalidate="novalidate">
                           <div class="modal-header">
                             <h5 class="modal-title">Edit Detail</h5>
                             <button data-dismiss="modal" class="close" type="button">×</button>
@@ -242,7 +242,7 @@
     if (del == true) {
       var sureDel = confirm("Are you sure want to delete");
       if (sureDel == true) {
-        window.location = "<?php echo base_url()?>admin/emb/delete/" + id;
+        window.location = "<?php echo base_url()?>admin/EMB/delete/" + id;
       }
 
     }

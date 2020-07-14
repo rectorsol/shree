@@ -57,7 +57,7 @@
                     <tbody id="fresh_data2">
                       <?php  $id=1;
                       foreach ($order_data as $value) { ?>
-                      <tr class="gradeU" id="tr_<?php echo $value['product_order_id']?>">
+                      <tr class="gradeU" id="tr_<?php echo $value['order_id']?>">
                         <td><input type="text" class="form-control" name="serial_number[]" value="<?php echo $value['series_number']?>" required></td>
                         <td><input type="text" name="unit[]" class="form-control" value="<?php echo $value['unit']?>" required></td>
                         <td><input type="text" class="form-control" name="quantity[]" value="<?php echo $value['quantity']?>" required></td>

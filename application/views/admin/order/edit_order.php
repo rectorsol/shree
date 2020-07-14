@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <form class="form-horizontal" action="<?php echo base_url('admin/orders/update_orderdata/').$data->product_order_id ?>"   method="post" enctype="multipart/form-data">
+                    <form class="form-horizontal" action="<?php echo base_url('admin/orders/update_orderdata/').$data->order_id ?>"   method="post" enctype="multipart/form-data">
                         <div class="card-body">
                             <h4 class="card-title">Edit order</h4><hr>
                          <div class="modal-body">
